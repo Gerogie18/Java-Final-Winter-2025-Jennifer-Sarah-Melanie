@@ -4,7 +4,7 @@ import org.keyin.database.DatabaseConnection;
 
 import java.sql.*;
 
-public class UserDao {
+public class UserDAO {
 
     public User getUserByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM users WHERE user_name = ?";
