@@ -20,7 +20,16 @@ public class User {
         ADMIN, TRAINER, MEMBER
     }
 
-    //Constructor
+    //Constructors
+    public User(int userId, String username, String password, String email, int phoneNumber, String address, Role role) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.role = role;
+    }
     public User(String username, String password, String email, int phoneNumber, String address, Role role) {
         //update userID
         this.userId = String.format("%07d", UserId);
