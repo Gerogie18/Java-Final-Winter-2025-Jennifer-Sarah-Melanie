@@ -46,6 +46,7 @@ TABLESPACE pg_default;
 
 
 -- Getting sum for memberships by month example
+-- I haven't done anything here.
 SELECT
     TO_CHAR(date_purchased, 'YYYY-MM') AS month,
     SUM(membership_price) AS total_revenue
