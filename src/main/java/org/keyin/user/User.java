@@ -1,15 +1,13 @@
 package org.keyin.user;
 
-import org.mindrot.jbcrypt.BCrypt;
 
 //*
 // This is the parent class for all users, There are 3 types of users: Trainer, Member, and Admin
 //
 // *//
-public class User {
-    private static int UserId = 1;
 
-    private final String userId;
+public class User {
+    private int userId;
     private String username;
     private String password;
     private String email;
@@ -22,14 +20,20 @@ public class User {
         ADMIN, TRAINER, MEMBER
     }
 
-    //Constructor
-    public User(String username, String password, String email, int phoneNumber, String address, Role role) {
-        //update userID
-        this.userId = String.format("%07d", UserId);
-        UserId++;
-
+    //Constructors
+    public User(int userId, String username, String password, String email, int phoneNumber, String address, Role role) {
+        this.userId = userId;
         this.username = username;
-        this.password = hashPassword(password);
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.role = role;
+    }
+    public User(String username, String password, String email, int phoneNumber, String address, Role role) {
+        this.userId = 0;
+        this.username = username;
+        this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -37,8 +41,12 @@ public class User {
     }
 
     //Getters and Setters
-    public String getUserId() {
+    public int getUserId() {
         return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -53,9 +61,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setPassword(String password) {this.password = password; }
 
     public String getEmail() {
         return email;
@@ -89,27 +95,16 @@ public class User {
         this.role = role;
     }
 
-    //Hash password using BCrypt
-    private String hashPassword (String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
-    }
-
-    //Verify password using BCrypt
-    public boolean verifyPassword (String password) {
-        return BCrypt.checkpw(password, this.password);
-    }
-
     //toString
     @java.lang.Override
     public java.lang.String toString() {
-        return "User{" +
+        return "User:" + role + "{" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 ", address='" + address + '\'' +
-                ", role=" + role +
                 '}';
     }
 }
