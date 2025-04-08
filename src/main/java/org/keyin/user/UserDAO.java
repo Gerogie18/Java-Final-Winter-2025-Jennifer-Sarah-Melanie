@@ -3,36 +3,44 @@ package org.keyin.user;
 import org.keyin.database.DatabaseConnection;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
-    //CREATE user
+    public UserDAO() {}
+
+    // CREATE user
     public void createUser(User user) throws SQLException {
-        String sql = "INSERT INTO users (user_id, user_name, user_password, user_email, user_phone_number, user_address, user_role) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (user_name, user_password, user_email, user_phone_number, user_address, user_role) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, user.getUserId());
-            pstmt.setString(2, user.getUsername());
-            pstmt.setString(3, user.getPassword());
-            pstmt.setString(4, user.getEmail());
-            pstmt.setInt(5, user.getPhoneNumber());
-            pstmt.setString(6, user.getAddress());
-            pstmt.setString(7, user.getRole().toString());
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getPassword());
+            pstmt.setString(3, user.getEmail());
+            pstmt.setInt(4, user.getPhoneNumber());
+            pstmt.setString(5, user.getAddress());
+            pstmt.setString(6, user.getRole().toString());
             pstmt.executeUpdate();
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    user.setUserId(generatedKeys.getInt(1));
+                }
+            }
         }
     }
 
-    //DELETE user
-    public void deleteUserById(String userId) throws SQLException {
+    // DELETE user
+    public void deleteUserById(int userId) throws SQLException {
         String sql = "DELETE FROM users WHERE user_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, userId);
+            pstmt.setInt(1, userId);
             pstmt.executeUpdate();
         }
     }
 
-    //SET user
+    // UPDATE user
     public void updateUser(User user) throws SQLException {
         String sql = "UPDATE users SET user_name = ?, user_password = ?, user_email = ?, user_phone_number = ?, user_address = ?, user_role = ? WHERE user_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -43,12 +51,34 @@ public class UserDAO {
             pstmt.setInt(4, user.getPhoneNumber());
             pstmt.setString(5, user.getAddress());
             pstmt.setString(6, user.getRole().toString());
-            pstmt.setString(7, user.getUserId());
+            pstmt.setInt(7, user.getUserId());
             pstmt.executeUpdate();
         }
     }
 
-    //GET search for users
+    //Get user by different parameters
+    public User getUserById(int userId) throws SQLException {
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new User(
+                            rs.getInt("user_id"),
+                            rs.getString("user_name"),
+                            rs.getString("user_password"),
+                            rs.getString("user_email"),
+                            rs.getInt("user_phone_number"),
+                            rs.getString("user_address"),
+                            User.Role.valueOf(rs.getString("user_role"))
+                    );
+                }
+            }
+        }
+        return null;
+    }
+
     public User getUserByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM users WHERE user_name = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -57,7 +87,7 @@ public class UserDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return new User(
-                            rs.getString("user_id"),
+                            rs.getInt("user_id"),
                             rs.getString("user_name"),
                             rs.getString("user_password"),
                             rs.getString("user_email"),
@@ -79,29 +109,7 @@ public class UserDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return new User(
-                            rs.getString("user_id"),
-                            rs.getString("user_name"),
-                            rs.getString("user_password"),
-                            rs.getString("user_email"),
-                            rs.getInt("user_phone_number"),
-                            rs.getString("user_address"),
-                            User.Role.valueOf(rs.getString("user_role"))
-                    );
-                }
-            }
-        }
-        return null;
-    }
-
-    public User getUserByAddress(String address) throws SQLException {
-        String sql = "SELECT * FROM users WHERE user_address = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, address);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return new User(
-                            rs.getString("user_id"),
+                            rs.getInt("user_id"),
                             rs.getString("user_name"),
                             rs.getString("user_password"),
                             rs.getString("user_email"),
@@ -123,7 +131,7 @@ public class UserDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return new User(
-                            rs.getString("user_id"),
+                            rs.getInt("user_id"),
                             rs.getString("user_name"),
                             rs.getString("user_password"),
                             rs.getString("user_email"),
