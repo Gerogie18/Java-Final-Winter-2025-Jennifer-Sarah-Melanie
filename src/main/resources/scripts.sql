@@ -1,10 +1,6 @@
 CREATE TABLE users (
-   user_id SERIAL PRIMARY KEY UNIQUE,
+   user_id SERIAL PRIMARY KEY,
    user_name VARCHAR(50) NOT NULL,
-<<<<<<< Updated upstream
-=======
-   user_phone_number NUMERIC(10) NOT NULL,
->>>>>>> Stashed changes
    user_email VARCHAR(100) NOT NULL UNIQUE,
    user_role VARCHAR(10) NOT NULL CHECK(role IN('ADMIN','TRAINER','MEMBER')) CONSTRAINT valid_role_check
    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
