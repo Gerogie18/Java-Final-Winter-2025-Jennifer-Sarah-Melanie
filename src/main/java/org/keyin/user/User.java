@@ -31,12 +31,9 @@ public class User {
         this.role = role;
     }
     public User(String username, String password, String email, int phoneNumber, String address, Role role) {
-        //update userID
-        this.userId = String.format("%07d", UserId);
-        UserId++;
-
+        this.userId = 0;
         this.username = username;
-        this.password = hashPassword(password);
+        this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -44,8 +41,12 @@ public class User {
     }
 
     //Getters and Setters
-    public String getUserId() {
+    public int getUserId() {
         return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
