@@ -4,23 +4,15 @@ package org.keyin;
 
 import org.keyin.memberships.MembershipService;
 import org.keyin.user.UserService;
-import org.keyin.user.UserDAO;
 import org.keyin.workoutclasses.WorkoutClassService;
 
-import javax.naming.AuthenticationException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class GymApp {
     public static void main(String[] args) throws SQLException {
         // Initialize services
-        UserDAO userDAO = new UserDAO();
-        UserService userService = null;
-        try {
-            userService = new UserService(userDAO);
-        } catch (AuthenticationException e) {
-            throw new RuntimeException(e);
-        }
+        UserService userService = new UserService();
         MembershipService membershipService = new MembershipService();
         WorkoutClassService workoutService = new WorkoutClassService();
 
