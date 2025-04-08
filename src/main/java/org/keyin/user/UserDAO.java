@@ -144,4 +144,51 @@ public class UserDAO {
         }
         return null;
     }
+
+    public List<User> getUsersByRole(User.Role role) throws SQLException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE user_role = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, role.toString());
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    User user = new User(
+                            rs.getInt("user_id"),
+                            rs.getString("user_name"),
+                            rs.getString("user_password"),
+                            rs.getString("user_email"),
+                            rs.getInt("user_phone_number"),
+                            rs.getString("user_address"),
+                            User.Role.valueOf(rs.getString("user_role"))
+                    );
+                    users.add(user);
+                }
+            }
+        }
+        return users;
+    }
+
+    public List<User> getAllUsers() throws SQLException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    User user = new User(
+                            rs.getInt("user_id"),
+                            rs.getString("user_name"),
+                            rs.getString("user_password"),
+                            rs.getString("user_email"),
+                            rs.getInt("user_phone_number"),
+                            rs.getString("user_address"),
+                            User.Role.valueOf(rs.getString("user_role"))
+                    );
+                    users.add(user);
+                }
+            }
+        }
+        return users;
+    }
 }
