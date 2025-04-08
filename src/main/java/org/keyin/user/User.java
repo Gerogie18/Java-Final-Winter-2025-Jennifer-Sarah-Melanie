@@ -1,15 +1,13 @@
 package org.keyin.user;
 
-import org.mindrot.jbcrypt.BCrypt;
 
 //*
 // This is the parent class for all users, There are 3 types of users: Trainer, Member, and Admin
 //
 // *//
-public class User {
-    private static int UserId = 1;
 
-    private final String userId;
+public class User {
+    private int userId;
     private String username;
     private String password;
     private String email;
@@ -53,9 +51,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setPassword(String password) {this.password = password; }
 
     public String getEmail() {
         return email;
@@ -89,27 +85,16 @@ public class User {
         this.role = role;
     }
 
-    //Hash password using BCrypt
-    private String hashPassword (String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
-    }
-
-    //Verify password using BCrypt
-    public boolean verifyPassword (String password) {
-        return BCrypt.checkpw(password, this.password);
-    }
-
     //toString
     @java.lang.Override
     public java.lang.String toString() {
-        return "User{" +
+        return "User:" + role + "{" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 ", address='" + address + '\'' +
-                ", role=" + role +
                 '}';
     }
 }
