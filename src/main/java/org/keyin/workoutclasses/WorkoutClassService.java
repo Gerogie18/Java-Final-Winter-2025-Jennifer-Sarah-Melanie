@@ -1,5 +1,6 @@
 package org.keyin.workoutclasses;
 import org.keyin.user.UserDAO;
+import org.keyin.user.User;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.logging.Logger;
@@ -29,7 +30,8 @@ public class WorkoutClassService {
         if (!new HashSet<>(Arrays.asList("CANCELLED", "ACTIVE", "INACTIVE")).contains(workoutClass.getStatus())) {
             throw new IllegalArgumentException("Workout class status must be active, inactive, or cancelled");
         }
-        String userRole = userDAO.getUserRoleById(workoutClass.getTrainer());
+        User user = userDAO.getUserById(workoutClass.getTrainer());
+        User.Role userRole = User.getRole(user);
         if (!"trainer".equals(userRole)) {
             throw new IllegalArgumentException("User must be registered as a trainer");
         }

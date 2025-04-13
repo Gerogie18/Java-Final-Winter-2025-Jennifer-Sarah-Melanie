@@ -1,9 +1,14 @@
 package org.keyin.workoutclasses;
 import org.keyin.database.DatabaseConnection;
+//import org.keyin.user.User;
+import org.keyin.user.childclasses.Trainer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+//import java.util.ArrayList;
+//import java.util.List;
 import java.util.logging.Logger;
 
 public class WorkoutClassDAO {
@@ -54,8 +59,6 @@ public class WorkoutClassDAO {
     }
 
 
-
-
     public boolean deleteWorkoutClass(int id) throws SQLException {
         String sql = "DELETE FROM public.workout_classes WHERE class_id = ?;";
 
@@ -73,17 +76,72 @@ public class WorkoutClassDAO {
     public void getWorkoutClassById(int id)  throws SQLException {
     }
 
+
+
+    public ResultSet getAllWorkoutsByTrainer(Trainer trainer) throws SQLException {
+        ResultSet rs = null;
+        String sql = "SELECT * FROM workout_classes where trainer_id=?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1,trainer.getUserId());
+            rs = pstmt.executeQuery();
+            System.out.println("List of Workout Classes for Trainer " + trainer.getUsername()+ " " + trainer.getUserId());
+            while (rs.next()) {
+                int workout_id = rs.getInt("class_id");
+                String name = rs.getString("class_name");
+                String type = rs.getString("class_type");
+                String description = rs.getString("class_description");
+                String status = rs.getString("class_status");
+                int capacity = rs.getInt("class_capacity");
+                int trainer_id = rs.getInt("trainer_id");
+
+                System.out.println("-----------------");
+                System.out.println("Class ID: " + workout_id);
+                System.out.println("Name : " + name);
+                System.out.println("Type : " + type);
+                System.out.println("Description : " + description);
+                System.out.println("Status: " + status);
+                System.out.println("Max capacity: " + capacity);
+                System.out.println("-------------------------");
+            }
+        } catch (SQLException error) {
+            throw new RuntimeException(error);
+        }
+        return rs;
+    }
+
+
     public void getWorkoutClassByName(String name)  throws SQLException{
     }
+
     public void getAllWorkoutClasses()  throws SQLException{
+        ResultSet rs = null;
         String sql = "SELECT * FROM public.workout_classes;";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.executeQuery();
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                int workout_id = rs.getInt("class_id");
+                String name = rs.getString("class_name");
+                String type = rs.getString("class_type");
+                String description = rs.getString("class_description");
+                String status = rs.getString("class_status");
+                int capacity = rs.getInt("class_capacity");
+                int trainer_id = rs.getInt("trainer_id");
+
+                System.out.println("-----------------");
+                System.out.println("Class ID: " + workout_id);
+                System.out.println("Name : " + name);
+                System.out.println("Type : " + type);
+                System.out.println("Description : " + description);
+                System.out.println("Status: " + status);
+                System.out.println("Max capacity: " + capacity);
+                System.out.println("Trainer ID: " + trainer_id);
+                System.out.println("-------------------------");
+            }
         } catch (SQLException error) {
             log.info("Error:" + error.getMessage());
         }
     }
-
 }
