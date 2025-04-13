@@ -24,7 +24,7 @@ public class WorkoutClassDAO {
             stmt.setString(1, workoutClass.getName());
             stmt.setString(2, workoutClass.getType());
             stmt.setString(3, workoutClass.getDescription());
-            stmt.setString(4, workoutClass.getStatus());
+            stmt.setString(4, workoutClass.getStatusAsString());
             stmt.setInt(5, workoutClass.getClass_capacity());
             stmt.setInt(6, workoutClass.getTrainer());
             stmt.executeUpdate();
@@ -45,7 +45,7 @@ public class WorkoutClassDAO {
             stmt.setString(1, workoutClass.getName());
             stmt.setString(2, workoutClass.getType());
             stmt.setString(3, workoutClass.getDescription());
-            stmt.setString(4, workoutClass.getStatus());
+            stmt.setString(4, workoutClass.getStatusAsString());
             stmt.setInt(5, workoutClass.getClass_capacity());
             stmt.setInt(6, workoutClass.getTrainer());
             stmt.setInt(7, workoutClass.getId());
@@ -78,7 +78,7 @@ public class WorkoutClassDAO {
 
 
 
-    public ResultSet getAllWorkoutsByTrainer(Trainer trainer) throws SQLException {
+    public ResultSet getWorkoutsByTrainer(Trainer trainer) throws SQLException {
         ResultSet rs = null;
         String sql = "SELECT * FROM workout_classes where trainer_id=?";
         try (Connection conn = DatabaseConnection.getConnection();

@@ -5,12 +5,13 @@ public class WorkoutClass {
     private String name;
     private String type;
     private String description;
-    private String status; // 'ACTIVE','CANCELLED','INACTIVE'
+    private Status status;
+    public enum Status {ACTIVE,CANCELLED,INACTIVE};
     private int class_capacity; // class_capacity >= 0 AND class_capacity <= 100
     private int trainer; // trainer id
 
 
-    public WorkoutClass(String name, String type, String description, String status, int class_capacity, int trainer) {
+    public WorkoutClass(String name, String type, String description, Status status, int class_capacity, int trainer) {
         this.name = name;
         this.type = type;
         this.description = description;
@@ -51,11 +52,14 @@ public class WorkoutClass {
         this.description = description;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
+    public String getStatusAsString() {
+        return status.name();
+    }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

@@ -1,24 +1,22 @@
 package org.keyin.workoutclasses;
 import org.keyin.user.UserDAO;
 import org.keyin.user.User;
-import java.util.Arrays;
-import java.util.HashSet;
+import org.keyin.user.childclasses.Trainer;
 import java.util.logging.Logger;
 import java.sql.SQLException;
 
 public class WorkoutClassService {
     Logger log = Logger.getLogger(WorkoutClassService.class.getName());
-    // Inject in the DAO to be able to use it in the service
-    private WorkoutClassDAO workoutClassDAO;
-    private UserDAO userDAO;
 
-    public WorkoutClassService(WorkoutClassDAO workoutClassDAO) {
+    private final WorkoutClassDAO workoutClassDAO;
+    private final UserDAO userDAO;
+
+    public WorkoutClassService(WorkoutClassDAO workoutClassDAO, UserDAO userDAO) {
         this.workoutClassDAO = workoutClassDAO;
         this.userDAO = userDAO;
     }
 
 
-    // Need to add more validation (e.g., about trainer)
     public void createWorkoutClass(WorkoutClass workoutClass) throws IllegalArgumentException, SQLException {
         // Validate workout class details
         if (workoutClass.getName() == null || workoutClass.getName().isEmpty()) {
@@ -27,19 +25,19 @@ public class WorkoutClassService {
         if (workoutClass.getType() == null || workoutClass.getType().isEmpty()) {
             throw new IllegalArgumentException("Workout class type cannot be null or empty");
         }
-        if (!new HashSet<>(Arrays.asList("CANCELLED", "ACTIVE", "INACTIVE")).contains(workoutClass.getStatus())) {
-            throw new IllegalArgumentException("Workout class status must be active, inactive, or cancelled");
+        if (workoutClass.getStatus() == null) {
+            throw new IllegalArgumentException("Workout class status must be provided.");
         }
         User user = userDAO.getUserById(workoutClass.getTrainer());
-        User.Role userRole = User.getRole(user);
-        if (!"trainer".equals(userRole)) {
+
+        if (user.getRole() != User.Role.TRAINER) {
             throw new IllegalArgumentException("User must be registered as a trainer");
         }
         try {
             workoutClassDAO.createNewWorkoutClass(workoutClass);
         } catch (SQLException err) {
-            log.warning("Error during workout class creation: " + err.getMessage());
-            throw err;  // should we add different details here?
+            log.warning("Failed to create class: " + workoutClass.getName() + ", trainer ID: " + workoutClass.getTrainer() + ". Reason: " + err.getMessage());
+            throw err;
         }
     }
     // Need to update validation here
@@ -53,10 +51,9 @@ public class WorkoutClassService {
         if (workoutClass.getType() == null || workoutClass.getType().isEmpty()) {
             throw new IllegalArgumentException("Workout class type cannot be null or empty");
         }
-        if (!new HashSet<>(Arrays.asList("CANCELLED", "ACTIVE", "INACTIVE")).contains(workoutClass.getStatus())) {
-            throw new IllegalArgumentException("Workout class status must be active, inactive, or cancelled");
+        if (workoutClass.getStatus() == null) {
+            throw new IllegalArgumentException("Workout class status must be provided.");
         }
-
         boolean updated = workoutClassDAO.updateWorkoutClass(workoutClass);
         if (!updated) {
             log.info("No workout class was updated; possibly does not exist.");
@@ -79,5 +76,17 @@ public class WorkoutClassService {
             log.warning("Error during workout class deletion: " + err.getMessage());
             throw err;  // Rethrow to ensure the caller can react appropriately
         }
+    }
+
+    public void getWorkoutsByTrainer(Trainer trainer) throws SQLException {
+        if (trainer == null) {
+            System.out.println("Provide A Trainer Please ");
+        } else {
+            workoutClassDAO.getWorkoutsByTrainer(trainer);
+        }
+    }
+
+    public void listAllWorkouts() throws SQLException {
+        workoutClassDAO.getAllWorkoutClasses();
     }
 }
