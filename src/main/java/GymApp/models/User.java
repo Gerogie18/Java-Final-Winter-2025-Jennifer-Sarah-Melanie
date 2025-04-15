@@ -11,7 +11,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     private String address;
     private Role role;
 
@@ -21,7 +21,7 @@ public class User {
     }
 
     //Constructors
-    public User(int userId, String username, String password, String email, int phoneNumber, String address, Role role) {
+    public User(int userId, String username, String password, String email, String phoneNumber, String address, Role role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -30,7 +30,7 @@ public class User {
         this.address = address;
         this.role = role;
     }
-    public User(String username, String password, String email, int phoneNumber, String address, Role role) {
+    public User(String username, String password, String email, String phoneNumber, String address, Role role) {
         this.userId = 0;
         this.username = username;
         this.password = password;
@@ -71,11 +71,11 @@ public class User {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

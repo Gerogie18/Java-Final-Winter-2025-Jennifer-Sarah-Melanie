@@ -46,7 +46,7 @@ public class UserService {
         return userDAO.getUserByUsername(username);
     }
 
-    public User searchUserByPhoneNumber(int phoneNumber) throws SQLException {
+    public User searchUserByPhoneNumber(String phoneNumber) throws SQLException {
         return userDAO.getUserByPhoneNumber(phoneNumber);
     }
 

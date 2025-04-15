@@ -19,7 +19,7 @@ public class UserDAO {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getEmail());
-            pstmt.setInt(4, user.getPhoneNumber());
+            pstmt.setString(4, user.getPhoneNumber());
             pstmt.setString(5, user.getAddress());
             pstmt.setString(6, user.getRole().toString());
             pstmt.executeUpdate();
@@ -49,7 +49,7 @@ public class UserDAO {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getEmail());
-            pstmt.setInt(4, user.getPhoneNumber());
+            pstmt.setString(4, user.getPhoneNumber());
             pstmt.setString(5, user.getAddress());
             pstmt.setString(6, user.getRole().toString());
             pstmt.setInt(7, user.getUserId());
@@ -70,7 +70,7 @@ public class UserDAO {
                             rs.getString("user_name"),
                             rs.getString("user_password"),
                             rs.getString("user_email"),
-                            rs.getInt("user_phone_number"),
+                            rs.getString("user_phone_number"),
                             rs.getString("user_address"),
                             User.Role.valueOf(rs.getString("user_role"))
                     );
@@ -92,7 +92,7 @@ public class UserDAO {
                             rs.getString("user_name"),
                             rs.getString("user_password"),
                             rs.getString("user_email"),
-                            rs.getInt("user_phone_number"),
+                            rs.getString("user_phone_number"),
                             rs.getString("user_address"),
                             User.Role.valueOf(rs.getString("user_role"))
                     );
@@ -102,11 +102,11 @@ public class UserDAO {
         return null;
     }
 
-    public User getUserByPhoneNumber(int phoneNumber) throws SQLException {
+    public User getUserByPhoneNumber(String phoneNumber) throws SQLException {
         String sql = "SELECT * FROM users WHERE user_phone_number = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, phoneNumber);
+            pstmt.setString(1, phoneNumber);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return new User(
@@ -114,7 +114,7 @@ public class UserDAO {
                             rs.getString("user_name"),
                             rs.getString("user_password"),
                             rs.getString("user_email"),
-                            rs.getInt("user_phone_number"),
+                            rs.getString("user_phone_number"),
                             rs.getString("user_address"),
                             User.Role.valueOf(rs.getString("user_role"))
                     );
@@ -136,7 +136,7 @@ public class UserDAO {
                             rs.getString("user_name"),
                             rs.getString("user_password"),
                             rs.getString("user_email"),
-                            rs.getInt("user_phone_number"),
+                            rs.getString("user_phone_number"),
                             rs.getString("user_address"),
                             User.Role.valueOf(rs.getString("user_role"))
                     );
@@ -159,7 +159,7 @@ public class UserDAO {
                             rs.getString("user_name"),
                             rs.getString("user_password"),
                             rs.getString("user_email"),
-                            rs.getInt("user_phone_number"),
+                            rs.getString("user_phone_number"),
                             rs.getString("user_address"),
                             User.Role.valueOf(rs.getString("user_role"))
                     );
@@ -182,7 +182,7 @@ public class UserDAO {
                             rs.getString("user_name"),
                             rs.getString("user_password"),
                             rs.getString("user_email"),
-                            rs.getInt("user_phone_number"),
+                            rs.getString("user_phone_number"),
                             rs.getString("user_address"),
                             User.Role.valueOf(rs.getString("user_role"))
                     );
