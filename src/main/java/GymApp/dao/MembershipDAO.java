@@ -1,11 +1,4 @@
-package org.keyin.memberships;
-
-import org.keyin.database.DatabaseConnection;
-
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+package GymApp.dao;
 
 // DAOs are responsible for handling the interactions with the database
 public class MembershipDAO {

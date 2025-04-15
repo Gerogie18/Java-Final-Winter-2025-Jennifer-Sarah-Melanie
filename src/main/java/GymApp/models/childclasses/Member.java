@@ -1,6 +1,6 @@
-package org.keyin.user.childclasses;
+package GymApp.models.childclasses;
 
-import org.keyin.user.User;
+import GymApp.models.User;
 
 public class Member extends User {
     public Member (String username, String password, String email, int phoneNumber, String address) {

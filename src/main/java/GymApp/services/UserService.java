@@ -1,6 +1,8 @@
-package org.keyin.user;
+package GymApp.services;
 
-import org.mindrot.jbcrypt.BCrypt;
+import GymApp.dao.UserDAO;
+import GymApp.models.User;
+
 import javax.naming.AuthenticationException;
 import java.sql.SQLException;
 import java.util.List;

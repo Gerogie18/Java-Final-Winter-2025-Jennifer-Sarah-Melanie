@@ -1,7 +1,8 @@
-package org.keyin.workoutclasses;
-import org.keyin.database.DatabaseConnection;
+package GymApp.dao;
+import GymApp.database.DatabaseConnection;
 //import org.keyin.user.User;
-import org.keyin.user.childclasses.Trainer;
+import GymApp.models.WorkoutClass;
+import GymApp.models.childclasses.Trainer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +27,7 @@ public class WorkoutClassDAO {
             stmt.setString(3, workoutClass.getDescription());
             stmt.setString(4, workoutClass.getStatusAsString());
             stmt.setInt(5, workoutClass.getClass_capacity());
-            stmt.setInt(6, workoutClass.getTrainer());
+            stmt.setInt(6, workoutClass.getTrainerId());
             stmt.executeUpdate();
 
         } catch (SQLException err) {
@@ -47,7 +48,7 @@ public class WorkoutClassDAO {
             stmt.setString(3, workoutClass.getDescription());
             stmt.setString(4, workoutClass.getStatusAsString());
             stmt.setInt(5, workoutClass.getClass_capacity());
-            stmt.setInt(6, workoutClass.getTrainer());
+            stmt.setInt(6, workoutClass.getTrainerId());
             stmt.setInt(7, workoutClass.getId());
 
             int affectedRows = stmt.executeUpdate();

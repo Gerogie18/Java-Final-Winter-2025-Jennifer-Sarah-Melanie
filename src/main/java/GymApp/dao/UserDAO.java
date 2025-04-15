@@ -1,6 +1,7 @@
-package org.keyin.user;
+package GymApp.dao;
 
-import org.keyin.database.DatabaseConnection;
+import GymApp.database.DatabaseConnection;
+import GymApp.models.User;
 
 import java.sql.*;
 import java.util.ArrayList;

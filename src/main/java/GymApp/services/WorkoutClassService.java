@@ -1,7 +1,9 @@
-package org.keyin.workoutclasses;
-import org.keyin.user.UserDAO;
-import org.keyin.user.User;
-import org.keyin.user.childclasses.Trainer;
+package GymApp.services;
+import GymApp.dao.WorkoutClassDAO;
+import GymApp.models.WorkoutClass;
+import GymApp.dao.UserDAO;
+import GymApp.models.User;
+import GymApp.models.childclasses.Trainer;
 import java.util.logging.Logger;
 import java.sql.SQLException;
 
@@ -28,7 +30,7 @@ public class WorkoutClassService {
         if (workoutClass.getStatus() == null) {
             throw new IllegalArgumentException("Workout class status must be provided.");
         }
-        User user = userDAO.getUserById(workoutClass.getTrainer());
+        User user = userDAO.getUserById(workoutClass.getTrainerId());
 
         if (user.getRole() != User.Role.TRAINER) {
             throw new IllegalArgumentException("User must be registered as a trainer");
@@ -36,7 +38,7 @@ public class WorkoutClassService {
         try {
             workoutClassDAO.createNewWorkoutClass(workoutClass);
         } catch (SQLException err) {
-            log.warning("Failed to create class: " + workoutClass.getName() + ", trainer ID: " + workoutClass.getTrainer() + ". Reason: " + err.getMessage());
+            log.warning("Failed to create class: " + workoutClass.getName() + ", trainer ID: " + workoutClass.getTrainerId() + ". Reason: " + err.getMessage());
             throw err;
         }
     }
@@ -78,7 +80,7 @@ public class WorkoutClassService {
         }
     }
 
-    public void getWorkoutsByTrainer(Trainer trainer) throws SQLException {
+    public void listWorkoutsByTrainer(Trainer trainer) throws SQLException {
         if (trainer == null) {
             System.out.println("Provide A Trainer Please ");
         } else {
