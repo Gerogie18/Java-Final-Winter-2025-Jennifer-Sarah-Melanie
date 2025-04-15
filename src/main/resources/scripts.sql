@@ -5,6 +5,7 @@ CREATE TABLE users (
    user_email VARCHAR(100) NOT NULL UNIQUE,
    user_address VARCHAR(100) NOT NULL,
    user_role VARCHAR(10) NOT NULL,
+   ADD COLUMN user_password VARCHAR(255) NOT NULL DEFAULT 'changeme',
    CONSTRAINT valid_role_check CHECK (user_role IN ('ADMIN', 'TRAINER', 'MEMBER'))
 );
 
