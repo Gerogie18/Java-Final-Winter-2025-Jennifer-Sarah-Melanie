@@ -77,7 +77,7 @@ public class MembershipDAO {
 
     public ResultSet getMemberships(User user) throws SQLException {
         ResultSet rs = null;
-        String sql = "SELECT * FROM memberships WHERE user_id=?";
+        String sql = "SELECT * FROM memberships WHERE member_id=?";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, user.getUserId());
@@ -88,7 +88,6 @@ public class MembershipDAO {
                 Double cost = rs.getDouble("membership_cost");
                 String desc = rs.getString("membership_description");
                 LocalDate date = rs.getDate("date_purchased").toLocalDate();
-                int memberID = rs.getInt("member_id");
 
                 System.out.println("-----------------");
                 System.out.println("Membership Type: " + membershipType);
