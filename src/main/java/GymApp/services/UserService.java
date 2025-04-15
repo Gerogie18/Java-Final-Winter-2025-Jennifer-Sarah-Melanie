@@ -10,35 +10,35 @@ import java.util.List;
 public class UserService {
     private final UserDAO userDAO;
 
-    //security logic
-    public boolean hasRole(String userId, String role) {
-        User user = userDAO.getUserById(userId);
-        return user != null && user.getRole().equals(role);
-    }
-
-    public User login(String username, String password) throws AuthenticationException {
-        User user = userDAO.getUserByUsername(username);
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
-        } else {
-            return false;
-        }
-    }
+//    //security logic
+//    public boolean hasRole(int userId, String role) throws SQLException{
+//        User user = userDAO.getUserById(userId);
+//        return user != null && user.getRole().equals(role);
+//    }
+//
+//    public User login(String username, String password) throws AuthenticationException {
+//        User user = userDAO.getUserByUsername(username);
+//        if (user != null && user.getPassword().equals(password)) {
+//            return user;
+//        } else {
+//            return false;
+//        }
+//    }
 
     //Functions for USER DAO operations
-    public void createUser(User user) {
+    public void createUser(User user)  throws SQLException {
         userDAO.createUser(user);
     }
 
-    public void updateUser(User user) {
+    public void updateUser(User user) throws SQLException  {
         userDAO.updateUser(user);
     }
 
-    public void deleteUser(String userId) {
+    public void deleteUser(int userId) throws SQLException  {
         userDAO.deleteUserById(userId);
     }
 
-    public UserService(UserDAO userDAO) {
+    public UserService(UserDAO userDAO) throws SQLException  {
         this.userDAO = userDAO;
     }
 
@@ -50,9 +50,9 @@ public class UserService {
         return userDAO.getUserByPhoneNumber(phoneNumber);
     }
 
-    public User searchUserByAddress(String address) throws SQLException {
-        return userDAO.getUserByAddress(address);
-    }
+//    public User searchUserByAddress(String address) throws SQLException {
+//        return userDAO.getUserByAddress(address);
+//    }
 
     public User searchUserByEmail(String email) throws SQLException {
         return userDAO.getUserByEmail(email);
