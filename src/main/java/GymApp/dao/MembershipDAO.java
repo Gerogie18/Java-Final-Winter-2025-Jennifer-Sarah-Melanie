@@ -58,7 +58,7 @@ public class MembershipDAO {
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 String membershipType = rs.getString("membership_type");
-                Double cost = rs.getDouble("membership_cost");
+                double cost = rs.getDouble("membership_cost");
                 String desc = rs.getString("membership_description");
                 LocalDate date = rs.getDate("date_purchased").toLocalDate();
                 int memberID = rs.getInt("member_id");
@@ -71,7 +71,6 @@ public class MembershipDAO {
                 System.out.println("Member ID: " + memberID);
                 System.out.println("-------------------------");
             }
-
         }
         ;
     }
