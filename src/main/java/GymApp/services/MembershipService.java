@@ -1,4 +1,4 @@
-package org.keyin.memberships;
+package GymApp.services;
 
 
 // Service class for membership handle all the business logic

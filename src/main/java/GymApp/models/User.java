@@ -1,4 +1,4 @@
-package org.keyin.user;
+package GymApp.models;
 
 
 //*

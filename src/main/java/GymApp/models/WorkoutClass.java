@@ -1,4 +1,4 @@
-package org.keyin.workoutclasses;
+package GymApp.models;
 
 public class WorkoutClass {
     private int id;
@@ -8,16 +8,19 @@ public class WorkoutClass {
     private Status status;
     public enum Status {ACTIVE,CANCELLED,INACTIVE};
     private int class_capacity; // class_capacity >= 0 AND class_capacity <= 100
-    private int trainer; // trainer id
+    private int trainerId; // trainer id
 
 
-    public WorkoutClass(String name, String type, String description, Status status, int class_capacity, int trainer) {
+    public WorkoutClass() {
+    }
+
+    public WorkoutClass(String name, String type, String description, Status status, int class_capacity, int trainerId) {
         this.name = name;
         this.type = type;
         this.description = description;
         this.status = status;
         this.class_capacity = class_capacity;
-        this.trainer = trainer;
+        this.trainerId = trainerId;
     }
 
     public int getId() {
@@ -71,11 +74,11 @@ public class WorkoutClass {
         this.class_capacity = class_capacity;
     }
 
-    public int getTrainer() {
-        return trainer;
+    public int getTrainerId() {
+        return trainerId;
     }
 
-    public void setTrainer(int trainer) {
-        this.trainer = trainer;
+    public void setTrainerByID(int trainerId) {
+        this.trainerId = trainerId;
     }
 }
