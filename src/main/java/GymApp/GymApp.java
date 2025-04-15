@@ -1,10 +1,13 @@
-package org.keyin;
+package GymApp;
 
-
-
-import org.keyin.memberships.MembershipService;
-import org.keyin.user.UserService;
-import org.keyin.workoutclasses.WorkoutClassService;
+import GymApp.dao.MembershipDAO;
+import GymApp.menus.TrainerMenu;
+import GymApp.services.MembershipService;
+import GymApp.models.User;
+import GymApp.dao.UserDAO;
+import GymApp.services.UserService;
+import GymApp.dao.WorkoutClassDAO;
+import GymApp.services.WorkoutClassService;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -12,9 +15,18 @@ import java.util.Scanner;
 public class GymApp {
     public static void main(String[] args) throws SQLException {
         // Initialize services
-        UserService userService = new UserService();
+        UserDAO userDAO = new UserDAO();
+        WorkoutClassDAO workoutDAO = new WorkoutClassDAO();
+        MembershipDAO membershipDAO = new MembershipDAO();
+
+        UserService userService = new UserService(userDAO);
+//        try {
+//            userService = new UserService(userDAO);
+//        } catch (AuthenticationException error) {
+//            throw new RuntimeException(error);
+//        }
         MembershipService membershipService = new MembershipService();
-        WorkoutClassService workoutService = new WorkoutClassService();
+        WorkoutClassService workoutService = new WorkoutClassService(workoutDAO, userDAO);
 
         // Scanner for user input
         Scanner scanner = new Scanner(System.in);
@@ -54,22 +66,22 @@ public class GymApp {
         scanner.close();
     }
 
-    private static void logInAsUser(Scanner scanner, UserService userService, MembershipService membershipService, WorkoutService workoutService) {
+    private static void logInAsUser(Scanner scanner, UserService userService, MembershipService membershipService, WorkoutClassService workoutService) {
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
         try {
-            User user = userService.loginForUser(username, password);
+            User user = userService.login(username, password);
             if (user != null) {
                 System.out.println("Login Successful! Welcome " + user.getUserName());
                 switch (user.getUserRole().toLowerCase()) {
                     case "admin":
-                        showAdminMenu(scanner, user, userService, membershipService, workoutService);
+                        //AdminMenu.show(scanner, user, userService, membershipService, workoutService);
                         break;
                     case "trainer":
-                        // show menu for trainer
+                        TrainerMenu.show(scanner, user, userService, workoutService);
                         break;
                     case "member":
                         // show menu for member
@@ -93,12 +105,12 @@ public class GymApp {
     }
 
     // Placeholder for Trainer menu
-    private static void showTrainerMenu(Scanner scanner, User user, UserService userService, WorkoutService workoutService) {
+    private static void showTrainerMenu(Scanner scanner, User user, UserService userService, WorkoutClassService workoutService) {
         System.out.println("Trainer menu under construction.");
     }
 
     // Admin menu with minimal implementation
-    private static void showAdminMenu(Scanner scanner, User user, UserService userService, MembershipService membershipService, WorkoutService workoutService) {
+    private static void showAdminMenu(Scanner scanner, User user, UserService userService, MembershipService membershipService, WorkoutClassService workoutService) {
         System.out.println("Admin menu under construction.");
     }
 
