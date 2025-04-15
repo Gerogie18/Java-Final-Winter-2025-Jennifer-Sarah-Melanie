@@ -96,6 +96,7 @@ public class Membership {
                 ", membershipType='" + membershipType + '\'' +
                 ", membershipDescription='" + membershipDescription + '\'' +
                 ", membershipCost=" + membershipCost +
+                ", membershipStartDate=" + membershipStartDate +
                 ", memberID=" + memberID +
                 '}';
     }
