@@ -19,7 +19,7 @@ public class WorkoutClassService {
     }
 
 
-    public void createWorkoutClass(WorkoutClass workoutClass) throws IllegalArgumentException, SQLException {
+    public void addNewWorkoutClass(WorkoutClass workoutClass) throws IllegalArgumentException, SQLException {
         // Validate workout class details
         if (workoutClass.getName() == null || workoutClass.getName().isEmpty()) {
             throw new IllegalArgumentException("Class name cannot be empty.");

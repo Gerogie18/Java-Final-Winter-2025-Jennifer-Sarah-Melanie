@@ -19,8 +19,7 @@ public class Membership {
 
     private int memberID;
 
-    public Membership(int membershipID, String membershipType, String membershipDescription, double membershipCost,
-            LocalDate membershipStarDate,
+    public Membership(int membershipID, String membershipType, double membershipCost, String membershipDescription,
             int memberID) {
         this.membershipID = membershipID;
         this.membershipType = membershipType;
@@ -30,8 +29,7 @@ public class Membership {
         this.memberID = memberID;
     }
 
-    public Membership(String membershipType, String membershipDescription, double membershipCost,
-            LocalDate membershipStarDate,
+    public Membership(String membershipType, double membershipCost, String membershipDescription,
             int memberID) {
         this.membershipType = membershipType;
         this.membershipDescription = membershipDescription;

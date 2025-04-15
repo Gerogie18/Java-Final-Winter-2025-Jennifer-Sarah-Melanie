@@ -33,7 +33,7 @@ public class TrainerMenu implements Menu {
                     addWorkout(scanner, user, workoutService);
                     break;
                 case 2:
-                    viewMyClasses(user, workoutService);
+                    //viewMyClasses(user, workoutService);
                     break;
                 case 3:
                     System.out.println("Logging out...");
