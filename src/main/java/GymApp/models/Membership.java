@@ -1,8 +1,11 @@
 package GymApp.models;
 
+import java.time.LocalDate;
+
 //*\
 // This is class file that represents a membership
 //
+
 public class Membership {
     private int membershipID;
 
@@ -12,22 +15,28 @@ public class Membership {
 
     private double membershipCost;
 
+    private LocalDate membershipStartDate;
+
     private int memberID;
 
     public Membership(int membershipID, String membershipType, String membershipDescription, double membershipCost,
+            LocalDate membershipStarDate,
             int memberID) {
         this.membershipID = membershipID;
         this.membershipType = membershipType;
         this.membershipDescription = membershipDescription;
         this.membershipCost = membershipCost;
+        this.membershipStartDate = LocalDate.now();
         this.memberID = memberID;
     }
 
     public Membership(String membershipType, String membershipDescription, double membershipCost,
+            LocalDate membershipStarDate,
             int memberID) {
         this.membershipType = membershipType;
         this.membershipDescription = membershipDescription;
         this.membershipCost = membershipCost;
+        this.membershipStartDate = LocalDate.now();
         this.memberID = memberID;
     }
 
@@ -62,6 +71,14 @@ public class Membership {
 
     public void setMembershipCost(double membershipCost) {
         this.membershipCost = membershipCost;
+    }
+
+    public LocalDate getMembershipStartDate() {
+        return membershipStartDate;
+    }
+
+    public void setMembershipStartDate(LocalDate membershipStartDate) {
+        this.membershipStartDate = membershipStartDate;
     }
 
     public int getMemberID() {
