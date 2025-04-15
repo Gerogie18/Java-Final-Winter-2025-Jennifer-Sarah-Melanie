@@ -94,10 +94,9 @@ public class MembershipDAO {
                 System.out.println("Cost : " + cost);
                 System.out.println("Description : " + desc);
                 System.out.println("Date Purchased : " + date);
-                System.out.println("Member ID: " + memberID);
                 System.out.println("-------------------------");
             }
-            
+
         } catch (SQLException error) {
             throw new RuntimeException(error);
         }
