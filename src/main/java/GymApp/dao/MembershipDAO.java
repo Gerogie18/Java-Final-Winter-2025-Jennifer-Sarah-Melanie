@@ -6,6 +6,8 @@ import GymApp.models.User;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
 
 // DAOs are responsible for handling the interactions with the database
 public class MembershipDAO {
@@ -50,29 +52,26 @@ public class MembershipDAO {
         }
     }
 
-    public void getAllMemberships() throws SQLException {
-        ResultSet rs = null;
-        String sql = "SELECT * FROM memberships";
+    public List<Membership> getAllMemberships() throws SQLException {
+        List<Membership> memberships = new ArrayList<>();
+        String sql = "SELECT membership_id, membership_type, membership_cost, membership_description, date_purchased, member_id FROM memberships";
         try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            rs = pstmt.executeQuery();
-            while (rs.next()) {
-                String membershipType = rs.getString("membership_type");
-                double cost = rs.getDouble("membership_cost");
-                String desc = rs.getString("membership_description");
-                LocalDate date = rs.getDate("date_purchased").toLocalDate();
-                int memberID = rs.getInt("member_id");
-
-                System.out.println("-----------------");
-                System.out.println("Membership Type: " + membershipType);
-                System.out.println("Cost : " + cost);
-                System.out.println("Description : " + desc);
-                System.out.println("Date Purchased : " + date);
-                System.out.println("Member ID: " + memberID);
-                System.out.println("-------------------------");
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Membership membership = new Membership(
+                            rs.getInt("membership_id"),
+                            rs.getString("membership_type"),
+                            rs.getDouble("membership_cost"),
+                            rs.getString("membership_description"),
+                            rs.getDate("date_purchased").toLocalDate(),
+                            rs.getInt("member_id")
+                    );
+                    memberships.add(membership);
+                }
             }
         }
-        ;
+        return memberships;
     }
 
     public Membership getMembershipById() throws SQLException {

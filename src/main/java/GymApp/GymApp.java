@@ -93,7 +93,7 @@ public class GymApp {
 
                 switch (user.getRole()) {
                     case ADMIN:
-                        //AdminMenu.show(scanner, user, userService, membershipService, workoutService);
+                        AdminMenu.displayMenu(scanner, membershipService, userService, user.getUserId());
                         break;
                     case TRAINER:
                         TrainerMenu.displayMenu(scanner, user.getUserId(), workoutService);

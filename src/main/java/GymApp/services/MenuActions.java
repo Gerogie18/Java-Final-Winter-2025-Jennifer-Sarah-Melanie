@@ -10,10 +10,118 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class MenuActions {
+public static void promptBackToMenu(Scanner scanner) {
+    System.out.println();
+    System.out.print("Back to menu?: ");
+    scanner.nextLine(); // Consume the newline character left by previous nextLine() calls
+    String input = scanner.nextLine();
+}
+// Users
+public static void viewAllUsers(Scanner scanner, UserService userService) {
+    userService.printAllUsers();
+    promptBackToMenu(scanner);
+}
+    public static void viewUsersByRole(Scanner scanner, UserService userService) {
+        Role userRole = null;
+        // Role validation loop
+        while (userRole == null) {
+            System.out.print("Enter role (Admin/Trainer/Member): ");
+            String roleInput = scanner.nextLine().trim();
+
+            try {
+                userRole = Role.fromString(roleInput);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid role entered: " + roleInput + ". Please enter Admin, Trainer, or Member.");
+            }
+        }
+        switch (userRole) {
+            case ADMIN:
+                userService.printAllAdmins();
+                promptBackToMenu(scanner);
+                break;
+            case MEMBER:
+                userService.printAllMembers();
+                promptBackToMenu(scanner);
+                break;
+            case TRAINER:
+                userService.printAllTrainers();
+                promptBackToMenu(scanner);
+                break;
+        }
+    }
+    public static void deleteUser(Scanner scanner, int adminId, UserService userService) {
+        boolean validInput = false;
+        int userIdToDelete = -1; // Initialize with an invalid value
+
+        while (!validInput) {
+            System.out.println("Enter ID of user to delete:");
+            System.out.println("Leave empty to go back to menu");
+            String userIdStr = scanner.nextLine().trim();
+            if (userIdStr.isEmpty()) {
+                break;
+            }
+            try {
+                userIdToDelete = Integer.parseInt(userIdStr);
+                validInput = true; // Parsing successful, exit the loop
+
+                if (adminId == userIdToDelete) {
+                    System.out.println("Cannot delete yourself.");
+                    validInput = false; // Reset to prompt again
+                } else {
+                    try {
+                        userService.deleteUser(userIdToDelete);
+                        System.out.println("User with ID " + userIdToDelete + " deleted successfully.");
+                    } catch (SQLException e) {
+                        System.err.println("Error deleting user: " + e.getMessage());
+                        validInput = false; // Consider if you want to loop again on SQL error
+                    }
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid user ID format. Please enter a number.");
+            }
+        }
+    }
+
     private static final Logger log = Logger.getLogger(MenuActions.class.getName());
 
 
+    //Memberships
+    public static void viewAllMemberships (Scanner scanner, MembershipService membershipService) {
+        membershipService.printAllMemberships();
+        promptBackToMenu(scanner);
+    }
+
+    public static void viewAnnualRevenue (Scanner scanner, MembershipService membershipService) {
+        System.out.print("Enter the year to view total revenue for: ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a year (e.g., 2023).");
+            scanner.next(); // consume the invalid input
+        }
+        int year = scanner.nextInt();
+        scanner.nextLine(); // consume the newline character
+
+        try {
+            double annualRevenue = membershipService.calculateAnnualRevenue(year);
+            System.out.println("Total revenue for the year " + year + ": $" + String.format("%.2f", annualRevenue));
+        } catch (SQLException e) {
+            System.err.println("Error retrieving annual revenue: " + e.getMessage());
+        }
+        promptBackToMenu(scanner);
+    }
+
+    private static void viewTotalMembershipExpenses(Scanner scanner, MembershipService membershipService, int memberId) {
+        System.out.println("\n--- Function: View Total Membership Expenses ---");
+    }
+
+    private static void purchaseNewMembership(Scanner scanner, MembershipService membershipService, int memberId) {
+        System.out.println("\n--- Function: Purchase New Gym Membership ---");
+    }
+
     // Workouts
+    private static void browseWorkoutClasses(Scanner scanner, WorkoutClassService workoutClassService) {
+        System.out.println("\n--- Function: Browse Workout Classes ---");
+    }
+
     public static void addWorkout(Scanner scanner, int userId, WorkoutClassService workoutService) {
         System.out.println("Enter workout class name: ");
         String name = scanner.nextLine();

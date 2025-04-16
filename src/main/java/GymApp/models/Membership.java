@@ -38,6 +38,15 @@ public class Membership {
         this.memberID = memberID;
     }
 
+    public Membership(int membershipID, String membershipType, double membershipCost, String membershipDescription, LocalDate datePurchased, int memberId) {
+        this.membershipID = membershipID;
+        this.membershipType = membershipType;
+        this.membershipCost = membershipCost;
+        this.membershipDescription = membershipDescription;
+        this.membershipStartDate = datePurchased;
+        this.memberID = memberId;
+    }
+
     // Getters and Setters
     public int getMembershipID() {
         return membershipID;
@@ -89,13 +98,8 @@ public class Membership {
 
     @Override
     public String toString() {
-        return "Membership{" +
-                "membershipID=" + membershipID +
-                ", membershipType='" + membershipType + '\'' +
-                ", membershipDescription='" + membershipDescription + '\'' +
-                ", membershipCost=" + membershipCost +
-                ", membershipStartDate=" + membershipStartDate +
-                ", memberID=" + memberID +
-                '}';
+        return String.format("%-12d | %-15s | %-30s | $%-8.2f | %-15s | %-8d",
+                membershipID, membershipType, membershipDescription,
+                membershipCost, membershipStartDate, memberID);
     }
 }
