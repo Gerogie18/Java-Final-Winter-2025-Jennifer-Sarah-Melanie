@@ -2,28 +2,40 @@ package GymApp.services;
 
 import GymApp.dao.UserDAO;
 import GymApp.models.User;
+import GymApp.models.enums.Role;
 
 import javax.naming.AuthenticationException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class UserService {
+    Logger log = Logger.getLogger(WorkoutClassService.class.getName());
     private final UserDAO userDAO;
 
-//    //security logic
+    //security logic
 //    public boolean hasRole(int userId, String role) throws SQLException{
 //        User user = userDAO.getUserById(userId);
 //        return user != null && user.getRole().equals(role);
 //    }
-//
-//    public User login(String username, String password) throws AuthenticationException {
-//        User user = userDAO.getUserByUsername(username);
-//        if (user != null && user.getPassword().equals(password)) {
-//            return user;
-//        } else {
-//            return false;
-//        }
-//    }
+
+    public User login(String username, String password) throws AuthenticationException, SQLException {
+        if (username == null || username.isBlank() || password == null || password.isBlank()) {
+            throw new AuthenticationException("Username and password must not be empty.");
+        }
+
+        User user = userDAO.getUserByUsername(username);
+        if (user == null) {
+            log.warning("Login failed: username '" + username + "' not found.");
+            throw new AuthenticationException("Username not found.");
+        }
+        if (!user.getPassword().equals(password)) {
+            log.warning("Login failed: incorrect password for username '" + username + "'.");
+            throw new AuthenticationException("Incorrect username or password.");
+        }
+            log.info("User " + username + " logged in successfully.");
+            return user;
+    }
 
     //Functions for USER DAO operations
     public void createUser(User user)  throws SQLException {
@@ -63,13 +75,13 @@ public class UserService {
         return userDAO.getAllUsers();
     }
     public List<User> listAllAdmin() throws SQLException {
-        return userDAO.getUsersByRole(User.Role.ADMIN);
+        return userDAO.getUsersByRole(Role.ADMIN);
     }
     public List<User> listAllTrainers() throws SQLException {
-        return userDAO.getUsersByRole(User.Role.TRAINER);
+        return userDAO.getUsersByRole(Role.TRAINER);
     }
     public List<User> listAllMembers() throws SQLException {
-        return userDAO.getUsersByRole(User.Role.MEMBER);
+        return userDAO.getUsersByRole(Role.MEMBER);
     }
 
     //Print functions
