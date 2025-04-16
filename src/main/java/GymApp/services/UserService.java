@@ -9,49 +9,61 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class UserService {
     Logger log = Logger.getLogger(WorkoutClassService.class.getName());
     private final UserDAO userDAO;
 
-    //security logic
-//    public boolean hasRole(int userId, String role) throws SQLException{
-//        User user = userDAO.getUserById(userId);
-//        return user != null && user.getRole().equals(role);
-//    }
+    public UserService (UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
-    public User login(String username, String password) throws AuthenticationException, SQLException {
-        if (username == null || username.isBlank() || password == null || password.isBlank()) {
-            throw new AuthenticationException("Username and password must not be empty.");
+    public User login(String email, String password) throws AuthenticationException, SQLException {
+        if (email == null || email.isBlank() || password == null || password.isBlank()) {
+            throw new AuthenticationException("Email and password must not be empty.");
         }
-
-        User user = userDAO.getUserByUsername(username);
+        User user = userDAO.getUserByEmail(email);
         if (user == null) {
-            log.warning("Login failed: username '" + username + "' not found.");
+            log.warning("Login failed - no user for this email");
             throw new AuthenticationException("Username not found.");
         }
-        if (!user.getPassword().equals(password)) {
-            log.warning("Login failed: incorrect password for username '" + username + "'.");
-            throw new AuthenticationException("Incorrect username or password.");
+        if (!BCrypt.checkpw(password, user.getPassword())) {
+            log.warning("Login failed: incorrect credentials");
+            throw new AuthenticationException("Incorrect email or password.");
         }
-            log.info("User " + username + " logged in successfully.");
+            log.info(user.getUsername() + ":" + email + " logged in successfully.");
             return user;
     }
 
     //Functions for USER DAO operations
     public void createUser(User user)  throws SQLException {
+        // Check if email is taken before creating the user
+        if (isEmailTaken(user.getEmail())) {
+            throw new SQLException("Email address already exists.");
+        }
+        // Hash the password and set it to the user object
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        user.setPassword(hashedPassword);
         userDAO.createUser(user);
     }
 
     public void updateUser(User user) throws SQLException  {
+        // Need to fetch the existing user to compare emails
+        User existingUser = userDAO.getUserById(user.getUserId());
+        if (existingUser != null && !existingUser.getEmail().equals(user.getEmail()) && isEmailTaken(user.getEmail())) {
+            throw new SQLException("Email address already exists for another user.");
+        }
+        // Hash the password if it has been changed (and is not already a hash)
+        if (user.getPassword() != null && !user.getPassword().startsWith("$2a$")) {
+            String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+            user.setPassword(hashedPassword);
+        }
         userDAO.updateUser(user);
     }
 
     public void deleteUser(int userId) throws SQLException  {
         userDAO.deleteUserById(userId);
-    }
-
-    public UserService(UserDAO userDAO) throws SQLException  {
-        this.userDAO = userDAO;
     }
 
     public User searchUserByUsername(String username) throws SQLException {
@@ -61,10 +73,6 @@ public class UserService {
     public User searchUserByPhoneNumber(String phoneNumber) throws SQLException {
         return userDAO.getUserByPhoneNumber(phoneNumber);
     }
-
-//    public User searchUserByAddress(String address) throws SQLException {
-//        return userDAO.getUserByAddress(address);
-//    }
 
     public User searchUserByEmail(String email) throws SQLException {
         return userDAO.getUserByEmail(email);
@@ -93,7 +101,7 @@ public class UserService {
             } else {
                 System.out.println("--- All Users ---");
                 for (User user : allUsers) {
-                    System.out.println(user.toString()); // Calling toString() on each User object
+                    System.out.println(user.toString());
                 }
                 System.out.println("------------------");
             }
@@ -154,16 +162,7 @@ public class UserService {
     }
 
     //GET Validations for creating new user
-    private boolean isUsernameTaken(String username) {
-        try {
-            return userDAO.getUserByUsername(username) != null;
-        } catch (SQLException e) {
-            System.err.println("Error checking if username exists: " + e.getMessage());
-            return true;
-        }
-    }
-
-    private boolean isEmailTaken(String email) {
+    public boolean isEmailTaken(String email) {
         try {
             return userDAO.getUserByEmail(email) != null;
         } catch (SQLException e) {
@@ -171,6 +170,5 @@ public class UserService {
             return true;
         }
     }
-
 
 }

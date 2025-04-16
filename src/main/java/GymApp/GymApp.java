@@ -64,13 +64,29 @@ public class GymApp {
     }
 
     private static void logInAsUser(Scanner scanner, UserService userService, MembershipService membershipService, WorkoutClassService workoutService) {
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
+        String email = "";
+        String password = "";
+
+        // Get username, ensuring it's not empty
+        while (email.trim().isEmpty()) {
+            System.out.print("Enter email: ");
+            email = scanner.nextLine();
+            if (email.trim().isEmpty()) {
+                System.out.println("Email cannot be empty. Please try again.");
+            }
+        }
+
+        // Get password, ensuring it's not empty
+        while (password.trim().isEmpty()) {
+            System.out.print("Enter password: ");
+            password = scanner.nextLine();
+            if (password.trim().isEmpty()) {
+                System.out.println("Password cannot be empty. Please try again.");
+            }
+        }
 
         try {
-            User user = userService.login(username, password);
+            User user = userService.login(email, password);
             if (user != null) {
                 System.out.println("Login Successful! Welcome " + user.getUsername());
 
@@ -111,25 +127,77 @@ public class GymApp {
         System.out.println("Admin menu under construction.");
     }
 
-    // Minimal implementation of adding a new user
     private static void registerUser(Scanner scanner, UserService userService) {
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-        System.out.print("Enter email: ");
-        String email = scanner.nextLine();
-        System.out.print("Enter phone number: ");
-        String phoneNumber = scanner.nextLine();
-        System.out.print("Enter address: ");
-        String address = scanner.nextLine();
-        System.out.print("Enter role (Admin/Trainer/Member): ");
-        String role = scanner.nextLine();
+        String email = "";
+        String username = "";
+        String password = "";
+        String phoneNumber = "";
+        String address = "";
+        Role userRole = null;
 
-        User user = new User(username, password, email, phoneNumber, address, Role.fromString(role));
         try {
+            // Get email, ensuring it's not empty and not already taken
+            while (email.trim().isEmpty() || userService.isEmailTaken(email)) {
+                System.out.print("Enter email: ");
+                email = scanner.nextLine().trim();
+                if (email.isEmpty()) {
+                    System.out.println("Email cannot be empty. Please try again.");
+                } else if (userService.isEmailTaken(email)) {
+                    System.out.println("Error: This email address is already registered. Please enter a different email.");
+                }
+            }
+            // Get username, ensuring it's not empty
+            while (username.trim().isEmpty()) {
+                System.out.print("Enter username: ");
+                username = scanner.nextLine().trim();
+                if (username.isEmpty()) {
+                    System.out.println("Username cannot be empty. Please try again.");
+                }
+            }
+
+            // Get password, ensuring it's not empty
+            while (password.trim().isEmpty()) {
+                System.out.print("Enter password: ");
+                password = scanner.nextLine().trim();
+                if (password.isEmpty()) {
+                    System.out.println("Password cannot be empty. Please try again.");
+                }
+            }
+
+            // Get phone number, ensuring it's not empty
+            while (phoneNumber.trim().isEmpty()) {
+                System.out.print("Enter phone number: ");
+                phoneNumber = scanner.nextLine().trim();
+                if (phoneNumber.isEmpty()) {
+                    System.out.println("Phone number cannot be empty. Please try again.");
+                }
+            }
+
+            // Get address, ensuring it's not empty
+            while (address.trim().isEmpty()) {
+                System.out.print("Enter address: ");
+                address = scanner.nextLine().trim();
+                if (address.isEmpty()) {
+                    System.out.println("Address cannot be empty. Please try again.");
+                }
+            }
+
+            // Role validation loop
+            while (userRole == null) {
+                System.out.print("Enter role (Admin/Trainer/Member): ");
+                String roleInput = scanner.nextLine().trim();
+
+                try {
+                    userRole = Role.fromString(roleInput);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid role entered: " + roleInput + ". Please enter Admin, Trainer, or Member.");
+                }
+            }
+
+            User user = new User(username, password, email, phoneNumber, address, userRole);
             userService.createUser(user);
             System.out.println("User added successfully!");
+
         } catch (SQLException e) {
             System.out.println("Error adding user: " + e.getMessage());
         }
