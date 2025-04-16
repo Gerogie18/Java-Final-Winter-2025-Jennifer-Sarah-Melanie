@@ -28,7 +28,7 @@ public class MembershipDAO {
         }
     }
 
-    public void deleteMembershipById(int membershipId) throws SQLException {
+    public boolean deleteMembershipById(int membershipId) throws SQLException {
         String sql = "DELETE FROM memberships WHERE membership_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -51,6 +51,31 @@ public class MembershipDAO {
     }
 
     public void getAllMemberships() throws SQLException {
+        ResultSet rs = null;
+        String sql = "SELECT * FROM memberships";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String membershipType = rs.getString("membership_type");
+                double cost = rs.getDouble("membership_cost");
+                String desc = rs.getString("membership_description");
+                LocalDate date = rs.getDate("date_purchased").toLocalDate();
+                int memberID = rs.getInt("member_id");
+
+                System.out.println("-----------------");
+                System.out.println("Membership Type: " + membershipType);
+                System.out.println("Cost : " + cost);
+                System.out.println("Description : " + desc);
+                System.out.println("Date Purchased : " + date);
+                System.out.println("Member ID: " + memberID);
+                System.out.println("-------------------------");
+            }
+        }
+        ;
+    }
+
+    public Membership getMembershipById() throws SQLException {
         ResultSet rs = null;
         String sql = "SELECT * FROM memberships";
         try (Connection conn = DatabaseConnection.getConnection();
