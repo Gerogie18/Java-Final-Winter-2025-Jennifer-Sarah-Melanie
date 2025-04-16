@@ -4,6 +4,8 @@ import GymApp.models.WorkoutClass;
 import GymApp.dao.UserDAO;
 import GymApp.models.User;
 import GymApp.models.childclasses.Trainer;
+
+import java.util.List;
 import java.util.logging.Logger;
 import java.sql.SQLException;
 
@@ -80,15 +82,14 @@ public class WorkoutClassService {
         }
     }
 
-    public void listWorkoutsByTrainer(Trainer trainer) throws SQLException {
-        if (trainer == null) {
-            System.out.println("Provide A Trainer Please ");
-        } else {
-            workoutClassDAO.getWorkoutsByTrainer(trainer);
-        }
+    public List<WorkoutClass> listWorkoutsByTrainer(int trainerId) throws SQLException {
+//        if (!trainerId == null) {
+//            throw new IllegalArgumentException("Trainer must not be null.");
+//        }
+        return workoutClassDAO.getWorkoutsByTrainer(trainerId);
     }
 
-    public void listAllWorkouts() throws SQLException {
-        workoutClassDAO.getAllWorkoutClasses();
+    public List<WorkoutClass> listAllWorkouts() throws SQLException {
+        return workoutClassDAO.getAllWorkoutClasses();
     }
 }

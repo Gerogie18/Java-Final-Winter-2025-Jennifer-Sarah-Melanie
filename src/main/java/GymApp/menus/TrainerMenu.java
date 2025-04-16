@@ -71,7 +71,7 @@ public class TrainerMenu implements Menu {
 
     private void viewMyClasses(int trainerId, WorkoutClassService workoutService) {
         try {
-            workoutService.listWorkoutsByTrainer(trainer.getUserId()).forEach(System.out::println);
+            workoutService.listWorkoutsByTrainer(trainerId).forEach(System.out::println);
         } catch (SQLException e) {
             System.out.println("Error retrieving classes.");
             e.printStackTrace();

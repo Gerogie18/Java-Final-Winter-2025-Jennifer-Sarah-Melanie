@@ -1,27 +1,28 @@
 package GymApp.dao;
 import GymApp.database.DatabaseConnection;
 //import org.keyin.user.User;
+import GymApp.models.User;
 import GymApp.models.WorkoutClass;
 import GymApp.models.childclasses.Trainer;
+import GymApp.models.enums.Status;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 //import java.util.ArrayList;
 //import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class WorkoutClassDAO {
     Logger log = Logger.getLogger(WorkoutClassDAO.class.getName());
 
-    public void createNewWorkoutClass(WorkoutClass workoutClass)  throws SQLException{
+    public void createNewWorkoutClass(WorkoutClass workoutClass) throws SQLException {
         String sql = "INSERT INTO public.workout_classes(\n" +
                 "\t class_name, class_type, class_description, class_status, class_capacity, trainer_id)\n" +
                 "\t VALUES (?, ?, ?, ?, ?, ?);";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, workoutClass.getName());
             stmt.setString(2, workoutClass.getType());
             stmt.setString(3, workoutClass.getDescription());
@@ -30,13 +31,25 @@ public class WorkoutClassDAO {
             stmt.setInt(6, workoutClass.getTrainerId());
             stmt.executeUpdate();
 
-        } catch (SQLException err) {
-            log.severe("Failed to create workout class: " + err.getMessage());
-            throw new SQLException("Error creating workout class", err);
+            //check if update was successfull
+            int rowsInserted = stmt.executeUpdate();
+            if (rowsInserted == 0) {
+                throw new SQLException("Creating workout class failed; no rows affected.");
+            }
+
+            //get workshop ID
+            try (var rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    int generatedId = rs.getInt(1);
+                    workoutClass.setId(generatedId);  //set workoutClass id
+                } else {
+                    throw new SQLException("Creating workout class failed; no ID obtained.");
+                }
+            }
         }
     }
 
-    public boolean updateWorkoutClass(WorkoutClass workoutClass) throws SQLException{
+    public boolean updateWorkoutClass(WorkoutClass workoutClass) throws SQLException {
         String sql = "UPDATE public.workout_classes\n" +
                 "\tSET class_name = ?, class_type = ?, class_description = ?, class_status = ?, class_capacity = ?, trainer_id = ?\n" +
                 "\tWHERE class_id = ?;";
@@ -53,9 +66,6 @@ public class WorkoutClassDAO {
 
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
-        } catch (SQLException err) {
-            log.severe("Failed to update workout class: " + err.getMessage());
-            throw new SQLException("Error updating workout class", err);
         }
     }
 
@@ -68,81 +78,65 @@ public class WorkoutClassDAO {
             stmt.setInt(1, id);
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
-        } catch (SQLException err) {
-            log.severe("Failed to delete workout class: " + err.getMessage());
-            throw new SQLException("Error deleting workout class", err);
         }
     }
 
-    public void getWorkoutClassById(int id)  throws SQLException {
+    public void getWorkoutClassById(int id) throws SQLException {
     }
 
 
+    public List<WorkoutClass> getWorkoutsByTrainer(int trainerId) throws SQLException {
+        List<WorkoutClass> workoutClasses = new ArrayList<>();
+        String sql = "SELECT * FROM workout_classes WHERE trainer_id = ?";
 
-    public ResultSet getWorkoutsByTrainer(Trainer trainer) throws SQLException {
-        ResultSet rs = null;
-        String sql = "SELECT * FROM workout_classes where trainer_id=?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1,trainer.getUserId());
-            rs = pstmt.executeQuery();
-            System.out.println("List of Workout Classes for Trainer " + trainer.getUsername()+ " " + trainer.getUserId());
-            while (rs.next()) {
-                int workout_id = rs.getInt("class_id");
-                String name = rs.getString("class_name");
-                String type = rs.getString("class_type");
-                String description = rs.getString("class_description");
-                String status = rs.getString("class_status");
-                int capacity = rs.getInt("class_capacity");
-                int trainer_id = rs.getInt("trainer_id");
 
-                System.out.println("-----------------");
-                System.out.println("Class ID: " + workout_id);
-                System.out.println("Name : " + name);
-                System.out.println("Type : " + type);
-                System.out.println("Description : " + description);
-                System.out.println("Status: " + status);
-                System.out.println("Max capacity: " + capacity);
-                System.out.println("-------------------------");
+            pstmt.setInt(1, trainerId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    WorkoutClass workoutClass = new WorkoutClass(
+                            rs.getInt("class_id"),
+                            rs.getString("class_name"),
+                            rs.getString("class_type"),
+                            rs.getString("class_description"),
+                            Status.fromString(rs.getString("class_status")),  // safer version of valueOf
+                            rs.getInt("class_capacity"),
+                            trainerId
+                    );
+                    workoutClasses.add(workoutClass);
+                }
             }
-        } catch (SQLException error) {
-            throw new RuntimeException(error);
         }
-        return rs;
+
+        return workoutClasses;
     }
 
 
-    public void getWorkoutClassByName(String name)  throws SQLException{
-    }
 
-    public void getAllWorkoutClasses()  throws SQLException{
-        ResultSet rs = null;
+    public List<WorkoutClass> getAllWorkoutClasses() throws SQLException {
+        List<WorkoutClass> workoutClasses = new ArrayList<>();
         String sql = "SELECT * FROM public.workout_classes;";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                int workout_id = rs.getInt("class_id");
-                String name = rs.getString("class_name");
-                String type = rs.getString("class_type");
-                String description = rs.getString("class_description");
-                String status = rs.getString("class_status");
-                int capacity = rs.getInt("class_capacity");
-                int trainer_id = rs.getInt("trainer_id");
-
-                System.out.println("-----------------");
-                System.out.println("Class ID: " + workout_id);
-                System.out.println("Name : " + name);
-                System.out.println("Type : " + type);
-                System.out.println("Description : " + description);
-                System.out.println("Status: " + status);
-                System.out.println("Max capacity: " + capacity);
-                System.out.println("Trainer ID: " + trainer_id);
-                System.out.println("-------------------------");
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    WorkoutClass workoutClass = new WorkoutClass(
+                            rs.getInt("class_id"),
+                            rs.getString("class_name"),
+                            rs.getString("class_type"),
+                            rs.getString("class_description"),
+                            Status.valueOf(rs.getString("class_status")),
+                            rs.getInt("class_capacity"),
+                            rs.getInt("trainer_id")
+                    );
+                    workoutClasses.add(workoutClass);
+                }
             }
-        } catch (SQLException error) {
-            log.info("Error:" + error.getMessage());
+
         }
+        return workoutClasses;
     }
 }
