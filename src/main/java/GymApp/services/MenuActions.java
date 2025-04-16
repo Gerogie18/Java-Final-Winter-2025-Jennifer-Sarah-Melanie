@@ -1,6 +1,5 @@
 package GymApp.services;
 
-import GymApp.models.User;
 import GymApp.models.WorkoutClass;
 import GymApp.models.enums.Role;
 import GymApp.models.enums.Status;
@@ -8,28 +7,10 @@ import GymApp.models.enums.Status;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class MenuActions {
-
-
-// Users
-
-//public static void addNewUser(Scanner scanner, UserService userService) {
-//    System.out.print("Enter username: ");
-//    String username = scanner.nextLine();
-//    System.out.print("Enter password: ");
-//    String password = scanner.nextLine();
-//    System.out.print("Enter role (Admin/Trainer/Member): ");
-//    String role = scanner.nextLine();
-//
-//    User user = new User(username, password, role);
-//    try {
-//        userService.addUser(user);
-//        System.out.println("User added successfully!");
-//    } catch (SQLException e) {
-//        System.out.println("Error adding user: " + e.getMessage());
-//    }
-//}
+    private static final Logger log = Logger.getLogger(MenuActions.class.getName());
 
 
     // Workouts
@@ -43,10 +24,16 @@ public class MenuActions {
         System.out.println("Enter description: ");
         String description = scanner.nextLine();
 
+        System.out.println("Enter description: ");
+        int capacity = scanner.nextInt();
+        scanner.nextLine();
+
         WorkoutClass workoutClass = new WorkoutClass();
         workoutClass.setName(name);
         workoutClass.setType(type);
         workoutClass.setDescription(description);
+        workoutClass.setStatus(Status.active);
+        workoutClass.setClass_capacity(capacity);
         workoutClass.setTrainerByID(userId);
 
         try {
@@ -56,15 +43,36 @@ public class MenuActions {
             System.out.println("Input error: " + err.getMessage());
         } catch (SQLException err) {
             System.out.println("Sorry! We couldn’t add the workout class right now.");
-            err.printStackTrace();
+            log.warning("Error while adding workout class: " + err.getMessage());
         }
     }
 
 
     public static void deleteWorkout(Scanner scanner, int userId, Role userRole, WorkoutClassService workoutService) {
-        System.out.println("Enter id of the workout class you would like to delete: ");
-        int workoutId = scanner.nextInt();
-        scanner.nextLine(); //consume line
+        // Initialize variables outside of while loop
+        WorkoutClass workout = null;
+        int workoutId = -1;
+
+        // Keep prompting until a valid class is entered
+        while (workout == null) {
+            System.out.print("Enter the ID of the workout class you want to delete: ");
+
+            // Only permit integers
+            if (!scanner.hasNextInt()) {
+                System.out.println("Please enter a valid numeric ID.");
+                scanner.nextLine(); // Clear invalid input
+                continue;
+            }
+
+            workoutId = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            try {
+                workout = workoutService.getWorkoutClassById(workoutId);
+            } catch (IllegalArgumentException | SQLException e) {
+                System.out.println("Workout class not found. Please try again.");
+            }
+        }
 
         System.out.println("Are you sure you want to delete this class? (y/n)");
         String confirm = scanner.nextLine();
