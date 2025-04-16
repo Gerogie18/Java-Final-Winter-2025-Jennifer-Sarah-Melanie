@@ -1,6 +1,6 @@
 package GymApp.models;
 
-
+import GymApp.models.enums.Role;
 //*
 // This is the parent class for all users, There are 3 types of users: Trainer, Member, and Admin
 //
@@ -15,10 +15,6 @@ public class User {
     private String address;
     private Role role;
 
-    //enum for roles
-    public enum Role {
-        ADMIN, TRAINER, MEMBER
-    }
 
     //Constructors
     public User(int userId, String username, String password, String email, String phoneNumber, String address, Role role) {
@@ -31,7 +27,6 @@ public class User {
         this.role = role;
     }
     public User(String username, String password, String email, String phoneNumber, String address, Role role) {
-        this.userId = 0;
         this.username = username;
         this.password = password;
         this.email = email;
