@@ -93,13 +93,7 @@ public class User {
     //toString
     @java.lang.Override
     public java.lang.String toString() {
-        return "User:" + role + "{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                ", address='" + address + '\'' +
-                '}';
+        return String.format("%-8s | %-5d | %-15s | %-25s | %-12s | %-20s",
+                role, userId, username, email, phoneNumber, address);
     }
 }
