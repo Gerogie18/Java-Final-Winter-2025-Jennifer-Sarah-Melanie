@@ -1,6 +1,6 @@
 package GymApp.menus;
 import GymApp.services.MenuActions;
-import GymApp.models.enums.Role;
+import GymApp.models.enums.UserRole;
 import GymApp.services.WorkoutClassService;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -32,10 +32,10 @@ public abstract class TrainerMenu implements Menu {
                     MenuActions.addWorkout(scanner, trainerId, workoutService);
                     break;
                 case 2:
-                    MenuActions.deleteWorkout(scanner, trainerId, Role.TRAINER, workoutService);
+                    MenuActions.deleteWorkout(scanner, trainerId, UserRole.TRAINER, workoutService);
                     break;
                 case 3:
-                    MenuActions.updateWorkout(scanner, trainerId, Role.TRAINER, workoutService);
+                    MenuActions.updateWorkout(scanner, trainerId, UserRole.TRAINER, workoutService);
                     break;
                 case 4:
                     MenuActions.viewMyClasses(trainerId, workoutService);

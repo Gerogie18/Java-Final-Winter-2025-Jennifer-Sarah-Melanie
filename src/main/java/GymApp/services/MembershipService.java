@@ -11,39 +11,25 @@ import java.sql.SQLException;
 // and only uses the DAO to interact with the database it does not have methods to do so
 // you can inject in your dao to use in your service. An example will be in the code
 public class MembershipService {
-    Logger log = Logger.getLogger(WorkoutClassService.class.getName());
+    Logger log = Logger.getLogger(MembershipService.class.getName());
 
     private final MembershipDAO membershipDAO;
-
-    // When you inject in the DAO you have access to all methods in it
-    // MembershipDAO membershipDAO = new MembershipDAO();this.userDAO=userDAO;
 
     public MembershipService(MembershipDAO membershipDAO) {
         new UserDAO();
         this.membershipDAO = membershipDAO;
     }
 
-    // For each of your DAO methods, you want to make something like this:
     public void addMembership(Membership membership) throws SQLException {
         membershipDAO.addMembership(membership);
     }
 
-    // public void deleteMembershipById(int membership) throws SQLException {
-    // membershipDAO.deleteMembershipById(membership);
-    // }
 
     // deletes based on membershipID
     public void deleteMembershipById(int membershipId, String userId) throws SQLException {
         if (membershipId <= 0) {
             throw new IllegalArgumentException("Invalid membership ID.");
         }
-
-        // Membership membership = MembershipDAO.getMembershipById(membershipId);
-
-        // if (membershipId == null) { // for some reason this is not working, red
-        // underline
-        // throw new SQLException("Membership ID not found.");
-        // }
 
         try {
             boolean isDeleted = membershipDAO.deleteMembershipById(membershipId);

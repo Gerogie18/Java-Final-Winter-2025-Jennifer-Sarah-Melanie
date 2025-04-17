@@ -133,7 +133,7 @@ public class GymApp {
         String password = "";
         String phoneNumber = "";
         String address = "";
-        Role userRole = null;
+        UserRole userRole = null;
 
         try {
             // Get email, ensuring it's not empty and not already taken
@@ -188,7 +188,7 @@ public class GymApp {
                 String roleInput = scanner.nextLine().trim();
 
                 try {
-                    userRole = Role.fromString(roleInput);
+                    userRole = UserRole.fromString(roleInput);
                 } catch (IllegalArgumentException e) {
                     System.out.println("Invalid role entered: " + roleInput + ". Please enter Admin, Trainer, or Member.");
                 }

@@ -2,7 +2,7 @@ package GymApp.dao;
 
 import GymApp.database.DatabaseConnection;
 import GymApp.models.User;
-import GymApp.models.enums.Role;
+import GymApp.models.enums.UserRole;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ public class UserDAO {
                             rs.getString("user_email"),
                             rs.getString("user_phone_number"),
                             rs.getString("user_address"),
-                            Role.valueOf(rs.getString("user_role"))
+                            UserRole.valueOf(rs.getString("user_role"))
                     );
                 }
             }
@@ -95,7 +95,7 @@ public class UserDAO {
                             rs.getString("user_email"),
                             rs.getString("user_phone_number"),
                             rs.getString("user_address"),
-                            Role.valueOf(rs.getString("user_role"))
+                            UserRole.valueOf(rs.getString("user_role"))
                     );
                 }
             }
@@ -117,7 +117,7 @@ public class UserDAO {
                             rs.getString("user_email"),
                             rs.getString("user_phone_number"),
                             rs.getString("user_address"),
-                            Role.valueOf(rs.getString("user_role"))
+                            UserRole.valueOf(rs.getString("user_role"))
                     );
                 }
             }
@@ -139,7 +139,7 @@ public class UserDAO {
                             rs.getString("user_email"),
                             rs.getString("user_phone_number"),
                             rs.getString("user_address"),
-                            Role.valueOf(rs.getString("user_role"))
+                            UserRole.valueOf(rs.getString("user_role"))
                     );
                 }
             }
@@ -147,12 +147,12 @@ public class UserDAO {
         return null;
     }
 
-    public List<User> getUsersByRole(Role role) throws SQLException {
+    public List<User> getUsersByRole(UserRole userRole) throws SQLException {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users WHERE user_role = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, role.toString());
+            pstmt.setString(1, userRole.toString());
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     User user = new User(
@@ -162,7 +162,7 @@ public class UserDAO {
                             rs.getString("user_email"),
                             rs.getString("user_phone_number"),
                             rs.getString("user_address"),
-                            Role.valueOf(rs.getString("user_role"))
+                            UserRole.valueOf(rs.getString("user_role"))
                     );
                     users.add(user);
                 }
@@ -185,7 +185,7 @@ public class UserDAO {
                             rs.getString("user_email"),
                             rs.getString("user_phone_number"),
                             rs.getString("user_address"),
-                            Role.valueOf(rs.getString("user_role"))
+                            UserRole.valueOf(rs.getString("user_role"))
                     );
                     users.add(user);
                 }

@@ -3,8 +3,8 @@ import GymApp.dao.WorkoutClassDAO;
 import GymApp.models.WorkoutClass;
 import GymApp.dao.UserDAO;
 import GymApp.models.User;
-import GymApp.models.enums.Role;
-import GymApp.models.enums.Status;
+import GymApp.models.enums.UserRole;
+import GymApp.models.enums.WorkoutStatus;
 import java.util.List;
 import java.util.logging.Logger;
 import java.sql.SQLException;
@@ -34,7 +34,7 @@ public class WorkoutClassService {
         }
         User user = userDAO.getUserById(workoutClass.getTrainerId());
 
-        if (user.getRole() == Role.TRAINER) {
+        if (user.getRole() == UserRole.TRAINER) {
             throw new IllegalArgumentException("User must be registered as a trainer");
         }
         try {
@@ -46,15 +46,16 @@ public class WorkoutClassService {
     }
 
 
+
 // updates WorkoutClass based on role
-    public void updateWorkoutClass(WorkoutClass updatedClass, Role userRole, int userId) throws SQLException {
+    public void updateWorkoutClass(WorkoutClass updatedClass, UserRole userRole, int userId) throws SQLException {
         //Check if updatedClass is ok
         if (updatedClass == null || updatedClass.getId() <= 0) {
             throw new IllegalArgumentException("Invalid workout class.");
         }
 
         //Check user permission
-        if (userRole != Role.ADMIN && updatedClass.getTrainerId() != userId) {
+        if (userRole != UserRole.ADMIN && updatedClass.getTrainerId() != userId) {
             throw new IllegalArgumentException("Trainers can only update their own classes.");
         }
 
@@ -74,7 +75,7 @@ public class WorkoutClassService {
 
 
 //deletes based on user role
-    public void deleteWorkoutClass(int classId, Role userRole, int userId) throws SQLException {
+    public void deleteWorkoutClass(int classId, UserRole userRole, int userId) throws SQLException {
         if (classId <= 0) {
             throw new IllegalArgumentException("Invalid workout class ID.");
         }
@@ -84,7 +85,7 @@ public class WorkoutClassService {
         if (workout == null) {
             throw new SQLException("Workout class not found.");
         }
-        if (userRole != Role.ADMIN && workout.getTrainerId() != userId) {
+        if (userRole != UserRole.ADMIN && workout.getTrainerId() != userId) {
             throw new IllegalArgumentException("Trainers can only delete their own classes.");
         }
 
@@ -125,11 +126,13 @@ public class WorkoutClassService {
         return workoutClassDAO.getWorkoutsByTrainer(trainerId);
     }
 
-    public List<WorkoutClass> listAllWorkouts(Role userRole) throws SQLException {
-        if (userRole == Role.MEMBER) {
-            return workoutClassDAO.getWorkoutClassesByStatus(Status.active);
+    public List<WorkoutClass> listAllWorkouts(UserRole userRole) throws SQLException {
+        if (userRole == UserRole.MEMBER) {
+            return workoutClassDAO.getWorkoutClassesByStatus(WorkoutStatus.active);
         } else {
             return workoutClassDAO.getAllWorkoutClasses();
         }
     }
+
+
 }
