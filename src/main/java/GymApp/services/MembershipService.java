@@ -94,7 +94,7 @@ public class MembershipService {
                         "--------------------------------------------------------------------------------------------------");
             }
         } catch (SQLException e) {
-            System.err.println("Error retrieving memberships: " + e.getMessage());
+            log.warning("Error retrieving memberships: " + e.getMessage());
         }
     }
 
@@ -114,5 +114,29 @@ public class MembershipService {
             throw new IllegalArgumentException("Member ID must not be null.");
         }
         return membershipDAO.getMembershipsByMember(userId);
+    }
+
+    public void printMembershipByMember(int userId) {
+        try {
+            List<Membership> memberships = getMembershipByMember(userId);
+            if (memberships.isEmpty()) {
+                System.out.println("No memberships found.");
+            } else {
+                System.out.println("--- Memberships for " + userId + " ---");
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
+                System.out.println(String.format("%-12s | %-15s | %-30s | %-10s | %-15s | %-8s",
+                        "MEMBERSHIP ID", "TYPE", "DESCRIPTION", "COST", "START DATE", "MEMBER ID"));
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
+                for (Membership membership : memberships) {
+                    System.out.println(membership.toString());
+                }
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
+            }
+        } catch (SQLException e) {
+            log.warning("Error retrieving memberships: " + e.getMessage());
+        }
     }
 }
