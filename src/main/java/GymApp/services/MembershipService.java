@@ -81,19 +81,23 @@ public class MembershipService {
                 System.out.println("No memberships found.");
             } else {
                 System.out.println("--- All Memberships ---");
-                System.out.println("--------------------------------------------------------------------------------------------------");
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
                 System.out.println(String.format("%-12s | %-15s | %-30s | %-10s | %-15s | %-8s",
                         "MEMBERSHIP ID", "TYPE", "DESCRIPTION", "COST", "START DATE", "MEMBER ID"));
-                System.out.println("--------------------------------------------------------------------------------------------------");
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
                 for (Membership membership : memberships) {
                     System.out.println(membership.toString());
                 }
-                System.out.println("--------------------------------------------------------------------------------------------------");
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
             }
         } catch (SQLException e) {
             System.err.println("Error retrieving memberships: " + e.getMessage());
         }
     }
+
     public double calculateAnnualRevenue(int year) throws SQLException {
         List<Membership> memberships = getAllMemberships();
         double annualRevenue = 0;
@@ -105,9 +109,10 @@ public class MembershipService {
         return annualRevenue;
     }
 
-    // ? what data type is this?
-    public void getMemberships(User user) throws SQLException {
-        membershipDAO.getMemberships(user);
+    public List<Membership> getMembershipByMember(int userId) throws SQLException {
+        if (userId <= 0) {
+            throw new IllegalArgumentException("Member ID must not be null.");
+        }
+        return membershipDAO.getMembershipsByMember(userId);
     }
-
 }
