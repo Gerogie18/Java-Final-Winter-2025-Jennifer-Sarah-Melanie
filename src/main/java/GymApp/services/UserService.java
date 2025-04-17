@@ -23,6 +23,8 @@ public class UserService {
         if (email == null || email.isBlank() || password == null || password.isBlank()) {
             throw new AuthenticationException("Email and password must not be empty.");
         }
+        email = email.trim().toLowerCase();
+
         User user = userDAO.getUserByEmail(email);
         if (user == null) {
             log.warning("Login failed - no user for this email");
@@ -40,12 +42,20 @@ public class UserService {
     public int createUser(User user)  throws SQLException {
         // Check if email is taken before creating the user
         if (isEmailTaken(user.getEmail())) {
+            log.warning("User creation failed: Email already exists");
             throw new SQLException("Email address already exists.");
         }
         // Hash the password and set it to the user object
         String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         user.setPassword(hashedPassword);
-        return userDAO.createUser(user);
+        try {
+            int newUserId = userDAO.createUser(user);
+            log.info("New user created: ID=" + newUserId + ", Role=" + user.getRole() + ", Email=" + user.getEmail());
+            return newUserId;
+        } catch (SQLException e) {
+            log.warning("Database error during user creation (email: " + user.getEmail() + "): " + e.getMessage());
+            throw e;
+        }
     }
 
     public void updateUser(User user) throws SQLException  {
@@ -63,25 +73,50 @@ public class UserService {
     }
 
     public void deleteUser(int userId) throws SQLException  {
-        userDAO.deleteUserById(userId);
-    }
+        if (userId <= 0) {
+            throw new IllegalArgumentException("Invalid user ID.");
+        }
 
-    public User searchUserByUsername(String username) throws SQLException {
-        return userDAO.getUserByUsername(username);
+        try {
+            boolean deleted = userDAO.deleteUserById(userId);
+            if (!deleted) {
+                log.info("No user found with ID=" + userId + ". Nothing to delete.");
+                throw new SQLException("User not found. No deletion performed.");
+            }
+            log.info("User ID=" + userId + " successfully deleted.");
+        } catch (SQLException e) {
+            log.warning("Error deleting user ID=" + userId + ": " + e.getMessage());
+            throw e;
+        }
     }
-
-    public User searchUserByPhoneNumber(String phoneNumber) throws SQLException {
-        return userDAO.getUserByPhoneNumber(phoneNumber);
-    }
-
-    public User searchUserByEmail(String email) throws SQLException {
-        return userDAO.getUserByEmail(email);
-    }
+//
+//    public User searchUserByUsername(String username) throws SQLException {
+//        return userDAO.getUserByUsername(username);
+//    }
+//
+//    public User searchUserByPhoneNumber(String phoneNumber) throws SQLException {
+//        return userDAO.getUserByPhoneNumber(phoneNumber);
+//    }
+//
+//    public User searchUserByEmail(String email) throws SQLException {
+//        return userDAO.getUserByEmail(email);
+//    }
 
     //GET User List functions
     public List<User> listAllUsers() throws SQLException {
-        return userDAO.getAllUsers();
+
+        try {
+            List<User> users = userDAO.getAllUsers();
+            log.info("Retrieved list of all users.");
+            return users;
+        } catch (SQLException e) {
+            log.warning("Database error while retrieving users: " + e.getMessage());
+            throw e;
+        }
+
     }
+
+
     public List<User> listAllAdmin() throws SQLException {
         return userDAO.getUsersByRole(UserRole.ADMIN);
     }
@@ -92,12 +127,26 @@ public class UserService {
         return userDAO.getUsersByRole(UserRole.MEMBER);
     }
 
+
+//    public List<User> listUsersByRole(UserRole role) throws SQLException {
+//        try {
+//            List<User> users = userDAO.getUsersByRole(role);
+//            log.info("Retrieved list of users with role: " + role);
+    //        return users;
+//        } catch (SQLException e) {
+//            String roleLabel = (role == null) ? "all roles" : "role=" + role;
+//            log.warning("Database error while retrieving users (" + roleLabel + "): " + e.getMessage());
+//            throw e;
+//        }
+//    }
+
+
     //Print functions
-    public void printAllUsers() {
-        try {
+    public void printAllUsers() throws SQLException{
             List<User> allUsers = listAllUsers();
             if (allUsers.isEmpty()) {
                 System.out.println("No users found.");
+                log.info("Attempted to print users, but none found.");
             } else {
                 System.out.println("--- All Users ---");
                 System.out.println("----------------------------------------------------------------------------------");
@@ -109,9 +158,6 @@ public class UserService {
                 }
                 System.out.println("----------------------------------------------------------------------------------");
             }
-        } catch (SQLException e) {
-            System.err.println("Error retrieving all users: " + e.getMessage());
-        }
     }
 
     public void printAllAdmins() {

@@ -34,12 +34,13 @@ public class UserDAO {
     }
 
     // DELETE user
-    public void deleteUserById(int userId) throws SQLException {
+    public boolean deleteUserById(int userId) throws SQLException {
         String sql = "DELETE FROM users WHERE user_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, userId);
-            pstmt.executeUpdate();
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
         }
     }
 

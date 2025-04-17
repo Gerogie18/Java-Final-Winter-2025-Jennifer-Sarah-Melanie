@@ -45,7 +45,7 @@ public abstract class AdminMenu implements Menu {
                     MenuActions.deleteUser(scanner, adminId, userService);
                     break;
                 case 4:
-                    MenuActions.viewAllMemberships(scanner, membershipService);
+                    MenuActions.viewAllMemberships(membershipService);
                     break;
                 case 5:
                     MenuActions.viewAnnualRevenue(scanner, membershipService);

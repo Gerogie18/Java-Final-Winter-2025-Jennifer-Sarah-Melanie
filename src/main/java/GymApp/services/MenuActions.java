@@ -7,7 +7,6 @@ import GymApp.models.enums.UserRole;
 import GymApp.models.enums.WorkoutStatus;
 
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -16,18 +15,15 @@ public class MenuActions {
 
     private static final Logger log = Logger.getLogger(MenuActions.class.getName());
 
-    public static void promptBackToMenu(Scanner scanner) {
-        System.out.println();
-        System.out.print("Back to menu?: ");
-        scanner.nextLine(); // Consume the newline character left by previous nextLine() calls
-        String input = scanner.nextLine();
-    }
-
-
     // Users
     public static void viewAllUsers(Scanner scanner, UserService userService) {
-        userService.printAllUsers();
-        promptBackToMenu(scanner);
+        try {
+            userService.printAllUsers();
+            log.info("All users displayed successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error retrieving user list. Please try again later.");
+            log.warning("Database error while retrieving all users: " + e.getMessage());
+        }
     }
 
     public static void viewUsersByRole(Scanner scanner, UserService userService) {
@@ -41,20 +37,18 @@ public class MenuActions {
                 userRole = UserRole.fromString(roleInput);
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid role entered: " + roleInput + ". Please enter Admin, Trainer, or Member.");
+                log.info("Invalid role entered: '" + roleInput + "'. Expected: ADMIN, TRAINER, or MEMBER. " + e.getMessage());
             }
         }
         switch (userRole) {
             case ADMIN:
                 userService.printAllAdmins();
-                promptBackToMenu(scanner);
                 break;
             case MEMBER:
                 userService.printAllMembers();
-                promptBackToMenu(scanner);
                 break;
             case TRAINER:
                 userService.printAllTrainers();
-                promptBackToMenu(scanner);
                 break;
         }
     }
@@ -73,9 +67,11 @@ public class MenuActions {
             try {
                 userIdToDelete = Integer.parseInt(userIdStr);
                 validInput = true; // Parsing successful, exit the loop
+                log.info("User ID=" + userIdToDelete + " deleted by admin ID=" + adminId);
 
                 if (adminId == userIdToDelete) {
                     System.out.println("Cannot delete yourself.");
+                    log.warning("Admin ID=" + adminId + " attempted to delete themselves.");
                     validInput = false; // Reset to prompt again
                 } else {
                     try {
@@ -83,11 +79,15 @@ public class MenuActions {
                         System.out.println("User with ID " + userIdToDelete + " deleted successfully.");
                     } catch (SQLException e) {
                         System.err.println("Error deleting user: " + e.getMessage());
-                        validInput = false; // Consider if you want to loop again on SQL error
+                        log.warning("Database error while deleting user ID=" + userIdToDelete +
+                                " by admin ID=" + adminId + ": " + e.getMessage());
+                        validInput = false;
                     }
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid user ID format. Please enter a number.");
+                log.info("Invalid user ID format entered: '" + userIdStr + "'");
+
             }
         }
     }
@@ -95,9 +95,15 @@ public class MenuActions {
 
 
     // Memberships
-    public static void viewAllMemberships(Scanner scanner, MembershipService membershipService) {
-        membershipService.printAllMemberships();
-        promptBackToMenu(scanner);
+    public static void viewAllMemberships(MembershipService membershipService) {
+        try {
+            log.info("Retrieving all memberships...");
+            membershipService.printAllMemberships();
+            log.info("All memberships displayed successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error retrieving membership list.");
+            log.warning("Database error while retrieving all memberships: " + e.getMessage());
+        }
     }
 
 
@@ -113,22 +119,27 @@ public class MenuActions {
         try {
             double annualRevenue = membershipService.calculateAnnualRevenue(year);
             System.out.println("Total revenue for the year " + year + ": $" + String.format("%.2f", annualRevenue));
+            log.info("Revenue retrieved for " + year + ": $" + String.format("%.2f", annualRevenue));
         } catch (SQLException e) {
             System.err.println("Error retrieving annual revenue: " + e.getMessage());
+            log.warning("Database error retrieving annual revenue for " + year + ": " + e.getMessage());
         }
-        promptBackToMenu(scanner);
     }
 
-    public static void viewTotalMembershipExpenses(Scanner scanner, MembershipService membershipService, int memberId) {
+    public static void viewTotalMembershipExpenses(MembershipService membershipService, int memberId) {
+
+        membershipService.printMembershipByMember(memberId);
 
         try {
             double totalCost = membershipService.calculateMembershipCosts(memberId);
-            System.out.println("Total membership costs for memberID" + memberId + ": $" + String.format("%.2f", totalCost));
+            System.out.println("Total membership costs for member ID " + memberId + ": $" + String.format("%.2f", totalCost));
+            log.info("Membership cost retrieved for member ID=" + memberId + ": $" + String.format("%.2f", totalCost));
         } catch (SQLException e) {
-            System.err.println("Error total cost: " + e.getMessage());
+            System.err.println("Error retrieving total cost.");
+            log.warning("Database error retrieving membership cost for member ID=" + memberId + ": " + e.getMessage());
         }
-        promptBackToMenu(scanner);
     }
+
 
 
 
@@ -184,8 +195,8 @@ public class MenuActions {
         } catch (IllegalArgumentException err) {
             System.out.println("Input error: " + err.getMessage());
         } catch (SQLException err) {
-            System.out.println("Sorry! We couldn’t add the workout class right now.");
-            log.warning("Error while adding workout class: " + err.getMessage());
+            System.out.println("Sorry! We couldn’t add the workout class right now. Please try again later.");
+            log.warning("Database error while adding workout class (trainer ID: " + userId + "): " + err.getMessage());
         }
     }
 
@@ -208,8 +219,13 @@ public class MenuActions {
             workoutId = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
+            //check permissions
             try {
                 workout = workoutService.getWorkoutClassById(workoutId);
+                if (userRole != UserRole.ADMIN && workout.getTrainerId() != userId) {
+                    System.out.println("You may only delete classes assigned to you.");
+                    workout = null;
+                }
             } catch (IllegalArgumentException | SQLException e) {
                 System.out.println("Workout class not found. Please try again.");
             }
@@ -228,8 +244,9 @@ public class MenuActions {
         } catch (IllegalArgumentException err) {
             System.out.println("Input error: " + err.getMessage());
         } catch (SQLException err) {
-            System.out.println("Sorry! We couldn’t add the workout class right now.");
-            err.printStackTrace();
+            System.out.println("We couldn’t delete the workout class right now. Please try again later.");
+            log.warning("Database error while deleting workout class (ID: " + workoutId +
+                    ", user ID: " + userId + "): " + err.getMessage());
         }
     }
 
@@ -238,7 +255,7 @@ public class MenuActions {
         WorkoutClass workout = null;
         int classId = -1;
 
-        // Keep prompting until a valid class is entered
+        // === Prompt for class ID ===
         while (true) {
             System.out.print("Enter the ID of the workout class you want to update: ");
 
@@ -250,7 +267,6 @@ public class MenuActions {
 
             classId = scanner.nextInt();
             scanner.nextLine(); // Clear the newline
-            workout = null;
 
             try {
                 workout = workoutService.getWorkoutClassById(classId);
@@ -265,13 +281,15 @@ public class MenuActions {
                 // Valid class found and permission confirmed
                 break;
 
-            } catch (IllegalArgumentException | SQLException e) {
+            } catch (IllegalArgumentException | SQLException err) {
                 System.out.println("Workout class not found. Please try again.");
+                log.warning("Database error retrieving class (ID: " + classId +
+                        ", user ID: " + userId + "): " + err.getMessage());
             }
         }
 
-        // get User Input
-        // Allow user to leave fields empty if they don't want to change anything
+        // === Get user input ===
+            // Allow user to leave fields empty if they don't want to change anything
         System.out.println();
         System.out.println("Update the fields you wish to change.");
         System.out.println("Leave field empty to keep the current value.");
@@ -297,29 +315,35 @@ public class MenuActions {
         System.out.println("Current capacity: " + workout.getClass_capacity());
         System.out.print("New capacity: ");
         String capacityInput = scanner.nextLine();
-        if (!capacityInput.isBlank()) {
+        try {
             int capacity = Integer.parseInt(capacityInput);
             workout.setClass_capacity(capacity);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number. Capacity not changed.");
         }
 
         System.out.println("Current status: " + workout.getStatus());
         System.out.print("New status (active, cancelled, inactive): ");
-        String statusInput = scanner.nextLine();
+        String statusInput = scanner.nextLine().toLowerCase().trim();
         if (!statusInput.isBlank()) {
             workout.setStatus(WorkoutStatus.fromString(statusInput));
         }
 
-        // Commit update
+        // === Apply updates ===
         try {
             workoutService.updateWorkoutClass(workout, userRole, userId);
             System.out.println("Workout class updated successfully!");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Input error: " + e.getMessage());
-        } catch (SQLException e) {
-            System.out.println("Database error while updating class.");
-            e.printStackTrace();
+        } catch (IllegalArgumentException err) {
+            System.out.println("Input error: " + err.getMessage());
+        } catch (SQLException err) {
+            System.out.println("We couldn’t update the workout class right now. Please try again later.");
+            log.warning("Database error while updating workout class (ID: " + workout.getId() +
+                    ", user ID: " + userId + "): " + err.getMessage());
         }
     }
+
+
+
 
     public static void viewMyClasses(int trainerId, WorkoutClassService workoutService) {
         try {
@@ -344,13 +368,13 @@ public class MenuActions {
                 System.out.println("--------------------------------------------------");
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException err) {
             System.out.println("Error retrieving your classes.");
-            e.printStackTrace();
+            log.warning("Database error while retrieving workout classes for trainer ID: " + trainerId + ": " + err.getMessage());
         }
     }
 
-    public static void browseWorkoutClasses(Scanner scanner, UserRole userRole, WorkoutClassService workoutClassService) {
+    public static void browseWorkoutClasses(UserRole userRole, WorkoutClassService workoutClassService) {
         try {
             List<WorkoutClass> workoutClasses = workoutClassService.listAllWorkouts(userRole);
             if (workoutClasses.isEmpty()) {
@@ -359,7 +383,7 @@ public class MenuActions {
                 System.out.println("--- All Classes ---");
                 System.out.println(
                         "--------------------------------------------------------------------------------------------------");
-                System.out.println(String.format("%-12d | %-15s | %-10s | $%-35s | %-8s | %-8d",
+                System.out.println(String.format("%-12s | %-15s | %-10s | %-35s | %-8s | %-8s",
                         "CLASS ID", "NAME", "TYPE", "DESCRIPTION", "STATUS", "TRAINER"));
                 System.out.println(
                         "--------------------------------------------------------------------------------------------------");
@@ -369,8 +393,9 @@ public class MenuActions {
                 System.out.println(
                         "--------------------------------------------------------------------------------------------------");
             }
-        } catch (SQLException e) {
-            System.err.println("Error retrieving class list: " + e.getMessage());
+        } catch (SQLException err) {
+            System.err.println("Error retrieving class list: " + err.getMessage());
+            log.warning("Database error while retrieving list of workout classes for user ID: " + err.getMessage());
         }
     }
 
