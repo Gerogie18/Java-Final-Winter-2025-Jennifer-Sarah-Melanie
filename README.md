@@ -134,7 +134,7 @@ To access the Trainer Menu, you need to log in to the system with a trainer acco
 1. Clone the Repository:
    - Open a terminal or command prompt. 
    - Navigate to the directory where you want to clone the project. 
-   - Run the command git clone https://github.com/username/repository-name.git (replace username and repository-name with the actual GitHub username and repository name). 
+   - Run the command git clone https://github.com/Keyin-SD14-S3/fullstack-databases-final-sprint-team-team-jl-ma-sp.git (replace username and repository-name with the actual GitHub username and repository name). 
    - Press Enter to clone the repository. 
 2. Open the Project in Your IDE:
    - Open IntelliJ IDEA or VS Code. 
@@ -161,15 +161,22 @@ To access the Trainer Menu, you need to log in to the system with a trainer acco
 | Trainer | tina.trainer@gym.com      | trainer123   |
 | Member  | marley.member@gym.com     | member123    |
 
-### new user
-| **Attribute** | **Admin User**          | **Trainer User**       | **Member User**        |
-|---------------|-------------------------|------------------------|------------------------|
-| Email         | sophia.admin@gym.com    | mike.trainer@gym.com   | emily.member@gym.com   |
-| Username      | sophia_admin            | mike_trainer           | emily_member           |
-| Password      | admin456                | trainer456             | member456              |
-| Phone Number  | 709-555-4001            | 709-555-5001           | 709-555-6001           |
-| Address       | 456 Admin St            | 789 Trainer Rd         | 321 Member Ct          |
-| Role          | Admin                   | Trainer                | Member                 |
+### New User
+| **Attribute** | **New User**         |
+|---------------|----------------------|
+| Email         | sophia.admin@gym.com | 
+| Username      | sophia_admin         | 
+| Password      | admin456             | 
+| Phone Number  | 709-555-4001         |
+| Address       | 456 Admin St         | 
+
+## New Class
+| **Attribute** | **Value**          |
+|---------------|--------------------|
+| Name          | Yoga for Beginners |
+| Type          | Yoga               |
+| Description   | Gentle yoga class  |
+| Capacity      | 15                 |
 
 ---
 ## Development Documentation

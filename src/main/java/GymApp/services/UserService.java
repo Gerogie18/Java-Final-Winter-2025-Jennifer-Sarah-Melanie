@@ -167,14 +167,14 @@ public class UserService {
                 System.out.println("No administrators found.");
             } else {
                 System.out.println("--- Administrators ---");
-                System.out.println("----------------------------------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------------------------------");
                 System.out.println(String.format("%-8s | %-5s | %-15s | %-25s | %-12s | %-20s",
                         "ROLE", "ID", "USERNAME", "EMAIL", "PHONE", "ADDRESS"));
-                System.out.println("----------------------------------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------------------------------");
                 for (User admin : admins) {
                     System.out.println(admin.toString());
                 }
-                System.out.println("----------------------------------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------------------------------");
             }
         } catch (SQLException e) {
             System.err.println("Error retrieving administrators: " + e.getMessage());
@@ -188,14 +188,14 @@ public class UserService {
                 System.out.println("No trainers found.");
             } else {
                 System.out.println("--- Trainers ---");
-                System.out.println("----------------------------------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------------------------------");
                 System.out.println(String.format("%-8s | %-5s | %-15s | %-25s | %-12s | %-20s",
                         "ROLE", "ID", "USERNAME", "EMAIL", "PHONE", "ADDRESS"));
-                System.out.println("----------------------------------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------------------------------");
                 for (User trainer : trainers) {
                     System.out.println(trainer.toString());
                 }
-                System.out.println("----------------------------------------------------------------------------------");
+                System.out.println("---------------------------------------------------------------------------------------");
             }
         } catch (SQLException e) {
             System.err.println("Error retrieving trainers: " + e.getMessage());
