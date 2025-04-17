@@ -13,7 +13,7 @@ public class UserDAO {
     public UserDAO() {}
 
     // CREATE user
-    public void createUser(User user) throws SQLException {
+    public int createUser(User user) throws SQLException {
         String sql = "INSERT INTO users (user_name, user_password, user_email, user_phone_number, user_address, user_role) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -30,6 +30,7 @@ public class UserDAO {
                 }
             }
         }
+        return user.getUserId();
     }
 
     // DELETE user

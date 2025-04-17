@@ -6,12 +6,32 @@ import GymApp.models.User;
 import GymApp.dao.*;
 import GymApp.setup.DemoDatabaseSeeder;
 import javax.naming.AuthenticationException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
 
 public class GymApp {
     public static void main(String[] args) throws SQLException {
 
+        // set up a global logger
+        Logger logger = Logger.getLogger("GymAppLogger");
+
+        try {
+            FileHandler fileHandler = new FileHandler("gymapp.log", true); // true = append mode
+            fileHandler.setFormatter(new SimpleFormatter());
+            logger.addHandler(fileHandler);
+            logger.setLevel(Level.ALL);
+        } catch (IOException e) {
+            System.err.println("Logging setup failed: " + e.getMessage());
+        }
+
+
+        // Optional seed for database
         if (args.length > 0 && args[0].equals("--seed")) {
             DemoDatabaseSeeder.main(null);
             return;
@@ -63,69 +83,7 @@ public class GymApp {
         scanner.close();
     }
 
-    private static void logInAsUser(Scanner scanner, UserService userService, MembershipService membershipService, WorkoutClassService workoutService) {
-        String email = "";
-        String password = "";
 
-        // Get username, ensuring it's not empty
-        while (email.trim().isEmpty()) {
-            System.out.print("Enter email: ");
-            email = scanner.nextLine();
-            if (email.trim().isEmpty()) {
-                System.out.println("Email cannot be empty. Please try again.");
-            }
-        }
-
-        // Get password, ensuring it's not empty
-        while (password.trim().isEmpty()) {
-            System.out.print("Enter password: ");
-            password = scanner.nextLine();
-            if (password.trim().isEmpty()) {
-                System.out.println("Password cannot be empty. Please try again.");
-            }
-        }
-
-        try {
-            User user = userService.login(email, password);
-            if (user != null) {
-                System.out.println("Login Successful! Welcome " + user.getUsername());
-
-
-                switch (user.getRole()) {
-                    case ADMIN:
-                        AdminMenu.displayMenu(scanner, membershipService, userService, user.getUserId());
-                        break;
-                    case TRAINER:
-                        TrainerMenu.displayMenu(scanner, user.getUserId(), workoutService);
-                        break;
-                    case MEMBER:
-                        // show menu for member
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                System.out.println("Login Failed! Invalid credentials.");
-            }
-        } catch (AuthenticationException ae) {
-            System.out.println("Login failed: " + ae.getMessage());
-        } catch (SQLException e) {
-            System.out.println("A system error occurred while trying to log in.");
-            e.printStackTrace();
-        }
-    }
-
-    // Placeholder for Member menu
-    private static void showMemberMenu(Scanner scanner, User user, UserService userService, MembershipService membershipService) {
-        System.out.println("Member menu under construction.");
-    }
-
-
-
-    // Admin menu with minimal implementation
-    private static void showAdminMenu(Scanner scanner, User user, UserService userService, MembershipService membershipService, WorkoutClassService workoutService) {
-        System.out.println("Admin menu under construction.");
-    }
 
     private static void registerUser(Scanner scanner, UserService userService) {
         String email = "";
@@ -133,7 +91,7 @@ public class GymApp {
         String password = "";
         String phoneNumber = "";
         String address = "";
-        UserRole userRole = null;
+        UserRole userRole = UserRole.MEMBER;
 
         try {
             // Get email, ensuring it's not empty and not already taken
@@ -183,23 +141,77 @@ public class GymApp {
             }
 
             // Role validation loop
-            while (userRole == null) {
-                System.out.print("Enter role (Admin/Trainer/Member): ");
-                String roleInput = scanner.nextLine().trim();
-
-                try {
-                    userRole = UserRole.fromString(roleInput);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Invalid role entered: " + roleInput + ". Please enter Admin, Trainer, or Member.");
-                }
-            }
+//            while (userRole == null) {
+//                System.out.print("Enter role (Admin/Trainer/Member): ");
+//                String roleInput = scanner.nextLine().trim();
+//
+//                try {
+//                    userRole = UserRole.fromString(roleInput);
+//                } catch (IllegalArgumentException e) {
+//                    System.out.println("Invalid role entered: " + roleInput + ". Please enter Admin, Trainer, or Member.");
+//                }
+//            }
 
             User user = new User(username, password, email, phoneNumber, address, userRole);
-            userService.createUser(user);
-            System.out.println("User added successfully!");
+            int newUserId = userService.createUser(user);
+            System.out.println("New user added successfully! User ID: " + newUserId);
 
         } catch (SQLException e) {
             System.out.println("Error adding user: " + e.getMessage());
         }
     }
+
+
+    private static void logInAsUser(Scanner scanner, UserService userService, MembershipService membershipService, WorkoutClassService workoutService) {
+        String email = "";
+        String password = "";
+
+        // Get username, ensuring it's not empty
+        while (email.trim().isEmpty()) {
+            System.out.print("Enter email: ");
+            email = scanner.nextLine();
+            if (email.trim().isEmpty()) {
+                System.out.println("Email cannot be empty. Please try again.");
+            }
+        }
+
+        // Get password, ensuring it's not empty
+        while (password.trim().isEmpty()) {
+            System.out.print("Enter password: ");
+            password = scanner.nextLine();
+            if (password.trim().isEmpty()) {
+                System.out.println("Password cannot be empty. Please try again.");
+            }
+        }
+
+        try {
+            User user = userService.login(email, password);
+            if (user != null) {
+                System.out.println("Login Successful! Welcome " + user.getUsername());
+
+
+                switch (user.getRole()) {
+                    case ADMIN:
+                        AdminMenu.displayMenu(scanner, membershipService, userService, user.getUserId());
+                        break;
+                    case TRAINER:
+                        TrainerMenu.displayMenu(scanner, workoutService, membershipService, user.getUserId());
+                        break;
+                    case MEMBER:
+                        MemberMenu.displayMenu(scanner, membershipService, workoutService, user.getUserId());
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                System.out.println("Login Failed! Invalid credentials.");
+            }
+        } catch (AuthenticationException ae) {
+            System.out.println("Login failed: " + ae.getMessage());
+        } catch (SQLException e) {
+            System.out.println("A system error occurred while trying to log in.");
+            e.printStackTrace();
+        }
+    }
+
 }

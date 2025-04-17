@@ -1,4 +1,5 @@
 package GymApp.menus;
+import GymApp.services.MembershipService;
 import GymApp.services.MenuActions;
 import GymApp.models.enums.UserRole;
 import GymApp.services.WorkoutClassService;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 
 public abstract class TrainerMenu implements Menu {
 
-    public static void displayMenu(Scanner scanner, int trainerId, WorkoutClassService workoutService) throws SQLException {
+    public static void displayMenu(Scanner scanner, WorkoutClassService workoutService, MembershipService membershipService, int trainerId) throws SQLException {
         int choice;
         do {
             System.out.println("\n=== Trainer Menu ===");
@@ -41,7 +42,7 @@ public abstract class TrainerMenu implements Menu {
                     MenuActions.viewMyClasses(trainerId, workoutService);
                     break;
                 case 5:
-                    //MenuActions.buyMembership(trainerId, membershipService);
+                    MenuActions.purchaseNewMembership(scanner, membershipService, trainerId);
                     break;
                 case 6:
                     System.out.println("Logging out...");
