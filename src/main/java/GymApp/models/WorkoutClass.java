@@ -97,7 +97,7 @@ public class WorkoutClass {
 
     @Override
     public String toString() {
-        return String.format("%-12d | %-15s | %-10s | $%-35s | %-8s | %-8d",
+        return String.format("%-12d | %-15s | %-10s | %-35s | %-8s | %-8d",
                 id, name, type, description, workoutStatus, trainerId);
     }
 }

@@ -127,6 +127,9 @@ public class MenuActions {
     }
 
     public static void viewTotalMembershipExpenses(MembershipService membershipService, int memberId) {
+
+        membershipService.printMembershipByMember(memberId);
+
         try {
             double totalCost = membershipService.calculateMembershipCosts(memberId);
             System.out.println("Total membership costs for member ID " + memberId + ": $" + String.format("%.2f", totalCost));
