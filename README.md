@@ -1,5 +1,7 @@
 # Gym CLI application
 ## User Guide
+   The Gym App is a comprehensive management system designed for gyms to efficiently manage users, memberships, and workout classes. The application allows administrators to oversee user accounts, trainers to manage workout classes, and members to access their membership information. By streamlining these processes, the Gym App aims to improve the overall gym experience for both staff and members.
+
 ### Getting Started with the Gym App System
 #### Prerequisites
 - Java Development Kit (JDK) installed on your system
@@ -27,6 +29,7 @@ Seeding the database is necessary to populate it with initial testing data.
 4. Select "Configure". 
 5. In the launch.json file, add "args": ["--seed"] under the args section. 
 6. Save the changes and re-run the program.
+
 #### IntelliJ
 1. Open the GymApp class in IntelliJ. 
 2. Go to Run > Edit Configurations. 
@@ -167,6 +170,26 @@ To access the Trainer Menu, you need to log in to the system with a trainer acco
 | Phone Number  | 709-555-4001            | 709-555-5001           | 709-555-6001           |
 | Address       | 456 Admin St            | 789 Trainer Rd         | 321 Member Ct          |
 | Role          | Admin                   | Trainer                | Member                 |
+
+---
+## Development Documentation
+### Project Directory Structure
+- src/gymapp: The main application class (GymApp.java) resides here. 
+- setup: Contains the database seeder (DemoDatabaseSeeder) for initializing the database. 
+- services: Business logic is handled in this directory, with separate classes for users, memberships, gym classes, and menu actions. 
+- models: Data structures are defined here, including users (with admin, trainer, and member subclasses), memberships, and gym classes. 
+- dao: Database operations are encapsulated in this directory, with separate classes for users, memberships, and gym classes. 
+- menu: Role-based menus are defined in this directory, including admin, user, and member menus. 
+- database: The database connection is managed from this directory.
+This structure separates concerns and promotes modularity, making it easier to maintain and extend the application.
+
+### Build Process:
+The project uses Maven (Apache Maven) as its build tool. Maven is a popular build automation tool for Java projects. The build process is defined in the pom.xml file, which specifies the project's structure, dependencies, and build settings.
+
+### Dependencies:
+The project has two main dependencies:
+- PostgreSQL Driver: The project uses the PostgreSQL JDBC driver (version 42.7.5) to connect to a PostgreSQL database. This dependency allows the application to interact with the database.
+- jBCrypt: The project uses jBCrypt (version 0.4) for password hashing. This dependency provides a secure way to store passwords in the database.
 
 ---
 
