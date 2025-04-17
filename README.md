@@ -134,7 +134,7 @@ To access the Trainer Menu, you need to log in to the system with a trainer acco
 1. Clone the Repository:
    - Open a terminal or command prompt. 
    - Navigate to the directory where you want to clone the project. 
-   - Run the command git clone https://github.com/username/repository-name.git (replace username and repository-name with the actual GitHub username and repository name). 
+   - Run the command git clone https://github.com/Keyin-SD14-S3/fullstack-databases-final-sprint-team-team-jl-ma-sp.git (replace username and repository-name with the actual GitHub username and repository name). 
    - Press Enter to clone the repository. 
 2. Open the Project in Your IDE:
    - Open IntelliJ IDEA or VS Code. 

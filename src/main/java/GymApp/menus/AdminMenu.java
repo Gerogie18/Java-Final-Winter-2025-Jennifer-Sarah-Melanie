@@ -22,7 +22,7 @@ public abstract class AdminMenu implements Menu {
             System.out.println("2. View Users by Role");
             System.out.println("3. Delete User");
             System.out.println("4. View Memberships");
-            System.out.println("5. View total Revenue");
+            System.out.println("5. View Total Revenue");
             System.out.println("6. Logout");
             System.out.print("Enter your choice: ");
 
