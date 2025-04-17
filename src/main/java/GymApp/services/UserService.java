@@ -2,7 +2,7 @@ package GymApp.services;
 
 import GymApp.dao.UserDAO;
 import GymApp.models.User;
-import GymApp.models.enums.Role;
+import GymApp.models.enums.UserRole;
 
 import javax.naming.AuthenticationException;
 import java.sql.SQLException;
@@ -83,13 +83,13 @@ public class UserService {
         return userDAO.getAllUsers();
     }
     public List<User> listAllAdmin() throws SQLException {
-        return userDAO.getUsersByRole(Role.ADMIN);
+        return userDAO.getUsersByRole(UserRole.ADMIN);
     }
     public List<User> listAllTrainers() throws SQLException {
-        return userDAO.getUsersByRole(Role.TRAINER);
+        return userDAO.getUsersByRole(UserRole.TRAINER);
     }
     public List<User> listAllMembers() throws SQLException {
-        return userDAO.getUsersByRole(Role.MEMBER);
+        return userDAO.getUsersByRole(UserRole.MEMBER);
     }
 
     //Print functions

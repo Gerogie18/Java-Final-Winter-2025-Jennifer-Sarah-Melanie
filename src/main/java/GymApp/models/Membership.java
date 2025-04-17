@@ -1,5 +1,7 @@
 package GymApp.models;
 
+import GymApp.models.enums.MembershipType;
+
 import java.time.LocalDate;
 
 //*\
@@ -8,41 +10,44 @@ import java.time.LocalDate;
 
 public class Membership {
     private int membershipID;
-
-    private String membershipType;
-
+    private MembershipType membershipType;
     private String membershipDescription;
-
     private double membershipCost;
-
     private LocalDate membershipStartDate;
-
     private int memberID;
 
-    public Membership(int membershipID, String membershipType, double membershipCost, String membershipDescription,
-            int memberID) {
+    public Membership(int membershipID, MembershipType membershipType, int memberID) {
         this.membershipID = membershipID;
         this.membershipType = membershipType;
-        this.membershipDescription = membershipDescription;
-        this.membershipCost = membershipCost;
+        this.membershipDescription = membershipType.getDescription();
+        this.membershipCost = membershipType.getCost();
         this.membershipStartDate = LocalDate.now();
         this.memberID = memberID;
     }
 
-    public Membership(String membershipType, double membershipCost, String membershipDescription,
-            int memberID) {
+    public Membership(MembershipType membershipType, int memberID) {
         this.membershipType = membershipType;
-        this.membershipDescription = membershipDescription;
-        this.membershipCost = membershipCost;
+        this.membershipDescription = membershipType.getDescription();
+        this.membershipCost = membershipType.getCost();
         this.membershipStartDate = LocalDate.now();
         this.memberID = memberID;
     }
 
-    public Membership(int membershipID, String membershipType, double membershipCost, String membershipDescription, LocalDate datePurchased, int memberId) {
+    public Membership(int membershipID, MembershipType membershipType, LocalDate datePurchased, int memberID) {
         this.membershipID = membershipID;
         this.membershipType = membershipType;
-        this.membershipCost = membershipCost;
+        this.membershipDescription = membershipType.getDescription();
+        this.membershipCost = membershipType.getCost();
+        this.membershipStartDate = datePurchased;
+        this.memberID = memberID;
+    }
+
+
+    public Membership(int membershipID, MembershipType membershipType, double membershipCost, String membershipDescription, LocalDate datePurchased, int memberId) {
+        this.membershipID = membershipID;
+        this.membershipType = membershipType;
         this.membershipDescription = membershipDescription;
+        this.membershipCost = membershipCost;
         this.membershipStartDate = datePurchased;
         this.memberID = memberId;
     }
@@ -57,10 +62,10 @@ public class Membership {
     }
 
     public String getMembershipType() {
-        return membershipType;
+        return membershipType.toString();
     }
 
-    public void setMembershipType(String membershipType) {
+    public void setMembershipType(MembershipType membershipType) {
         this.membershipType = membershipType;
     }
 

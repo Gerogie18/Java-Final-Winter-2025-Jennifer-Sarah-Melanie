@@ -1,9 +1,8 @@
 package GymApp.services;
 
-import GymApp.models.Membership;
 import GymApp.models.WorkoutClass;
-import GymApp.models.enums.Role;
-import GymApp.models.enums.Status;
+import GymApp.models.enums.UserRole;
+import GymApp.models.enums.WorkoutStatus;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,14 +24,14 @@ public class MenuActions {
     }
 
     public static void viewUsersByRole(Scanner scanner, UserService userService) {
-        Role userRole = null;
+        UserRole userRole = null;
         // Role validation loop
         while (userRole == null) {
             System.out.print("Enter role (Admin/Trainer/Member): ");
             String roleInput = scanner.nextLine().trim();
 
             try {
-                userRole = Role.fromString(roleInput);
+                userRole = UserRole.fromString(roleInput);
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid role entered: " + roleInput + ". Please enter Admin, Trainer, or Member.");
             }
@@ -94,7 +93,7 @@ public class MenuActions {
         promptBackToMenu(scanner);
     }
 
-    public static void browseWorkoutClasses(Scanner scanner, Role userRole, WorkoutClassService workoutClassService) {
+    public static void browseWorkoutClasses(Scanner scanner, UserRole userRole, WorkoutClassService workoutClassService) {
         try {
             List<WorkoutClass> workoutClasses = workoutClassService.listAllWorkouts(userRole);
             if (workoutClasses.isEmpty()) {
@@ -168,7 +167,7 @@ public class MenuActions {
         workoutClass.setName(name);
         workoutClass.setType(type);
         workoutClass.setDescription(description);
-        workoutClass.setStatus(Status.active);
+        workoutClass.setStatus(WorkoutStatus.active);
         workoutClass.setClass_capacity(capacity);
         workoutClass.setTrainerByID(userId);
 
@@ -183,7 +182,7 @@ public class MenuActions {
         }
     }
 
-    public static void deleteWorkout(Scanner scanner, int userId, Role userRole, WorkoutClassService workoutService) {
+    public static void deleteWorkout(Scanner scanner, int userId, UserRole userRole, WorkoutClassService workoutService) {
         // Initialize variables outside of while loop
         WorkoutClass workout = null;
         int workoutId = -1;
@@ -227,7 +226,7 @@ public class MenuActions {
         }
     }
 
-    public static void updateWorkout(Scanner scanner, int userId, Role userRole, WorkoutClassService workoutService) {
+    public static void updateWorkout(Scanner scanner, int userId, UserRole userRole, WorkoutClassService workoutService) {
         // Initialize variables outside of while loop
         WorkoutClass workout = null;
         int classId = -1;
@@ -287,7 +286,7 @@ public class MenuActions {
         System.out.print("New status (active, cancelled, inactive): ");
         String statusInput = scanner.nextLine();
         if (!statusInput.isBlank()) {
-            workout.setStatus(Status.fromString(statusInput));
+            workout.setStatus(WorkoutStatus.fromString(statusInput));
         }
 
         // Commit update

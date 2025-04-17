@@ -1,36 +1,36 @@
 package GymApp.models;
 
-import GymApp.models.enums.Status;
+import GymApp.models.enums.WorkoutStatus;
 
 public class WorkoutClass {
     private int id;
     private String name;
     private String type;
     private String description;
-    private Status status;
+    private WorkoutStatus workoutStatus;
     private int class_capacity; // class_capacity >= 0 AND class_capacity <= 100
     private int trainerId; // trainer id
 
     public WorkoutClass() {
     }
 
-    public WorkoutClass(int id, String name, String type, String description, Status status, int class_capacity,
-            int trainerId) {
+    public WorkoutClass(int id, String name, String type, String description, WorkoutStatus workoutStatus, int class_capacity,
+                        int trainerId) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.description = description;
-        this.status = status;
+        this.workoutStatus = workoutStatus;
         this.class_capacity = class_capacity;
         this.trainerId = trainerId;
     }
 
-    public WorkoutClass(String name, String type, String description, Status status, int class_capacity,
-            int trainerId) {
+    public WorkoutClass(String name, String type, String description, WorkoutStatus workoutStatus, int class_capacity,
+                        int trainerId) {
         this.name = name;
         this.type = type;
         this.description = description;
-        this.status = status;
+        this.workoutStatus = workoutStatus;
         this.class_capacity = class_capacity;
         this.trainerId = trainerId;
     }
@@ -67,16 +67,16 @@ public class WorkoutClass {
         this.description = description;
     }
 
-    public Status getStatus() {
-        return status;
+    public WorkoutStatus getStatus() {
+        return workoutStatus;
     }
 
     public String getStatusAsString() {
-        return status.name();
+        return workoutStatus.name();
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(WorkoutStatus workoutStatus) {
+        this.workoutStatus = workoutStatus;
     }
 
     public int getClass_capacity() {
@@ -98,6 +98,6 @@ public class WorkoutClass {
     @Override
     public String toString() {
         return String.format("%-12d | %-15s | %-10s | $%-35s | %-8s | %-8d",
-                id, name, type, description, status, trainerId);
+                id, name, type, description, workoutStatus, trainerId);
     }
 }

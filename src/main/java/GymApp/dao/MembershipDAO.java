@@ -2,6 +2,7 @@ package GymApp.dao;
 
 import GymApp.database.DatabaseConnection;
 import GymApp.models.Membership;
+import GymApp.models.enums.MembershipType;
 
 import java.sql.*;
 import java.util.List;
@@ -16,13 +17,18 @@ public class MembershipDAO {
     public void addMembership(Membership membership) throws SQLException {
         String sql = "INSERT INTO memberships (membership_type, membership_cost, membership_description, date_purchased, member_id) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, membership.getMembershipType());
             pstmt.setDouble(2, membership.getMembershipCost());
             pstmt.setString(3, membership.getMembershipDescription());
             pstmt.setDate(4, Date.valueOf(membership.getMembershipStartDate()));
             pstmt.setInt(5, membership.getMemberID());
             pstmt.executeUpdate();
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    membership.setMembershipID(generatedKeys.getInt(1));
+                }
+            }
         }
     }
 
@@ -59,7 +65,7 @@ public class MembershipDAO {
                 while (rs.next()) {
                     Membership membership = new Membership(
                             rs.getInt("membership_id"),
-                            rs.getString("membership_type"),
+                            MembershipType.fromString(rs.getString("membership_type")),
                             rs.getDouble("membership_cost"),
                             rs.getString("membership_description"),
                             rs.getDate("date_purchased").toLocalDate(),
@@ -71,7 +77,7 @@ public class MembershipDAO {
         return memberships;
     }
 
-    public Membership getMembershipById(int membershipId) throws SQLException {
+    public static Membership getMembershipById(int membershipId) throws SQLException {
         String sql = "SELECT * FROM memberships WHERE membership_id=?";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -80,7 +86,7 @@ public class MembershipDAO {
                 if (rs.next()) {
                     return new Membership(
                             membershipId,
-                            rs.getString("membership_type"),
+                            MembershipType.fromString(rs.getString("membership_type")),
                             rs.getDouble("membership_cost"),
                             rs.getString("membership_description"),
                             rs.getDate("date_purchased").toLocalDate(),
@@ -102,7 +108,7 @@ public class MembershipDAO {
                 while (rs.next()) {
                     Membership membership = new Membership(
                             rs.getInt("membership_id"),
-                            rs.getString("membership_type"),
+                            MembershipType.fromString(rs.getString("membership_type")),
                             rs.getDouble("membership_cost"),
                             rs.getString("membership_description"),
                             rs.getDate("date_purchased").toLocalDate(),

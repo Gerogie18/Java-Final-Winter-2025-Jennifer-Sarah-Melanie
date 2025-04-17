@@ -1,7 +1,7 @@
 package GymApp.dao;
 import GymApp.database.DatabaseConnection;
 import GymApp.models.WorkoutClass;
-import GymApp.models.enums.Status;
+import GymApp.models.enums.WorkoutStatus;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,22 +15,22 @@ public class WorkoutClassDAO {
                 "\t VALUES (?, ?, ?, ?, ?, ?);";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, workoutClass.getName());
-            stmt.setString(2, workoutClass.getType());
-            stmt.setString(3, workoutClass.getDescription());
-            stmt.setString(4, workoutClass.getStatusAsString());
-            stmt.setInt(5, workoutClass.getClass_capacity());
-            stmt.setInt(6, workoutClass.getTrainerId());
+             PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, workoutClass.getName());
+            pstmt.setString(2, workoutClass.getType());
+            pstmt.setString(3, workoutClass.getDescription());
+            pstmt.setString(4, workoutClass.getStatusAsString());
+            pstmt.setInt(5, workoutClass.getClass_capacity());
+            pstmt.setInt(6, workoutClass.getTrainerId());
 
             //check if update was successfull
-            int rowsInserted = stmt.executeUpdate();
+            int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted == 0) {
                 throw new SQLException("Creating workout class failed; no rows affected.");
             }
 
             //get workshop ID
-            try (var rs = stmt.getGeneratedKeys()) {
+            try (var rs = pstmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     int generatedId = rs.getInt(1);
                     workoutClass.setId(generatedId);  //set workoutClass id
@@ -47,16 +47,16 @@ public class WorkoutClassDAO {
                 "\tWHERE class_id = ?;";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, workoutClass.getName());
-            stmt.setString(2, workoutClass.getType());
-            stmt.setString(3, workoutClass.getDescription());
-            stmt.setString(4, workoutClass.getStatusAsString());
-            stmt.setInt(5, workoutClass.getClass_capacity());
-            stmt.setInt(6, workoutClass.getTrainerId());
-            stmt.setInt(7, workoutClass.getId());
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, workoutClass.getName());
+            pstmt.setString(2, workoutClass.getType());
+            pstmt.setString(3, workoutClass.getDescription());
+            pstmt.setString(4, workoutClass.getStatusAsString());
+            pstmt.setInt(5, workoutClass.getClass_capacity());
+            pstmt.setInt(6, workoutClass.getTrainerId());
+            pstmt.setInt(7, workoutClass.getId());
 
-            int affectedRows = stmt.executeUpdate();
+            int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
         }
     }
@@ -66,9 +66,9 @@ public class WorkoutClassDAO {
         String sql = "DELETE FROM public.workout_classes WHERE class_id = ?;";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            int affectedRows = stmt.executeUpdate();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
         }
     }
@@ -89,7 +89,7 @@ public class WorkoutClassDAO {
                             rs.getString("class_name"),
                             rs.getString("class_type"),
                             rs.getString("class_description"),
-                            Status.fromString(rs.getString("class_status")),
+                            WorkoutStatus.fromString(rs.getString("class_status")),
                             rs.getInt("class_capacity"),
                             rs.getInt("trainer_id")
                     );
@@ -117,7 +117,7 @@ public class WorkoutClassDAO {
                             rs.getString("class_name"),
                             rs.getString("class_type"),
                             rs.getString("class_description"),
-                            Status.fromString(rs.getString("class_status")),  // safer version of valueOf
+                            WorkoutStatus.fromString(rs.getString("class_status")),  // safer version of valueOf
                             rs.getInt("class_capacity"),
                             trainerId
                     );
@@ -125,7 +125,6 @@ public class WorkoutClassDAO {
                 }
             }
         }
-
         return workoutClasses;
     }
 
@@ -136,15 +135,15 @@ public class WorkoutClassDAO {
         String sql = "SELECT * FROM public.workout_classes;";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-            try (ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     workoutClasses.add(new WorkoutClass(
                             rs.getInt("class_id"),
                             rs.getString("class_name"),
                             rs.getString("class_type"),
                             rs.getString("class_description"),
-                            Status.valueOf(rs.getString("class_status")),
+                            WorkoutStatus.valueOf(rs.getString("class_status")),
                             rs.getInt("class_capacity"),
                             rs.getInt("trainer_id")
                     ));
@@ -157,23 +156,23 @@ public class WorkoutClassDAO {
 
 
 
-    public List<WorkoutClass> getWorkoutClassesByStatus(Status status) throws SQLException {
+    public List<WorkoutClass> getWorkoutClassesByStatus(WorkoutStatus workoutStatus) throws SQLException {
         List<WorkoutClass> classes = new ArrayList<>();
         String sql = "SELECT * FROM workout_classes WHERE class_status = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, status.toString());
+            pstmt.setString(1, workoutStatus.toString());
 
-            try (ResultSet rs = stmt.executeQuery()) {
+            try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     classes.add(new WorkoutClass(
                             rs.getInt("class_id"),
                             rs.getString("class_name"),
                             rs.getString("class_type"),
                             rs.getString("class_description"),
-                            Status.fromString(rs.getString("class_status")),
+                            WorkoutStatus.fromString(rs.getString("class_status")),
                             rs.getInt("class_capacity"),
                             rs.getInt("trainer_id")
                     ));

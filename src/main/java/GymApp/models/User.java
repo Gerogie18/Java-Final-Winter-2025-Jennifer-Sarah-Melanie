@@ -1,6 +1,6 @@
 package GymApp.models;
 
-import GymApp.models.enums.Role;
+import GymApp.models.enums.UserRole;
 //*
 // This is the parent class for all users, There are 3 types of users: Trainer, Member, and Admin
 //
@@ -13,26 +13,26 @@ public class User {
     private String email;
     private String phoneNumber;
     private String address;
-    private Role role;
+    private UserRole userRole;
 
 
     //Constructors
-    public User(int userId, String username, String password, String email, String phoneNumber, String address, Role role) {
+    public User(int userId, String username, String password, String email, String phoneNumber, String address, UserRole userRole) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.role = role;
+        this.userRole = userRole;
     }
-    public User(String username, String password, String email, String phoneNumber, String address, Role role) {
+    public User(String username, String password, String email, String phoneNumber, String address, UserRole userRole) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.role = role;
+        this.userRole = userRole;
     }
 
     //Getters and Setters
@@ -82,18 +82,18 @@ public class User {
         this.address = address;
     }
 
-    public Role getRole() {
-        return role;
+    public UserRole getRole() {
+        return userRole;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     //toString
     @java.lang.Override
     public java.lang.String toString() {
         return String.format("%-8s | %-5d | %-15s | %-25s | %-12s | %-20s",
-                role, userId, username, email, phoneNumber, address);
+                userRole, userId, username, email, phoneNumber, address);
     }
 }

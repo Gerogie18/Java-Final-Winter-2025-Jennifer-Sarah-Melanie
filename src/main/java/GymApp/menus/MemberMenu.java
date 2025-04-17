@@ -3,7 +3,7 @@ package GymApp.menus;
 import GymApp.services.MembershipService;
 import GymApp.services.WorkoutClassService;
 import GymApp.services.MenuActions;
-import GymApp.models.enums.Role;
+import GymApp.models.enums.UserRole;
 
 import java.util.Scanner;
 
@@ -28,7 +28,7 @@ public abstract class MemberMenu {
 
             switch (choice) {
                 case 1:
-                    MenuActions.browseWorkoutClasses(scanner, Role.MEMBER, workoutClassService);
+                    MenuActions.browseWorkoutClasses(scanner, UserRole.MEMBER, workoutClassService);
                     break;
                 case 2:
                     // viewTotalMembershipExpenses(scanner, membershipService, memberId);
