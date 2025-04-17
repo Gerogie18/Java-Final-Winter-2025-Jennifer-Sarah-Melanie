@@ -20,6 +20,8 @@ public class MembershipService {
         this.membershipDAO = membershipDAO;
     }
 
+
+    //adds new membership
     public void addMembership(Membership membership) throws SQLException {
         membershipDAO.addMembership(membership);
     }
@@ -87,7 +89,17 @@ public class MembershipService {
         return annualRevenue;
     }
 
-    public List<Membership> getMembershipByMember(int userId) throws SQLException {
+    public double calculateMembershipCosts(int memberId) throws SQLException {
+        List<Membership> memberships = getMembershipsByMember(memberId);
+        double totalCost = 0;
+        for (Membership membership : memberships) {
+                totalCost += membership.getMembershipCost();
+        }
+        return totalCost;
+    }
+
+
+    public List<Membership> getMembershipsByMember(int userId) throws SQLException {
         if (userId <= 0) {
             throw new IllegalArgumentException("Member ID must not be null.");
         }
@@ -96,7 +108,7 @@ public class MembershipService {
 
     public void printMembershipByMember(int userId) {
         try {
-            List<Membership> memberships = getMembershipByMember(userId);
+            List<Membership> memberships = getMembershipsByMember(userId);
             if (memberships.isEmpty()) {
                 System.out.println("No memberships found.");
             } else {

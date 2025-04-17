@@ -1,6 +1,8 @@
 package GymApp.services;
 
+import GymApp.models.Membership;
 import GymApp.models.WorkoutClass;
+import GymApp.models.enums.MembershipType;
 import GymApp.models.enums.UserRole;
 import GymApp.models.enums.WorkoutStatus;
 
@@ -10,12 +12,16 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class MenuActions {
+
+    private static final Logger log = Logger.getLogger(MenuActions.class.getName());
+
     public static void promptBackToMenu(Scanner scanner) {
         System.out.println();
         System.out.print("Back to menu?: ");
         scanner.nextLine(); // Consume the newline character left by previous nextLine() calls
         String input = scanner.nextLine();
     }
+
 
     // Users
     public static void viewAllUsers(Scanner scanner, UserService userService) {
@@ -85,7 +91,7 @@ public class MenuActions {
         }
     }
 
-    private static final Logger log = Logger.getLogger(MenuActions.class.getName());
+
 
     // Memberships
     public static void viewAllMemberships(Scanner scanner, MembershipService membershipService) {
@@ -93,29 +99,6 @@ public class MenuActions {
         promptBackToMenu(scanner);
     }
 
-    public static void browseWorkoutClasses(Scanner scanner, UserRole userRole, WorkoutClassService workoutClassService) {
-        try {
-            List<WorkoutClass> workoutClasses = workoutClassService.listAllWorkouts(userRole);
-            if (workoutClasses.isEmpty()) {
-                System.out.println("No classes found.");
-            } else {
-                System.out.println("--- All Classes ---");
-                System.out.println(
-                        "--------------------------------------------------------------------------------------------------");
-                System.out.println(String.format("%-12d | %-15s | %-10s | $%-35s | %-8s | %-8d",
-                        "CLASS ID", "NAME", "TYPE", "DESCRIPTION", "STATUS", "TRAINER"));
-                System.out.println(
-                        "--------------------------------------------------------------------------------------------------");
-                for (WorkoutClass workoutClass : workoutClasses) {
-                    System.out.println(workoutClass.toString());
-                }
-                System.out.println(
-                        "--------------------------------------------------------------------------------------------------");
-            }
-        } catch (SQLException e) {
-            System.err.println("Error retrieving class list: " + e.getMessage());
-        }
-    }
 
     public static void viewAnnualRevenue(Scanner scanner, MembershipService membershipService) {
         System.out.print("Enter the year to view total revenue for: ");
@@ -135,19 +118,42 @@ public class MenuActions {
         promptBackToMenu(scanner);
     }
 
-    private static void viewTotalMembershipExpenses(Scanner scanner, MembershipService membershipService,
-            int memberId) {
-        System.out.println("\n--- Function: View Total Membership Expenses ---");
+    public static void viewTotalMembershipExpenses(Scanner scanner, MembershipService membershipService, int memberId) {
+
+        try {
+            double totalCost = membershipService.calculateMembershipCosts(memberId);
+            System.out.println("Total membership costs for memberID" + memberId + ": $" + String.format("%.2f", totalCost));
+        } catch (SQLException e) {
+            System.err.println("Error total cost: " + e.getMessage());
+        }
+        promptBackToMenu(scanner);
     }
 
-    private static void purchaseNewMembership(Scanner scanner, MembershipService membershipService, int memberId) {
-        System.out.println("\n--- Function: Purchase New Gym Membership ---");
+
+
+    public static void purchaseNewMembership(Scanner scanner, MembershipService membershipService, int userId) {
+        System.out.println("Enter membership type (basic, standard, premium): ");
+        String type = scanner.nextLine();
+
+        MembershipType membershipType = MembershipType.fromString(type);
+
+        Membership membership = new Membership(membershipType, userId);
+
+        try {
+            membershipService.addMembership(membership);
+            System.out.println("Membership added successfully!");
+
+        } catch (IllegalArgumentException err) {
+            System.out.println("Input error: " + err.getMessage());
+        } catch (SQLException err) {
+            System.out.println("Sorry! We couldn’t purchase the membership right now.");
+            log.warning("Error while adding membership: " + err.getMessage());
+        }
     }
+
+
 
     // Workouts
-    private static void browseWorkoutClasses(Scanner scanner, WorkoutClassService workoutClassService) {
-        System.out.println("\n--- Function: Browse Workout Classes ---");
-    }
 
     public static void addWorkout(Scanner scanner, int userId, WorkoutClassService workoutService) {
         System.out.println("Enter workout class name: ");
@@ -329,4 +335,29 @@ public class MenuActions {
             e.printStackTrace();
         }
     }
+
+    public static void browseWorkoutClasses(Scanner scanner, UserRole userRole, WorkoutClassService workoutClassService) {
+        try {
+            List<WorkoutClass> workoutClasses = workoutClassService.listAllWorkouts(userRole);
+            if (workoutClasses.isEmpty()) {
+                System.out.println("No classes found.");
+            } else {
+                System.out.println("--- All Classes ---");
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
+                System.out.println(String.format("%-12d | %-15s | %-10s | $%-35s | %-8s | %-8d",
+                        "CLASS ID", "NAME", "TYPE", "DESCRIPTION", "STATUS", "TRAINER"));
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
+                for (WorkoutClass workoutClass : workoutClasses) {
+                    System.out.println(workoutClass.toString());
+                }
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving class list: " + e.getMessage());
+        }
+    }
+
 }

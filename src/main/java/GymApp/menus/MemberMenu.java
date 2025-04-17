@@ -31,10 +31,10 @@ public abstract class MemberMenu {
                     MenuActions.browseWorkoutClasses(scanner, UserRole.MEMBER, workoutClassService);
                     break;
                 case 2:
-                    // viewTotalMembershipExpenses(scanner, membershipService, memberId);
+                    MenuActions.viewTotalMembershipExpenses(scanner, membershipService, memberId);
                     break;
                 case 3:
-                    // purchaseNewMembership(scanner, membershipService, memberId);
+                    MenuActions.purchaseNewMembership(scanner, membershipService, memberId);
                     break;
                 case 4:
                     System.out.println("Logging out...");
