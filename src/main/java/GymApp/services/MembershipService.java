@@ -54,7 +54,7 @@ public class MembershipService {
         return membershipDAO.getAllMemberships();
     }
 
-    public void printAllMemberships() {
+    public void printAllMemberships() throws SQLException{
         try {
             List<Membership> memberships = getAllMemberships();
             if (memberships.isEmpty()) {

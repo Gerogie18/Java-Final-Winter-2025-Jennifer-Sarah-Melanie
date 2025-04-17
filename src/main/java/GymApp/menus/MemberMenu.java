@@ -28,10 +28,10 @@ public abstract class MemberMenu {
 
             switch (choice) {
                 case 1:
-                    MenuActions.browseWorkoutClasses(scanner, UserRole.MEMBER, workoutClassService);
+                    MenuActions.browseWorkoutClasses(UserRole.MEMBER, workoutClassService);
                     break;
                 case 2:
-                    MenuActions.viewTotalMembershipExpenses(scanner, membershipService, memberId);
+                    MenuActions.viewTotalMembershipExpenses(membershipService, memberId);
                     break;
                 case 3:
                     MenuActions.purchaseNewMembership(scanner, membershipService, memberId);

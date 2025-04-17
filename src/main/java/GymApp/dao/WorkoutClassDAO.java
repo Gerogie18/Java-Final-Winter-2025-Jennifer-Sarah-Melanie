@@ -156,14 +156,14 @@ public class WorkoutClassDAO {
 
 
 
-    public List<WorkoutClass> getWorkoutClassesByStatus(WorkoutStatus workoutStatus) throws SQLException {
+    public List<WorkoutClass> getWorkoutClassesByStatus(String workoutStatus) throws SQLException {
         List<WorkoutClass> classes = new ArrayList<>();
         String sql = "SELECT * FROM workout_classes WHERE class_status = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, workoutStatus.toString());
+            pstmt.setString(1, workoutStatus.toUpperCase());
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {

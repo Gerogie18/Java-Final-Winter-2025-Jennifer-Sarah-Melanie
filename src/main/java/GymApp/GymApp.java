@@ -140,18 +140,6 @@ public class GymApp {
                 }
             }
 
-            // Role validation loop
-//            while (userRole == null) {
-//                System.out.print("Enter role (Admin/Trainer/Member): ");
-//                String roleInput = scanner.nextLine().trim();
-//
-//                try {
-//                    userRole = UserRole.fromString(roleInput);
-//                } catch (IllegalArgumentException e) {
-//                    System.out.println("Invalid role entered: " + roleInput + ". Please enter Admin, Trainer, or Member.");
-//                }
-//            }
-
             User user = new User(username, password, email, phoneNumber, address, userRole);
             int newUserId = userService.createUser(user);
             System.out.println("New user added successfully! User ID: " + newUserId);

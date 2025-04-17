@@ -4,7 +4,6 @@ import GymApp.models.WorkoutClass;
 import GymApp.dao.UserDAO;
 import GymApp.models.User;
 import GymApp.models.enums.UserRole;
-import GymApp.models.enums.WorkoutStatus;
 import java.util.List;
 import java.util.logging.Logger;
 import java.sql.SQLException;
@@ -39,6 +38,7 @@ public class WorkoutClassService {
         }
         try {
             workoutClassDAO.createNewWorkoutClass(workoutClass);
+            log.info("Workout class created: " + workoutClass.getName() + " (Trainer ID: " + workoutClass.getTrainerId() + ")");
         } catch (SQLException err) {
             log.warning("Failed to create class: " + workoutClass.getName() + ", trainer ID: " + workoutClass.getTrainerId() + ". Reason: " + err.getMessage());
             throw err;
@@ -90,7 +90,7 @@ public class WorkoutClassService {
                 log.info("No workout class found with ID: " + classId + ", nothing to delete.");
                 throw new SQLException("Deletion failed; no record found with ID: " + classId);
             }
-            log.info("Workout class " + classId + " deleted by " + "user " + userId);
+            log.info("Workout class " + classId + " deleted by user " + userId);
         } catch (SQLException err) {
             log.warning("Error during workout class deletion: " + err.getMessage());
             throw err;  // Rethrow to ensure the caller can react appropriately
@@ -101,33 +101,65 @@ public class WorkoutClassService {
 
     public WorkoutClass getWorkoutClassById(int classId) throws SQLException {
         if (classId <= 0) {
-            throw new IllegalArgumentException("Trainer must not be null.");
+            throw new IllegalArgumentException("Invalid workout class ID.");
         }
 
-        WorkoutClass workoutClass = workoutClassDAO.getWorkoutClassById(classId);
+        try {
+            WorkoutClass workoutClass = workoutClassDAO.getWorkoutClassById(classId);
 
-        if (workoutClass == null) {
-            log.info("No workout class found with ID: " + classId);
-            throw new SQLException("Workout class not found.");
+            if (workoutClass == null) {
+                log.info("No workout class found with ID: " + classId);
+                throw new SQLException("Workout class not found.");
+            }
+            log.info("Workout class retrieved: ID=" + classId);
+            return workoutClass;
+        } catch (SQLException err) {
+            log.warning("Failed to retrieve workout class ID=" + classId + ": " + err.getMessage());
+            throw err;  // Rethrow to ensure the caller can react appropriately
         }
-        log.info("Workout class " + classId + " retrieved");
-        return workoutClass;
     }
 
     public List<WorkoutClass> listWorkoutsByTrainer(int trainerId) throws SQLException {
         if (trainerId <= 0) {
-            throw new IllegalArgumentException("Trainer must not be null.");
+            throw new IllegalArgumentException("Invalid trainer ID.");
         }
-        return workoutClassDAO.getWorkoutsByTrainer(trainerId);
+
+        try {
+            List<WorkoutClass> classes = workoutClassDAO.getWorkoutsByTrainer(trainerId);
+
+            if (classes.isEmpty()) {
+                log.info("No workout classes found for trainer ID: " + trainerId);
+            } else {
+                log.info("Retrieved " + classes.size() + " classes for trainer ID: " + trainerId);
+            }
+
+            return classes;
+
+        } catch (SQLException err) {
+            log.warning("Error retrieving classes for trainer ID=" + trainerId + ": " + err.getMessage());
+            throw err;
+        }
     }
+
 
     public List<WorkoutClass> listAllWorkouts(UserRole userRole) throws SQLException {
-        if (userRole == UserRole.MEMBER) {
-            return workoutClassDAO.getWorkoutClassesByStatus(WorkoutStatus.active);
-        } else {
-            return workoutClassDAO.getAllWorkoutClasses();
+        try {
+            List<WorkoutClass> classes;
+
+            if (userRole == UserRole.MEMBER) {
+                classes = workoutClassDAO.getWorkoutClassesByStatus("ACTIVE");
+                log.info("Retrieved " + classes.size() + " active classes for MEMBER view.");
+            } else {
+                classes = workoutClassDAO.getAllWorkoutClasses();
+                log.info("Retrieved " + classes.size() + " total classes for role: " + userRole);
+            }
+
+            return classes;
+
+        } catch (SQLException err) {
+            log.warning("Error retrieving workout classes for role=" + userRole + ": " + err.getMessage());
+            throw err;
         }
     }
-
 
 }
