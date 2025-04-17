@@ -185,7 +185,7 @@ public class MenuActions {
         workoutClass.setName(name);
         workoutClass.setType(type);
         workoutClass.setDescription(description);
-        workoutClass.setStatus(WorkoutStatus.active);
+        workoutClass.setStatus(WorkoutStatus.ACTIVE);
         workoutClass.setClass_capacity(capacity);
         workoutClass.setTrainerByID(userId);
 
@@ -324,7 +324,7 @@ public class MenuActions {
 
         System.out.println("Current status: " + workout.getStatus());
         System.out.print("New status (active, cancelled, inactive): ");
-        String statusInput = scanner.nextLine().toLowerCase().trim();
+        String statusInput = scanner.nextLine().toUpperCase().trim();
         if (!statusInput.isBlank()) {
             workout.setStatus(WorkoutStatus.fromString(statusInput));
         }

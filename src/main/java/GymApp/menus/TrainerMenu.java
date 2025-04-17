@@ -16,7 +16,7 @@ public abstract class TrainerMenu implements Menu {
             System.out.println("2. Delete a Workout Class");
             System.out.println("3. Update a Workout Class");
             System.out.println("4. View My Workout Classes");
-            //System.out.println("5. Buy Membership");
+            System.out.println("5. Buy Membership");
             System.out.println("6. Logout");
             System.out.print("Enter your choice: ");
 
