@@ -1,4 +1,5 @@
 package GymApp.models;
+
 import GymApp.models.enums.Status;
 
 public class WorkoutClass {
@@ -10,11 +11,11 @@ public class WorkoutClass {
     private int class_capacity; // class_capacity >= 0 AND class_capacity <= 100
     private int trainerId; // trainer id
 
-
     public WorkoutClass() {
     }
 
-    public WorkoutClass(int id, String name, String type, String description, Status status, int class_capacity, int trainerId) {
+    public WorkoutClass(int id, String name, String type, String description, Status status, int class_capacity,
+            int trainerId) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -24,7 +25,8 @@ public class WorkoutClass {
         this.trainerId = trainerId;
     }
 
-    public WorkoutClass(String name, String type, String description, Status status, int class_capacity, int trainerId) {
+    public WorkoutClass(String name, String type, String description, Status status, int class_capacity,
+            int trainerId) {
         this.name = name;
         this.type = type;
         this.description = description;
@@ -68,6 +70,7 @@ public class WorkoutClass {
     public Status getStatus() {
         return status;
     }
+
     public String getStatusAsString() {
         return status.name();
     }
@@ -90,5 +93,11 @@ public class WorkoutClass {
 
     public void setTrainerByID(int trainerId) {
         this.trainerId = trainerId;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%-12d | %-15s | %-10s | $%-35s | %-8s | %-8d",
+                id, name, type, description, status, trainerId);
     }
 }

@@ -2,11 +2,14 @@ package GymApp.menus;
 
 import GymApp.services.MembershipService;
 import GymApp.services.WorkoutClassService;
+import GymApp.services.MenuActions;
+import GymApp.models.enums.Role;
+
 import java.util.Scanner;
 
-public class MemberMenu {
-
-    public static void displayMenu(Scanner scanner, MembershipService membershipService, WorkoutClassService workoutClassService, int memberId) {
+public abstract class MemberMenu {
+    public static void displayMenu(Scanner scanner, MembershipService membershipService,
+            WorkoutClassService workoutClassService, int memberId) {
         int choice;
         do {
             System.out.println("\n=== Member Menu ===");
@@ -25,13 +28,13 @@ public class MemberMenu {
 
             switch (choice) {
                 case 1:
-                    //browseWorkoutClasses(scanner, workoutClassService);
+                    MenuActions.browseWorkoutClasses(scanner, Role.MEMBER, workoutClassService);
                     break;
                 case 2:
-                    //viewTotalMembershipExpenses(scanner, membershipService, memberId);
+                    // viewTotalMembershipExpenses(scanner, membershipService, memberId);
                     break;
                 case 3:
-                    //purchaseNewMembership(scanner, membershipService, memberId);
+                    // purchaseNewMembership(scanner, membershipService, memberId);
                     break;
                 case 4:
                     System.out.println("Logging out...");

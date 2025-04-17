@@ -2,9 +2,6 @@ package GymApp.services;
 
 import GymApp.dao.MembershipDAO;
 import GymApp.dao.UserDAO;
-import GymApp.models.User;
-import GymApp.models.WorkoutClass;
-import GymApp.models.enums.Role;
 import GymApp.models.Membership;
 import java.util.List;
 import java.util.logging.Logger;
@@ -41,17 +38,12 @@ public class MembershipService {
             throw new IllegalArgumentException("Invalid membership ID.");
         }
 
-        // Membership membershipId = MembershipDAO.getMembershipById(membershipId);
+        // Membership membership = MembershipDAO.getMembershipById(membershipId);
 
-        if (membershipId == null) { // for some reason this is not working, red underline
-            throw new SQLException("Membership ID not found.");
-        }
-
-        // if (userRole != Role.ADMIN && workout.getTrainerId() != userId) {
-        // throw new IllegalArgumentException("Trainers can only delete their own
-        // classes.");
+        // if (membershipId == null) { // for some reason this is not working, red
+        // underline
+        // throw new SQLException("Membership ID not found.");
         // }
-        // not sure how to edit this one, do I need it?
 
         try {
             boolean isDeleted = membershipDAO.deleteMembershipById(membershipId);

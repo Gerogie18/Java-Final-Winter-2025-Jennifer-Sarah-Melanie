@@ -1,5 +1,6 @@
 package GymApp.services;
 
+import GymApp.models.Membership;
 import GymApp.models.WorkoutClass;
 import GymApp.models.enums.Role;
 import GymApp.models.enums.Status;
@@ -10,17 +11,19 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class MenuActions {
-public static void promptBackToMenu(Scanner scanner) {
-    System.out.println();
-    System.out.print("Back to menu?: ");
-    scanner.nextLine(); // Consume the newline character left by previous nextLine() calls
-    String input = scanner.nextLine();
-}
-// Users
-public static void viewAllUsers(Scanner scanner, UserService userService) {
-    userService.printAllUsers();
-    promptBackToMenu(scanner);
-}
+    public static void promptBackToMenu(Scanner scanner) {
+        System.out.println();
+        System.out.print("Back to menu?: ");
+        scanner.nextLine(); // Consume the newline character left by previous nextLine() calls
+        String input = scanner.nextLine();
+    }
+
+    // Users
+    public static void viewAllUsers(Scanner scanner, UserService userService) {
+        userService.printAllUsers();
+        promptBackToMenu(scanner);
+    }
+
     public static void viewUsersByRole(Scanner scanner, UserService userService) {
         Role userRole = null;
         // Role validation loop
@@ -49,6 +52,7 @@ public static void viewAllUsers(Scanner scanner, UserService userService) {
                 break;
         }
     }
+
     public static void deleteUser(Scanner scanner, int adminId, UserService userService) {
         boolean validInput = false;
         int userIdToDelete = -1; // Initialize with an invalid value
@@ -84,14 +88,37 @@ public static void viewAllUsers(Scanner scanner, UserService userService) {
 
     private static final Logger log = Logger.getLogger(MenuActions.class.getName());
 
-
-    //Memberships
-    public static void viewAllMemberships (Scanner scanner, MembershipService membershipService) {
+    // Memberships
+    public static void viewAllMemberships(Scanner scanner, MembershipService membershipService) {
         membershipService.printAllMemberships();
         promptBackToMenu(scanner);
     }
 
-    public static void viewAnnualRevenue (Scanner scanner, MembershipService membershipService) {
+    public static void browseWorkoutClasses(Scanner scanner, Role userRole, WorkoutClassService workoutClassService) {
+        try {
+            List<WorkoutClass> workoutClasses = workoutClassService.listAllWorkouts(userRole);
+            if (workoutClasses.isEmpty()) {
+                System.out.println("No classes found.");
+            } else {
+                System.out.println("--- All Classes ---");
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
+                System.out.println(String.format("%-12d | %-15s | %-10s | $%-35s | %-8s | %-8d",
+                        "CLASS ID", "NAME", "TYPE", "DESCRIPTION", "STATUS", "TRAINER"));
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
+                for (WorkoutClass workoutClass : workoutClasses) {
+                    System.out.println(workoutClass.toString());
+                }
+                System.out.println(
+                        "--------------------------------------------------------------------------------------------------");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving class list: " + e.getMessage());
+        }
+    }
+
+    public static void viewAnnualRevenue(Scanner scanner, MembershipService membershipService) {
         System.out.print("Enter the year to view total revenue for: ");
         while (!scanner.hasNextInt()) {
             System.out.println("Invalid input. Please enter a year (e.g., 2023).");
@@ -109,7 +136,8 @@ public static void viewAllUsers(Scanner scanner, UserService userService) {
         promptBackToMenu(scanner);
     }
 
-    private static void viewTotalMembershipExpenses(Scanner scanner, MembershipService membershipService, int memberId) {
+    private static void viewTotalMembershipExpenses(Scanner scanner, MembershipService membershipService,
+            int memberId) {
         System.out.println("\n--- Function: View Total Membership Expenses ---");
     }
 
@@ -155,7 +183,6 @@ public static void viewAllUsers(Scanner scanner, UserService userService) {
         }
     }
 
-
     public static void deleteWorkout(Scanner scanner, int userId, Role userRole, WorkoutClassService workoutService) {
         // Initialize variables outside of while loop
         WorkoutClass workout = null;
@@ -200,7 +227,6 @@ public static void viewAllUsers(Scanner scanner, UserService userService) {
         }
     }
 
-
     public static void updateWorkout(Scanner scanner, int userId, Role userRole, WorkoutClassService workoutService) {
         // Initialize variables outside of while loop
         WorkoutClass workout = null;
@@ -234,17 +260,20 @@ public static void viewAllUsers(Scanner scanner, UserService userService) {
         System.out.println("Current name: " + workout.getName());
         System.out.print("New name: ");
         String name = scanner.nextLine();
-        if (!name.isBlank()) workout.setName(name);
+        if (!name.isBlank())
+            workout.setName(name);
 
         System.out.println("Current type: " + workout.getType());
         System.out.print("New type: ");
         String type = scanner.nextLine();
-        if (!type.isBlank()) workout.setType(type);
+        if (!type.isBlank())
+            workout.setType(type);
 
         System.out.println("Current description: " + workout.getDescription());
         System.out.print("New description: ");
         String description = scanner.nextLine();
-        if (!description.isBlank()) workout.setDescription(description);
+        if (!description.isBlank())
+            workout.setDescription(description);
 
         System.out.println("Current capacity: " + workout.getClass_capacity());
         System.out.print("New capacity: ");
