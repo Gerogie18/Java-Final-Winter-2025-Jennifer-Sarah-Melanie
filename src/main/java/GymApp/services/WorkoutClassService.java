@@ -34,7 +34,7 @@ public class WorkoutClassService {
         }
         User user = userDAO.getUserById(workoutClass.getTrainerId());
 
-        if (user.getRole() == UserRole.TRAINER) {
+        if (user.getRole() != UserRole.TRAINER) {
             throw new IllegalArgumentException("User must be registered as a trainer");
         }
         try {
@@ -52,11 +52,6 @@ public class WorkoutClassService {
         //Check if updatedClass is ok
         if (updatedClass == null || updatedClass.getId() <= 0) {
             throw new IllegalArgumentException("Invalid workout class.");
-        }
-
-        //Check user permission
-        if (userRole != UserRole.ADMIN && updatedClass.getTrainerId() != userId) {
-            throw new IllegalArgumentException("Trainers can only update their own classes.");
         }
 
         // update database

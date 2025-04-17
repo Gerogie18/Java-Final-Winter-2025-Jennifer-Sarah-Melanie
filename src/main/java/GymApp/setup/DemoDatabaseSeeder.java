@@ -1,7 +1,9 @@
 package GymApp.setup;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import GymApp.database.DatabaseConnection;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class DemoDatabaseSeeder {
 
@@ -55,27 +57,45 @@ public class DemoDatabaseSeeder {
             System.out.println("[✓] Tables created.");
 
             // Insert users
-            stmt.executeUpdate("""
-                INSERT INTO users (user_name, user_phone_number, user_email, user_address, user_password, user_role)
-                VALUES
-                  ('Alex Admin', '709-555-0001', 'alex.admin@gym.com', '1 Admin Lane', 'admin123', 'ADMIN'),
-                  ('Jamie Admin', '709-555-0002', 'jamie.admin@gym.com', '2 Admin Blvd', 'admin123', 'ADMIN'),
+            String insertUserSQL = """
+    INSERT INTO users (user_name, user_phone_number, user_email, user_address, user_password, user_role)
+    VALUES (?, ?, ?, ?, ?, ?);
+""";
 
-                  ('Tina Trainer', '709-555-1001', 'tina.trainer@gym.com', '10 Trainer Rd', 'trainer123', 'TRAINER'),
-                  ('Terry Trainer', '709-555-1002', 'terry.trainer@gym.com', '11 Trainer Rd', 'trainer123', 'TRAINER'),
-                  ('Taylor Trainer', '709-555-1003', 'taylor.trainer@gym.com', '12 Trainer Ave', 'trainer123', 'TRAINER'),
-                  ('Toby Trainer', '709-555-1004', 'toby.trainer@gym.com', '13 Trainer St', 'trainer123', 'TRAINER'),
+            PreparedStatement userStmt = conn.prepareStatement(insertUserSQL);
 
-                  ('Mia Member', '709-555-2001', 'mia.member@gym.com', '21 Member Ct', 'member123', 'MEMBER'),
-                  ('Max Member', '709-555-2002', 'max.member@gym.com', '22 Member Ct', 'member123', 'MEMBER'),
-                  ('Morgan Member', '709-555-2003', 'morgan.member@gym.com', '23 Member Ct', 'member123', 'MEMBER'),
-                  ('Mel Member', '709-555-2004', 'mel.member@gym.com', '24 Member Ct', 'member123', 'MEMBER'),
-                  ('Micah Member', '709-555-2005', 'micah.member@gym.com', '25 Member Ct', 'member123', 'MEMBER'),
-                  ('Marley Member', '709-555-2006', 'marley.member@gym.com', '26 Member Ct', 'member123', 'MEMBER'),
-                  ('Mason Member', '709-555-2007', 'mason.member@gym.com', '27 Member Ct', 'member123', 'MEMBER'),
-                  ('Maddie Member', '709-555-2008', 'maddie.member@gym.com', '28 Member Ct', 'member123', 'MEMBER');
-            """);
+            String[][] users = {
+                    {"Alex Admin", "709-555-0001", "alex.admin@gym.com", "1 Admin Lane", "admin123", "ADMIN"},
+                    {"Jamie Admin", "709-555-0002", "jamie.admin@gym.com", "2 Admin Blvd", "admin123", "ADMIN"},
+                    {"Tina Trainer", "709-555-1001", "tina.trainer@gym.com", "10 Trainer Rd", "trainer123", "TRAINER"},
+                    {"Terry Trainer", "709-555-1002", "terry.trainer@gym.com", "11 Trainer Rd", "trainer123", "TRAINER"},
+                    {"Taylor Trainer", "709-555-1003", "taylor.trainer@gym.com", "12 Trainer Ave", "trainer123", "TRAINER"},
+                    {"Toby Trainer", "709-555-1004", "toby.trainer@gym.com", "13 Trainer St", "trainer123", "TRAINER"},
+                    {"Mia Member", "709-555-2001", "mia.member@gym.com", "21 Member Ct", "member123", "MEMBER"},
+                    {"Max Member", "709-555-2002", "max.member@gym.com", "22 Member Ct", "member123", "MEMBER"},
+                    {"Morgan Member", "709-555-2003", "morgan.member@gym.com", "23 Member Ct", "member123", "MEMBER"},
+                    {"Mel Member", "709-555-2004", "mel.member@gym.com", "24 Member Ct", "member123", "MEMBER"},
+                    {"Micah Member", "709-555-2005", "micah.member@gym.com", "25 Member Ct", "member123", "MEMBER"},
+                    {"Marley Member", "709-555-2006", "marley.member@gym.com", "26 Member Ct", "member123", "MEMBER"},
+                    {"Mason Member", "709-555-2007", "mason.member@gym.com", "27 Member Ct", "member123", "MEMBER"},
+                    {"Maddie Member", "709-555-2008", "maddie.member@gym.com", "28 Member Ct", "member123", "MEMBER"}
+            };
+
+            for (String[] user : users) {
+                String hashedPassword = BCrypt.hashpw(user[4], BCrypt.gensalt());
+
+                userStmt.setString(1, user[0]); // name
+                userStmt.setString(2, user[1]); // phone
+                userStmt.setString(3, user[2]); // email
+                userStmt.setString(4, user[3]); // address
+                userStmt.setString(5, hashedPassword); // hashed password
+                userStmt.setString(6, user[5]); // role
+                userStmt.addBatch();
+            }
+
+            userStmt.executeBatch();
             System.out.println("[✓] Users inserted.");
+
 
             // Insert workout classes
             stmt.executeUpdate("""

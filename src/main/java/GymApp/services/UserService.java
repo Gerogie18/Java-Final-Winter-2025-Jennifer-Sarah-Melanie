@@ -37,7 +37,7 @@ public class UserService {
     }
 
     //Functions for USER DAO operations
-    public void createUser(User user)  throws SQLException {
+    public int createUser(User user)  throws SQLException {
         // Check if email is taken before creating the user
         if (isEmailTaken(user.getEmail())) {
             throw new SQLException("Email address already exists.");
@@ -45,7 +45,7 @@ public class UserService {
         // Hash the password and set it to the user object
         String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         user.setPassword(hashedPassword);
-        userDAO.createUser(user);
+        return userDAO.createUser(user);
     }
 
     public void updateUser(User user) throws SQLException  {

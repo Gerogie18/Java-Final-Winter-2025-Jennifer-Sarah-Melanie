@@ -7,6 +7,7 @@ import GymApp.models.enums.UserRole;
 import GymApp.models.enums.WorkoutStatus;
 
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -156,16 +157,16 @@ public class MenuActions {
     // Workouts
 
     public static void addWorkout(Scanner scanner, int userId, WorkoutClassService workoutService) {
-        System.out.println("Enter workout class name: ");
-        String name = scanner.nextLine();
+        System.out.print("Enter workout class name: ");
+        String name = scanner.nextLine().trim();
 
-        System.out.println("Enter workout type: ");
-        String type = scanner.nextLine();
+        System.out.print("Enter workout type: ");
+        String type = scanner.nextLine().trim();
 
-        System.out.println("Enter description: ");
-        String description = scanner.nextLine();
+        System.out.print("Enter description: ");
+        String description = scanner.nextLine().trim();
 
-        System.out.println("Enter description: ");
+        System.out.print("Enter max capacity for class: ");
         int capacity = scanner.nextInt();
         scanner.nextLine();
 
@@ -238,10 +239,9 @@ public class MenuActions {
         int classId = -1;
 
         // Keep prompting until a valid class is entered
-        while (workout == null) {
+        while (true) {
             System.out.print("Enter the ID of the workout class you want to update: ");
 
-            // Only permit integers
             if (!scanner.hasNextInt()) {
                 System.out.println("Please enter a valid numeric ID.");
                 scanner.nextLine(); // Clear invalid input
@@ -249,10 +249,22 @@ public class MenuActions {
             }
 
             classId = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine(); // Clear the newline
+            workout = null;
 
             try {
                 workout = workoutService.getWorkoutClassById(classId);
+
+                // Check user permission
+                if (userRole != UserRole.ADMIN && workout.getTrainerId() != userId) {
+                    System.out.println("You can only update classes that belong to you.");
+                    workout = null; // Force re-prompt
+                    continue;
+                }
+
+                // Valid class found and permission confirmed
+                break;
+
             } catch (IllegalArgumentException | SQLException e) {
                 System.out.println("Workout class not found. Please try again.");
             }
@@ -260,6 +272,8 @@ public class MenuActions {
 
         // get User Input
         // Allow user to leave fields empty if they don't want to change anything
+        System.out.println();
+        System.out.println("Update the fields you wish to change.");
         System.out.println("Leave field empty to keep the current value.");
 
         System.out.println("Current name: " + workout.getName());
