@@ -203,7 +203,7 @@ The system consists of three main models: `User`, `Membership`, and `WorkoutClas
 In addition to the models, the system consists of three main 'layers': `DAO`, `Service`, and `Menu`. The DAO communicates with the database. The services call the DAO and catch any errors it might throw. They also handle creating logs. The menus provide an interface with the user to get user input to use to call the relevant service. The diagram below shows the relationships between each layer (note that instance variables and methods are truncated for space).
 
 
-![Class Diagram](src/main/resources/class_relationship.png)
+![Class Diagram](src/main/resources/class_relationships.png)
 
 
 ### Project Directory Structure
