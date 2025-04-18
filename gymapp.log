@@ -1,0 +1,682 @@
+Apr 17, 2025 10:05:31 P.M. org.postgresql.Driver loadDefaultProperties
+FINE: Loading driver configuration via classloader jdk.internal.loader.ClassLoaders$AppClassLoader@18b4aac2
+Apr 17, 2025 10:05:31 P.M. org.postgresql.Driver connect
+FINE: Connecting with URL: jdbc:postgresql://localhost:5432/s3javafinal
+Apr 17, 2025 10:05:31 P.M. org.postgresql.jdbc.PgConnection <init>
+FINE: PostgreSQL JDBC Driver 42.7.5
+Apr 17, 2025 10:05:31 P.M. org.postgresql.jdbc.PgConnection setDefaultFetchSize
+FINE:   setDefaultFetchSize = 0
+Apr 17, 2025 10:05:31 P.M. org.postgresql.jdbc.PgConnection setPrepareThreshold
+FINE:   setPrepareThreshold = 5
+Apr 17, 2025 10:05:31 P.M. org.postgresql.core.v3.ConnectionFactoryImpl openConnectionImpl
+FINE: Trying to establish a protocol version 3 connection to localhost:5432
+Apr 17, 2025 10:05:31 P.M. org.postgresql.core.Encoding <init>
+FINEST: Creating new Encoding UTF-8 with fastASCIINumbers true
+Apr 17, 2025 10:05:31 P.M. org.postgresql.core.Encoding <init>
+FINEST: Creating new Encoding UTF-8 with fastASCIINumbers true
+Apr 17, 2025 10:05:31 P.M. org.postgresql.core.v3.ConnectionFactoryImpl tryConnect
+FINE: Receive Buffer Size is 408,300
+Apr 17, 2025 10:05:31 P.M. org.postgresql.core.v3.ConnectionFactoryImpl tryConnect
+FINE: Send Buffer Size is 146,988
+Apr 17, 2025 10:05:31 P.M. org.postgresql.core.v3.ConnectionFactoryImpl enableSSL
+FINEST:  FE=> SSLRequest postgres
+Apr 17, 2025 10:05:31 P.M. org.postgresql.core.v3.ConnectionFactoryImpl enableSSL
+FINEST:  <=BE SSLRefused
+Apr 17, 2025 10:05:31 P.M. org.postgresql.core.v3.ConnectionFactoryImpl sendStartupPacket
+FINEST:  FE=> StartupPacket(user=postgres, database=s3javafinal, client_encoding=UTF8, DateStyle=ISO, TimeZone=America/St_Johns)
+Apr 17, 2025 10:05:31 P.M. org.postgresql.core.v3.ScramAuthenticator initializeScramClient
+FINEST: channelBinding( PREFER )
+Apr 17, 2025 10:05:31 P.M. org.postgresql.core.v3.ScramAuthenticator advertisedMechanisms
+FINEST:  <=BE AuthenticationSASL( [SCRAM-SHA-256] )
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.ScramAuthenticator initializeScramClient
+FINEST:  Using SCRAM mechanism: SCRAM-SHA-256
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.ScramAuthenticator handleAuthenticationSASL
+FINEST:  FE=> SASLInitialResponse( n,,n=*,r=Q:G>$-OQyr&)e#p#:fm|t~5* )
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.ScramAuthenticator handleAuthenticationSASLContinue
+FINEST:  <=BE AuthenticationSASLContinue( r=Q:G>$-OQyr&)e#p#:fm|t~5*R2je6loh5o/cigkex6zPXrPT,s=paI/R3mVcMxz2WYfW4PQQg==,i=4096 )
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.ScramAuthenticator handleAuthenticationSASLContinue
+FINEST:  FE=> SASLResponse( c=biws,r=Q:G>$-OQyr&)e#p#:fm|t~5*R2je6loh5o/cigkex6zPXrPT,p=PMqgo/D0Am34Hf3tCkHSOJXCSV0Zq19+ig2kb0+XSFM= )
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.ScramAuthenticator handleAuthenticationSASLFinal
+FINEST:  <=BE AuthenticationSASLFinal( v=dxsb6u+sXhOAChH9QJT0pq4T3duWJsFI7Bd3x+ulOMM= )
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.ConnectionFactoryImpl doAuthentication
+FINEST:  <=BE AuthenticationOk
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(in_hot_standby = off)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(integer_datetimes = on)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(TimeZone = America/St_Johns)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(IntervalStyle = postgres)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(is_superuser = on)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(application_name = )
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(default_transaction_read_only = off)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(scram_iterations = 4096)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(DateStyle = ISO, MDY)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(standard_conforming_strings = on)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(session_authorization = postgres)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(client_encoding = UTF8)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(server_version = 17.2)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(server_encoding = UTF8)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl readStartupMessages
+FINEST:  <=BE BackendKeyData(pid=31,207,ckey=1,906,191,749)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(I)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl execute
+FINEST:   simple execute, handler=org.postgresql.core.SetupQueryRunner$SimpleResultHandler@520a3426, maxRows=0, fetchSize=0, flags=1,047
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="SET extra_float_digits = 2",oids={})
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendSync
+FINEST:  FE=> Sync
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(SET)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(I)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl execute
+FINEST:   simple execute, handler=org.postgresql.core.SetupQueryRunner$SimpleResultHandler@335eadca, maxRows=0, fetchSize=0, flags=1,047
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="SET application_name = 'PostgreSQL JDBC Driver'",oids={})
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendSync
+FINEST:  FE=> Sync
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(SET)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(application_name = PostgreSQL JDBC Driver)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(I)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.jdbc.PgConnection <init>
+FINEST:     types using binary send = TIMESTAMPTZ,NUMERIC,OID_ARRAY,UUID,BYTEA_ARRAY,INT2_ARRAY,INT4_ARRAY,BYTEA,TEXT_ARRAY,TIMETZ,INT8,INT2,INT4,VARCHAR_ARRAY,INT8_ARRAY,POINT,TIMESTAMP,TIME,BOX,FLOAT4,FLOAT8,FLOAT4_ARRAY,FLOAT8_ARRAY
+Apr 17, 2025 10:05:32 P.M. org.postgresql.jdbc.PgConnection <init>
+FINEST:     types using binary receive = TIMESTAMPTZ,NUMERIC,OID_ARRAY,UUID,BYTEA_ARRAY,INT2_ARRAY,INT4_ARRAY,BYTEA,TEXT_ARRAY,TIMETZ,INT8,INT2,INT4,VARCHAR_ARRAY,INT8_ARRAY,POINT,DATE,TIMESTAMP,TIME,BOX,FLOAT4,FLOAT8,FLOAT4_ARRAY,FLOAT8_ARRAY
+Apr 17, 2025 10:05:32 P.M. org.postgresql.jdbc.PgConnection <init>
+FINEST:     integer date/time = true
+Apr 17, 2025 10:05:32 P.M. org.postgresql.jdbc.PgConnection setAutoCommit
+FINE:   setAutoCommit = false
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl execute
+FINEST:   simple execute, handler=org.postgresql.jdbc.PgStatement$StatementResultHandler@1c3a4799, maxRows=0, fetchSize=0, flags=5
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="BEGIN",oids={})
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=0)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="    DROP TABLE IF EXISTS memberships, workout_classes, users CASCADE",oids={})
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="
+
+    CREATE TABLE users (
+        user_id SERIAL PRIMARY KEY,
+        user_name VARCHAR(50) NOT NULL,
+        user_phone_number VARCHAR(15) NOT NULL,
+        user_email VARCHAR(100) NOT NULL UNIQUE,
+        user_address VARCHAR(100) NOT NULL,
+        user_password VARCHAR(255) NOT NULL,
+        user_role VARCHAR(10) NOT NULL,
+        CONSTRAINT valid_role_check CHECK (user_role IN ('ADMIN', 'TRAINER', 'MEMBER'))
+    )",oids={})
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="
+
+    CREATE TABLE workout_classes (
+        class_id SERIAL PRIMARY KEY,
+        class_name VARCHAR(50) NOT NULL,
+        class_type VARCHAR(50) NOT NULL,
+        class_description TEXT NOT NULL,
+        class_status VARCHAR(20) NOT NULL,
+        class_capacity INT,
+        trainer_id INT NOT NULL,
+        CONSTRAINT fk_workout_classes_trainer_id FOREIGN KEY (trainer_id)
+            REFERENCES users(user_id) ON UPDATE NO ACTION ON DELETE CASCADE,
+        CONSTRAINT status_check CHECK(class_status IN ('ACTIVE','CANCELLED','INACTIVE')),
+        CONSTRAINT capacity_check CHECK (class_capacity >= 0 AND class_capacity <= 100)
+    )",oids={})
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="
+
+    CREATE TABLE memberships (
+        membership_id SERIAL PRIMARY KEY,
+        membership_type VARCHAR(50) NOT NULL,
+        membership_cost DECIMAL(10, 2) NOT NULL,
+        membership_description TEXT,
+        date_purchased DATE DEFAULT CURRENT_DATE,
+        member_id INT NOT NULL,
+        CONSTRAINT fk_memberships_member_id FOREIGN KEY (member_id)
+            REFERENCES users(user_id) ON UPDATE NO ACTION ON DELETE CASCADE
+    )",oids={})
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl sendSync
+FINEST:  FE=> Sync
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(BEGIN)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(DROP TABLE)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(CREATE TABLE)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(CREATE TABLE)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(CREATE TABLE)
+Apr 17, 2025 10:05:32 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(T)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl execute
+FINEST:   batch execute 14 queries, handler=org.postgresql.jdbc.BatchResultHandler@4d95d2a2, maxRows=0, fetchSize=0, flags=516
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=S_1,query="    INSERT INTO users (user_name, user_phone_number, user_email, user_address, user_password, user_role)
+    VALUES ($1, $2, $3, $4, $5, $6)",oids={1043,1043,1043,1043,1043,1043})
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Alex Admin')>,type=VARCHAR,$2=<('709-555-0001')>,type=VARCHAR,$3=<('alex.admin@gym.com')>,type=VARCHAR,$4=<('1 Admin Lane')>,type=VARCHAR,$5=<('$2a$10$rQth2eiO1bsPZHyXEt3uWeCxkYWMHIgl/agodWP0.LWL4SYKYRWvS')>,type=VARCHAR,$6=<('ADMIN')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Jamie Admin')>,type=VARCHAR,$2=<('709-555-0002')>,type=VARCHAR,$3=<('jamie.admin@gym.com')>,type=VARCHAR,$4=<('2 Admin Blvd')>,type=VARCHAR,$5=<('$2a$10$HjreUTOgsuityWSqfRdt/eAu69cIDs0EqcoQfEuRjAcmfgF4.puOq')>,type=VARCHAR,$6=<('ADMIN')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Tina Trainer')>,type=VARCHAR,$2=<('709-555-1001')>,type=VARCHAR,$3=<('tina.trainer@gym.com')>,type=VARCHAR,$4=<('10 Trainer Rd')>,type=VARCHAR,$5=<('$2a$10$iQEoHBi.C/uFzgpPG6JoQeWZeiX0Y0rGC2RsM2RDWXPinVoiZbpue')>,type=VARCHAR,$6=<('TRAINER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Terry Trainer')>,type=VARCHAR,$2=<('709-555-1002')>,type=VARCHAR,$3=<('terry.trainer@gym.com')>,type=VARCHAR,$4=<('11 Trainer Rd')>,type=VARCHAR,$5=<('$2a$10$oiJDSo0NEs3uGFlYCdM7GesBK18/lxQmLvkeH0qsWMmsXrD5B7WgK')>,type=VARCHAR,$6=<('TRAINER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Taylor Trainer')>,type=VARCHAR,$2=<('709-555-1003')>,type=VARCHAR,$3=<('taylor.trainer@gym.com')>,type=VARCHAR,$4=<('12 Trainer Ave')>,type=VARCHAR,$5=<('$2a$10$4aSS6NIuhoDySie5jgtN3epo8dikjupxdF2l08555NMiDpx6fM0pu')>,type=VARCHAR,$6=<('TRAINER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Toby Trainer')>,type=VARCHAR,$2=<('709-555-1004')>,type=VARCHAR,$3=<('toby.trainer@gym.com')>,type=VARCHAR,$4=<('13 Trainer St')>,type=VARCHAR,$5=<('$2a$10$S8ckwNj8l.w9z8.YiqdJmu86Zn.sWInfVrVoLsFv0/4axRhMcsLBO')>,type=VARCHAR,$6=<('TRAINER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Mia Member')>,type=VARCHAR,$2=<('709-555-2001')>,type=VARCHAR,$3=<('mia.member@gym.com')>,type=VARCHAR,$4=<('21 Member Ct')>,type=VARCHAR,$5=<('$2a$10$UI6jXbzJQ2qprkP5fzRm.OlpRxwCWjeGmgrubrlM/H/tUZj9WI0TO')>,type=VARCHAR,$6=<('MEMBER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Max Member')>,type=VARCHAR,$2=<('709-555-2002')>,type=VARCHAR,$3=<('max.member@gym.com')>,type=VARCHAR,$4=<('22 Member Ct')>,type=VARCHAR,$5=<('$2a$10$iwzu5JSIDnFI0CMceKOl0OFcgZk9q7KuBXbmixkaNbRb7th0nJ5kS')>,type=VARCHAR,$6=<('MEMBER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Morgan Member')>,type=VARCHAR,$2=<('709-555-2003')>,type=VARCHAR,$3=<('morgan.member@gym.com')>,type=VARCHAR,$4=<('23 Member Ct')>,type=VARCHAR,$5=<('$2a$10$ZKxFxfFOBXpCXlm2aS.29ONx.mfJUWdw5LOadU4pYNWOe8c1seHp6')>,type=VARCHAR,$6=<('MEMBER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Mel Member')>,type=VARCHAR,$2=<('709-555-2004')>,type=VARCHAR,$3=<('mel.member@gym.com')>,type=VARCHAR,$4=<('24 Member Ct')>,type=VARCHAR,$5=<('$2a$10$H1ZrrVOiMwFO2pr7Qf7o5Op7pBPEeydOFFEF93Z.WA.IVn/v0UnwS')>,type=VARCHAR,$6=<('MEMBER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Micah Member')>,type=VARCHAR,$2=<('709-555-2005')>,type=VARCHAR,$3=<('micah.member@gym.com')>,type=VARCHAR,$4=<('25 Member Ct')>,type=VARCHAR,$5=<('$2a$10$YGR1RmCtzZeEJlfsBYeOfex44gxhrNNgkCYO6hgSE3BpFVQIn1bJO')>,type=VARCHAR,$6=<('MEMBER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Marley Member')>,type=VARCHAR,$2=<('709-555-2006')>,type=VARCHAR,$3=<('marley.member@gym.com')>,type=VARCHAR,$4=<('26 Member Ct')>,type=VARCHAR,$5=<('$2a$10$dFhXo05gAB3iJX7tWpVBo.ji.L925acVnqxmfsoNsGNsx.e6nCx6y')>,type=VARCHAR,$6=<('MEMBER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Mason Member')>,type=VARCHAR,$2=<('709-555-2007')>,type=VARCHAR,$3=<('mason.member@gym.com')>,type=VARCHAR,$4=<('27 Member Ct')>,type=VARCHAR,$5=<('$2a$10$.tBMieph2kyqMupzhIQy/uPBiZ/SfOSrDieDFm.zaMUMIItB4KM9u')>,type=VARCHAR,$6=<('MEMBER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_1,portal=null,$1=<('Maddie Member')>,type=VARCHAR,$2=<('709-555-2008')>,type=VARCHAR,$3=<('maddie.member@gym.com')>,type=VARCHAR,$4=<('28 Member Ct')>,type=VARCHAR,$5=<('$2a$10$dP2JnsGulIkbQLeleyyR9.Ba5ZK52Gg1qzdtKLwgkPyNY3ZkXUfhq')>,type=VARCHAR,$6=<('MEMBER')>,type=VARCHAR)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendSync
+FINEST:  FE=> Sync
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [S_1]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(T)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl execute
+FINEST:   simple execute, handler=org.postgresql.jdbc.PgStatement$StatementResultHandler@6acdbdf5, maxRows=0, fetchSize=0, flags=5
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="    INSERT INTO workout_classes (class_name, class_type, class_description, class_status, class_capacity, trainer_id)
+    VALUES
+      ('Morning Yoga', 'Yoga', 'Start your day with a stretch', 'ACTIVE', 20, 3),
+      ('Spin Express', 'Spin', 'High intensity cycling', 'ACTIVE', 15, 4),
+      ('Strength 101', 'Strength', 'Beginner strength training', 'ACTIVE', 18, 5),
+      ('Core Crusher', 'Pilates', 'Ab-focused class', 'INACTIVE', 12, 3),
+      ('Evening HIT', 'HIT', 'Full-body interval training', 'CANCELLED', 16, 6),
+      ('Mobility Flow', 'Stretching', 'Improve your flexibility', 'ACTIVE', 10, 4)",oids={})
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendSync
+FINEST:  FE=> Sync
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 6)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(T)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl execute
+FINEST:   simple execute, handler=org.postgresql.jdbc.PgStatement$StatementResultHandler@4b1c1ea0, maxRows=0, fetchSize=0, flags=5
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="    INSERT INTO memberships (membership_type, membership_cost, membership_description, member_id)
+    VALUES
+      ('Basic', 49.99, 'Access to gym and equipment', 7),
+      ('Basic', 49.99, 'Access to gym and equipment', 8),
+      ('Standard', 59.99, 'Includes group classes', 9),
+      ('Standard', 59.99, 'Includes group classes', 10),
+      ('Premium', 79.99, 'Classes and personal training', 11),
+      ('Basic', 49.99, 'Access to gym and equipment', 12),
+      ('Standard', 59.99, 'Includes group classes', 13),
+      ('Premium', 79.99, 'All-access membership', 14),
+      ('Premium', 79.99, 'Trainer also trains!', 3),
+      ('Premium', 79.99, 'Another training trainer', 6)",oids={})
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendSync
+FINEST:  FE=> Sync
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE NoData
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(INSERT 0 10)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(T)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl execute
+FINEST:   simple execute, handler=org.postgresql.jdbc.PgConnection$TransactionCommandHandler@2833cc44, maxRows=0, fetchSize=0, flags=22
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=S_2,query="COMMIT",oids={})
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=S_2,portal=null)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl sendSync
+FINEST:  FE=> Sync
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [S_2]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(COMMIT)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(I)
+Apr 17, 2025 10:05:33 P.M. org.postgresql.core.QueryExecutorCloseAction close
+FINEST:  FE=> Terminate
+Apr 17, 2025 10:06:15 P.M. org.postgresql.Driver loadDefaultProperties
+FINE: Loading driver configuration via classloader jdk.internal.loader.ClassLoaders$AppClassLoader@18b4aac2
+Apr 17, 2025 10:06:15 P.M. org.postgresql.Driver connect
+FINE: Connecting with URL: jdbc:postgresql://localhost:5432/s3javafinal
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgConnection <init>
+FINE: PostgreSQL JDBC Driver 42.7.5
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgConnection setDefaultFetchSize
+FINE:   setDefaultFetchSize = 0
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgConnection setPrepareThreshold
+FINE:   setPrepareThreshold = 5
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ConnectionFactoryImpl openConnectionImpl
+FINE: Trying to establish a protocol version 3 connection to localhost:5432
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.Encoding <init>
+FINEST: Creating new Encoding UTF-8 with fastASCIINumbers true
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.Encoding <init>
+FINEST: Creating new Encoding UTF-8 with fastASCIINumbers true
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ConnectionFactoryImpl tryConnect
+FINE: Receive Buffer Size is 408,300
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ConnectionFactoryImpl tryConnect
+FINE: Send Buffer Size is 146,988
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ConnectionFactoryImpl enableSSL
+FINEST:  FE=> SSLRequest postgres
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ConnectionFactoryImpl enableSSL
+FINEST:  <=BE SSLRefused
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ConnectionFactoryImpl sendStartupPacket
+FINEST:  FE=> StartupPacket(user=postgres, database=s3javafinal, client_encoding=UTF8, DateStyle=ISO, TimeZone=America/St_Johns)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ScramAuthenticator initializeScramClient
+FINEST: channelBinding( PREFER )
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ScramAuthenticator advertisedMechanisms
+FINEST:  <=BE AuthenticationSASL( [SCRAM-SHA-256] )
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ScramAuthenticator initializeScramClient
+FINEST:  Using SCRAM mechanism: SCRAM-SHA-256
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ScramAuthenticator handleAuthenticationSASL
+FINEST:  FE=> SASLInitialResponse( n,,n=*,r=erU~B9#5Qu>"lio*w(rPh-~> )
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ScramAuthenticator handleAuthenticationSASLContinue
+FINEST:  <=BE AuthenticationSASLContinue( r=erU~B9#5Qu>"lio*w(rPh-~>2M4glUkmqm07/0R8eRT63kT6,s=paI/R3mVcMxz2WYfW4PQQg==,i=4096 )
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ScramAuthenticator handleAuthenticationSASLContinue
+FINEST:  FE=> SASLResponse( c=biws,r=erU~B9#5Qu>"lio*w(rPh-~>2M4glUkmqm07/0R8eRT63kT6,p=un53mSFvK9Dd4OFhgDdrP5/cziyfMo8MV60gkRzaQfo= )
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ScramAuthenticator handleAuthenticationSASLFinal
+FINEST:  <=BE AuthenticationSASLFinal( v=fX76W4v31Z3Bz1HEx8FMmg99lXmAPQVLKzYnIy+Vhpc= )
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.ConnectionFactoryImpl doAuthentication
+FINEST:  <=BE AuthenticationOk
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(in_hot_standby = off)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(integer_datetimes = on)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(TimeZone = America/St_Johns)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(IntervalStyle = postgres)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(is_superuser = on)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(application_name = )
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(default_transaction_read_only = off)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(scram_iterations = 4096)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(DateStyle = ISO, MDY)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(standard_conforming_strings = on)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(session_authorization = postgres)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(client_encoding = UTF8)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(server_version = 17.2)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(server_encoding = UTF8)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl readStartupMessages
+FINEST:  <=BE BackendKeyData(pid=31,251,ckey=1,314,644,585)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(I)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl execute
+FINEST:   simple execute, handler=org.postgresql.core.SetupQueryRunner$SimpleResultHandler@5a8e6209, maxRows=0, fetchSize=0, flags=1,047
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="SET extra_float_digits = 2",oids={})
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendSync
+FINEST:  FE=> Sync
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(SET)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(I)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl execute
+FINEST:   simple execute, handler=org.postgresql.core.SetupQueryRunner$SimpleResultHandler@3a5ed7a6, maxRows=0, fetchSize=0, flags=1,047
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="SET application_name = 'PostgreSQL JDBC Driver'",oids={})
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=1)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendSync
+FINEST:  FE=> Sync
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(SET)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveParameterStatus
+FINEST:  <=BE ParameterStatus(application_name = PostgreSQL JDBC Driver)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(I)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgConnection <init>
+FINEST:     types using binary send = TIMESTAMPTZ,NUMERIC,OID_ARRAY,UUID,BYTEA_ARRAY,INT2_ARRAY,INT4_ARRAY,BYTEA,TEXT_ARRAY,TIMETZ,INT8,INT2,INT4,VARCHAR_ARRAY,INT8_ARRAY,POINT,TIMESTAMP,TIME,BOX,FLOAT4,FLOAT8,FLOAT4_ARRAY,FLOAT8_ARRAY
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgConnection <init>
+FINEST:     types using binary receive = TIMESTAMPTZ,NUMERIC,OID_ARRAY,UUID,BYTEA_ARRAY,INT2_ARRAY,INT4_ARRAY,BYTEA,TEXT_ARRAY,TIMETZ,INT8,INT2,INT4,VARCHAR_ARRAY,INT8_ARRAY,POINT,DATE,TIMESTAMP,TIME,BOX,FLOAT4,FLOAT8,FLOAT4_ARRAY,FLOAT8_ARRAY
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgConnection <init>
+FINEST:     integer date/time = true
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl execute
+FINEST:   simple execute, handler=org.postgresql.jdbc.PgStatement$StatementResultHandler@5a1c0542, maxRows=0, fetchSize=0, flags=17
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendParse
+FINEST:  FE=> Parse(stmt=null,query="SELECT * FROM users WHERE user_email = $1",oids={1043})
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendBind
+FINEST:  FE=> Bind(stmt=null,portal=null,$1=<('tina.trainer@gym.com')>,type=VARCHAR)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendDescribePortal
+FINEST:  FE=> Describe(portal=null)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendExecute
+FINEST:  FE=> Execute(portal=null,limit=0)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl sendSync
+FINEST:  FE=> Sync
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE ParseComplete [null]
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE BindComplete [unnamed]
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveFields
+FINEST:  <=BE RowDescription(7)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveFields
+FINEST:         Field(user_id,INT4,4,T)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveFields
+FINEST:         Field(user_name,VARCHAR,65535,T)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveFields
+FINEST:         Field(user_phone_number,VARCHAR,65535,T)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveFields
+FINEST:         Field(user_email,VARCHAR,65535,T)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveFields
+FINEST:         Field(user_address,VARCHAR,65535,T)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveFields
+FINEST:         Field(user_password,VARCHAR,65535,T)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveFields
+FINEST:         Field(user_role,VARCHAR,65535,T)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl processResults
+FINEST:  <=BE DataRow(len=125)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveCommandStatus
+FINEST:  <=BE CommandStatus(SELECT 1)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.v3.QueryExecutorImpl receiveRFQ
+FINEST:  <=BE ReadyForQuery(I)
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgResultSet getInt
+FINEST:   getInt columnIndex: 1
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgResultSet getString
+FINEST:   getString columnIndex: 2
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgResultSet getString
+FINEST:   getString columnIndex: 6
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgResultSet getString
+FINEST:   getString columnIndex: 4
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgResultSet getString
+FINEST:   getString columnIndex: 3
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgResultSet getString
+FINEST:   getString columnIndex: 5
+Apr 17, 2025 10:06:15 P.M. org.postgresql.jdbc.PgResultSet getString
+FINEST:   getString columnIndex: 7
+Apr 17, 2025 10:06:15 P.M. org.postgresql.core.QueryExecutorCloseAction close
+FINEST:  FE=> Terminate
+Apr 17, 2025 10:06:15 P.M. GymApp.services.UserService login
+INFO: Tina Trainer:tina.trainer@gym.com logged in successfully.
+Apr 17, 2025 10:09:26 P.M. java.lang.Shutdown logRuntimeExit
+FINE: Runtime.exit() called with status: 130
+java.lang.Throwable: Runtime.exit(130)
+	at java.base/java.lang.Shutdown.logRuntimeExit(Shutdown.java:179)
+	at java.base/java.lang.Shutdown.exit(Shutdown.java:160)
+	at java.base/java.lang.Terminator$1.handle(Terminator.java:51)
+	at java.base/jdk.internal.misc.Signal$1.run(Signal.java:218)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+

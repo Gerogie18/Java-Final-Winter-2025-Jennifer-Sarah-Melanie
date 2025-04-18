@@ -27,7 +27,7 @@ import java.sql.SQLException;
  */
 
 public class WorkoutClassService {
-    Logger log = Logger.getLogger(WorkoutClassService.class.getName());
+    private static final Logger log = Logger.getLogger(WorkoutClassService.class.getName());
 
     private final WorkoutClassDAO workoutClassDAO;
     private final UserDAO userDAO;

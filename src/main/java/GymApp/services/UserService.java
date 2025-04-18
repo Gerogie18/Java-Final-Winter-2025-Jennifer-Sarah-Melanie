@@ -24,7 +24,7 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 
 public class UserService {
-    Logger log = Logger.getLogger(WorkoutClassService.class.getName());
+    private static final Logger log = Logger.getLogger(WorkoutClassService.class.getName());
     private final UserDAO userDAO;
 
     public UserService (UserDAO userDAO) {

@@ -9,10 +9,7 @@ import javax.naming.AuthenticationException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.util.logging.*;
 
 /**
  * Main application class for the Gym Management System.
@@ -54,13 +51,23 @@ public class GymApp {
 
     public static void main(String[] args) throws SQLException {
 
-        Logger logger = Logger.getLogger("GymAppLogger");
-
+        // create logger
         try {
+            Logger rootLogger = Logger.getLogger("");
             FileHandler fileHandler = new FileHandler("gymapp.log", true); // true = append mode
             fileHandler.setFormatter(new SimpleFormatter());
-            logger.addHandler(fileHandler);
-            logger.setLevel(Level.ALL);
+            fileHandler.setLevel(Level.ALL);
+
+            rootLogger.addHandler(fileHandler);
+            rootLogger.setLevel(Level.ALL);
+
+            // Remove default console handler
+            for (Handler handler : rootLogger.getHandlers()) {
+                if (handler instanceof ConsoleHandler) {
+                    rootLogger.removeHandler(handler);
+                }
+            }
+
         } catch (IOException e) {
             System.err.println("Logging setup failed: " + e.getMessage());
         }
