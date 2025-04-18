@@ -2,6 +2,14 @@ package GymApp.models;
 
 import GymApp.models.enums.WorkoutStatus;
 
+/**
+ * Represents a scheduled workout class at the gym.
+ * <p>
+ * This class holds information such as the name, type, trainer assignment,
+ * status, capacity, and description of the class.
+ * </p>
+ */
+
 public class WorkoutClass {
     private int id;
     private String name;

@@ -22,7 +22,7 @@ VALUES
   ('Micah Member', '709-555-2005', 'micah.member@gym.com', '25 Member Ct', 'member123', 'MEMBER'),
   ('Marley Member', '709-555-2006', 'marley.member@gym.com', '26 Member Ct', 'member123', 'MEMBER'),
   ('Mason Member', '709-555-2007', 'mason.member@gym.com', '27 Member Ct', 'member123', 'MEMBER'),
-  ('Maddie Member', '709-555-2008', 'maddie.member@gym.com', '28 Member Ct', 'member123', 'MEMBER'),
+  ('Maddie Member', '709-555-2008', 'maddie.member@gym.com', '28 Member Ct', 'member123', 'MEMBER');
 
 
 INSERT INTO workout_classes (class_name, class_type, class_description, class_status, class_capacity, trainer_id)
@@ -45,5 +45,5 @@ VALUES
   ('Basic', 49.99, 'Access to gym and equipment', 12),
   ('Standard', 59.99, 'Includes group classes', 13),
   ('Premium', 79.99, 'All-access membership', 14),
-  ('Premium', 79.99, 'Trainer also trains!', 3),  -- Tina Trainer
-  ('Premium', 79.99, 'Another training trainer', 6); -- Toby Trainer
+  ('Premium', 79.99, 'Trainer also trains!', 3),
+  ('Premium', 79.99, 'Another training trainer', 6);

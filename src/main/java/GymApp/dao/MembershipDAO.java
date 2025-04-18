@@ -8,11 +8,19 @@ import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class MembershipDAO {
+/**
+ * Data Access Object (DAO) for handling operations related to gym memberships.
+ * <p>
+ * This class provides methods to perform CRUD operations on the {@code memberships} table
+ * in the database, such as creating memberships, retrieving membership records,
+ * and calculating membership-related statistics.
+ * </p>
+ *
+ *  @author Melanie Adams
+ *  @version 1.0
+ */
 
-    // Here we have a method that adds a membership to the database,
-    // it takes a membership object as a parameter and inserts it into the database
-    // using a prepared statement
+public class MembershipDAO {
 
     public void addMembership(Membership membership) throws SQLException {
         String sql = "INSERT INTO memberships (membership_type, membership_cost, membership_description, date_purchased, member_id) VALUES (?, ?, ?, ?, ?)";

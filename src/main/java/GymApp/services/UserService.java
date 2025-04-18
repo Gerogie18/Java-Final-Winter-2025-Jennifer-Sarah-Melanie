@@ -11,6 +11,18 @@ import java.util.logging.Logger;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+/**
+ * Service layer responsible for user-related operations such as registration,
+ * login, deletion, and user role filtering.
+ * <p>
+ * Handles input validation, password hashing, and delegates data persistence
+ * and queries to the {@link UserDAO}.
+ * </p>
+ *
+ *  @author Jennifer Lyver
+ *  @version 1.0
+ */
+
 public class UserService {
     Logger log = Logger.getLogger(WorkoutClassService.class.getName());
     private final UserDAO userDAO;
@@ -38,7 +50,9 @@ public class UserService {
             return user;
     }
 
+
     //Functions for USER DAO operations
+
     public int createUser(User user)  throws SQLException {
         // Check if email is taken before creating the user
         if (isEmailTaken(user.getEmail())) {
@@ -89,18 +103,18 @@ public class UserService {
             throw e;
         }
     }
-//
-//    public User searchUserByUsername(String username) throws SQLException {
-//        return userDAO.getUserByUsername(username);
-//    }
-//
-//    public User searchUserByPhoneNumber(String phoneNumber) throws SQLException {
-//        return userDAO.getUserByPhoneNumber(phoneNumber);
-//    }
-//
-//    public User searchUserByEmail(String email) throws SQLException {
-//        return userDAO.getUserByEmail(email);
-//    }
+
+    public User searchUserByUsername(String username) throws SQLException {
+        return userDAO.getUserByUsername(username);
+    }
+
+    public User searchUserByPhoneNumber(String phoneNumber) throws SQLException {
+        return userDAO.getUserByPhoneNumber(phoneNumber);
+    }
+
+    public User searchUserByEmail(String email) throws SQLException {
+        return userDAO.getUserByEmail(email);
+    }
 
     //GET User List functions
     public List<User> listAllUsers() throws SQLException {
@@ -127,18 +141,6 @@ public class UserService {
         return userDAO.getUsersByRole(UserRole.MEMBER);
     }
 
-
-//    public List<User> listUsersByRole(UserRole role) throws SQLException {
-//        try {
-//            List<User> users = userDAO.getUsersByRole(role);
-//            log.info("Retrieved list of users with role: " + role);
-    //        return users;
-//        } catch (SQLException e) {
-//            String roleLabel = (role == null) ? "all roles" : "role=" + role;
-//            log.warning("Database error while retrieving users (" + roleLabel + "): " + e.getMessage());
-//            throw e;
-//        }
-//    }
 
 
     //Print functions

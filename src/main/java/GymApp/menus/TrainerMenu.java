@@ -6,7 +6,17 @@ import GymApp.services.WorkoutClassService;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public abstract class TrainerMenu implements Menu {
+
+/**
+ * Handles the command-line interface for trainer-specific actions.
+ * <p>
+ * This class provides a static method to display and manage the trainer menu,
+ * allowing trainers to create, update, and delete workout classes, view their classes,
+ * and purchase memberships for themselves.
+ * </p>
+ */
+
+public class TrainerMenu {
 
     public static void displayMenu(Scanner scanner, WorkoutClassService workoutService, MembershipService membershipService, int trainerId) throws SQLException {
         int choice;

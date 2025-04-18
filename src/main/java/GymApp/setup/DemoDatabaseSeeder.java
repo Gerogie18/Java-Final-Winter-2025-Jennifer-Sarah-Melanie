@@ -5,6 +5,11 @@ import java.sql.Statement;
 import GymApp.database.DatabaseConnection;
 import org.mindrot.jbcrypt.BCrypt;
 
+/**
+ * Seeds database to have demo material
+ *
+ */
+
 public class DemoDatabaseSeeder {
 
     public static void main(String[] args) {

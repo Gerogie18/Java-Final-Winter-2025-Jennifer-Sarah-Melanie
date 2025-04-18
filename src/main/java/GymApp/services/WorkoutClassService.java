@@ -8,6 +8,24 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.sql.SQLException;
 
+/**
+ * Service layer responsible for managing business logic related to workout classes.
+ * <p>
+ * This class handles creation, updating, deletion, and retrieval of workout classes.
+ * It validates trainer roles, enforces access control, and delegates data persistence
+ * to the {@link WorkoutClassDAO}. It may also use {@link UserDAO} to perform
+ * user-related validations, such as verifying trainer identities.
+ * </p>
+ *
+ * <p>
+ * This service is used by controllers or menu handlers to process user actions
+ * related to scheduling, managing, and displaying workout classes.
+ * </p>
+ *
+ * @author Sarah Perry
+ * @version 1.0
+ */
+
 public class WorkoutClassService {
     Logger log = Logger.getLogger(WorkoutClassService.class.getName());
 
@@ -19,7 +37,7 @@ public class WorkoutClassService {
         this.userDAO = userDAO;
     }
 
-//Only Trainers can add a new Class; we might want to modify this so Admins can, too.
+
     public void addNewWorkoutClass(WorkoutClass workoutClass) throws IllegalArgumentException, SQLException {
         // Validate workout class details
         if (workoutClass.getName() == null || workoutClass.getName().isEmpty()) {
@@ -46,8 +64,14 @@ public class WorkoutClassService {
     }
 
 
+    /**
+     * updates WorkoutClass if user has permission
+     * @param updatedClass
+     * @param userRole
+     * @param userId
+     * @throws SQLException
+     */
 
-// updates WorkoutClass based on role
     public void updateWorkoutClass(WorkoutClass updatedClass, UserRole userRole, int userId) throws SQLException {
         //Check if updatedClass is ok
         if (updatedClass == null || updatedClass.getId() <= 0) {
@@ -69,7 +93,13 @@ public class WorkoutClassService {
     }
 
 
-//deletes based on user role
+    /**
+     * Deletes workout class if user has permission
+     * @param classId
+     * @param userRole
+     * @param userId
+     * @throws SQLException
+     */
     public void deleteWorkoutClass(int classId, UserRole userRole, int userId) throws SQLException {
         if (classId <= 0) {
             throw new IllegalArgumentException("Invalid workout class ID.");
@@ -98,6 +128,12 @@ public class WorkoutClassService {
     }
 
 
+    /**
+     * Retrieves a workout class by its ID
+     * @param classId
+     * @return
+     * @throws SQLException
+     */
 
     public WorkoutClass getWorkoutClassById(int classId) throws SQLException {
         if (classId <= 0) {
@@ -118,6 +154,13 @@ public class WorkoutClassService {
             throw err;  // Rethrow to ensure the caller can react appropriately
         }
     }
+
+    /**
+     * Returns a list of all the workouts associated with a trainer ID
+     * @param trainerId
+     * @return
+     * @throws SQLException
+     */
 
     public List<WorkoutClass> listWorkoutsByTrainer(int trainerId) throws SQLException {
         if (trainerId <= 0) {
@@ -142,6 +185,12 @@ public class WorkoutClassService {
     }
 
 
+    /**
+     * Returns a list of all workouts; members only see active workout classes
+     * @param userRole
+     * @return
+     * @throws SQLException
+     */
     public List<WorkoutClass> listAllWorkouts(UserRole userRole) throws SQLException {
         try {
             List<WorkoutClass> classes;

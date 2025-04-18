@@ -14,11 +14,46 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/**
+ * Main application class for the Gym Management System.
+ * <p>
+ * Handles application startup, service initialization, logging setup, and the main menu flow for
+ * login and registration. Routes users to role-specific submenus based on their credentials.
+ * </p>
+ *
+ * <p>Supported roles:</p>
+ * <ul>
+ *     <li>Admin</li>
+ *     <li>Trainer</li>
+ *     <li>Member</li>
+ * </ul>
+ *
+ * <p>Command-line arguments:</p>
+ * <ul>
+ *     <li><code>--seed</code> — Seeds the database with demo data (if implemented)</li>
+ * </ul>
+ *
+ * @author SD12-JMS
+ * @version 1.0
+ */
+
 
 public class GymApp {
+
+    /**
+     * The main entry point for the Gym Management System.
+     * <p>
+     * Initializes application services, sets up logging, and displays the top-level menu for
+     * signing up, logging in, or exiting the application.
+     * </p>
+     *
+     * @param args optional command-line arguments (e.g., "--seed" to populate demo data)
+     * @throws SQLException if a database connection or query fails during initialization
+     */
+
+
     public static void main(String[] args) throws SQLException {
 
-        // set up a global logger
         Logger logger = Logger.getLogger("GymAppLogger");
 
         try {
@@ -84,6 +119,23 @@ public class GymApp {
     }
 
 
+    /**
+     * Handles the registration of a new user through CLI input.
+     * <p>
+     * This method prompts the user to enter their email, username, password,
+     * phone number, and address. It performs input validation for each field,
+     * ensuring that no required field is left empty and that the provided email
+     * address is not already registered.
+     * </p>
+     *
+     * <p>
+     * Upon successful validation, the user information is passed to the
+     * {@link UserService} to create the new user, and a confirmation message is displayed.
+     * </p>
+     *
+     * @param scanner      the Scanner object used to read user input
+     * @param userService  the service used to interact with user data and validation
+     */
 
     private static void registerUser(Scanner scanner, UserService userService) {
         String email = "";
@@ -149,6 +201,20 @@ public class GymApp {
         }
     }
 
+    /**
+     * Prompts the user to log in using their email and password, validates credentials,
+     * and redirects the user to the appropriate menu based on their role.
+     * <p>
+     * This method handles basic input validation for empty email and password fields.
+     * It attempts authentication through the {@link UserService}, and if successful,
+     * routes the user to the corresponding CLI menu for their role (Admin, Trainer, or Member).
+     * </p>
+     *
+     * @param scanner          the Scanner object used to read user input
+     * @param userService      the service used for authenticating user credentials
+     * @param membershipService the service providing membership-related functionality
+     * @param workoutService   the service providing workout class-related functionality
+     */
 
     private static void logInAsUser(Scanner scanner, UserService userService, MembershipService membershipService, WorkoutClassService workoutService) {
         String email = "";
@@ -198,7 +264,6 @@ public class GymApp {
             System.out.println("Login failed: " + ae.getMessage());
         } catch (SQLException e) {
             System.out.println("A system error occurred while trying to log in.");
-            e.printStackTrace();
         }
     }
 
