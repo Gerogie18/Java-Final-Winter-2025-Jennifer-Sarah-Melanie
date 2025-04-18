@@ -134,7 +134,7 @@ To access the Trainer Menu, you need to log in to the system with a trainer acco
 1. Clone the Repository:
    - Open a terminal or command prompt. 
    - Navigate to the directory where you want to clone the project. 
-   - Run the command git clone https://github.com/Keyin-SD14-S3/fullstack-databases-final-sprint-team-team-jl-ma-sp.git (replace username and repository-name with the actual GitHub username and repository name). 
+   - Run the command git clone https://github.com/Keyin-SD14-S3/fullstack-databases-final-sprint-team-team-jl-ma-sp.git 
    - Press Enter to clone the repository. 
 2. Open the Project in Your IDE:
    - Open IntelliJ IDEA or VS Code. 
@@ -180,6 +180,25 @@ To access the Trainer Menu, you need to log in to the system with a trainer acco
 
 ---
 ## Development Documentation
+### Class Diagram Description
+The system consists of three main models: `User`, `Membership`, and `WorkoutClass`. Each model is paired with an enum to manage specific states.
+
+#### Relationships
+
+- A `User` can have multiple `Membership`s.
+- A `Membership` is associated with one `User`.
+- A `WorkoutClass` is associated with one `User` (trainer), and only users with the `Trainer` role can lead a `WorkoutClass`.
+
+#### Enums
+
+- `UserRole` enum manages user roles (e.g., Admin, Trainer, Member).
+- `MembershipType` enum manages membership types.
+- `WorkoutStatus` enum manages workout class statuses.
+
+### Class Diagram
+
+![Class Diagram](src/main/resources/ClassDiagram.svg)
+
 ### Project Directory Structure
 - src/gymapp: The main application class (GymApp.java) resides here. 
 - setup: Contains the database seeder (DemoDatabaseSeeder) for initializing the database. 
