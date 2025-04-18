@@ -180,7 +180,7 @@ To access the Trainer Menu, you need to log in to the system with a trainer acco
 
 ---
 ## Development Documentation
-### Class Diagram Description
+### Class Diagram Description (focusing on models)
 The system consists of three main models: `User`, `Membership`, and `WorkoutClass`. Each model is paired with an enum to manage specific states.
 
 #### Relationships
@@ -195,9 +195,16 @@ The system consists of three main models: `User`, `Membership`, and `WorkoutClas
 - `MembershipType` enum manages membership types.
 - `WorkoutStatus` enum manages workout class statuses.
 
-### Class Diagram
+#### Class Diagram
 
 ![Class Diagram](src/main/resources/ClassDiagram.svg)
+
+### Class Description (wider view)
+In addition to the models, the system consists of three main 'layers': `DAO`, `Service`, and `Menu`. The DAO communicates with the database. The services call the DAO and catch any errors it might throw. They also handle creating logs. The menus provide an interface with the user to get user input to use to call the relevant service. The diagram below shows the relationships between each layer (note that instance variables and methods are truncated for space).
+
+
+![Class Diagram](src/main/resources/class_relationship.png)
+
 
 ### Project Directory Structure
 - src/gymapp: The main application class (GymApp.java) resides here. 
