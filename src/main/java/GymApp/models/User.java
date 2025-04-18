@@ -1,10 +1,14 @@
 package GymApp.models;
 
 import GymApp.models.enums.UserRole;
-//*
-// This is the parent class for all users, There are 3 types of users: Trainer, Member, and Admin
-//
-// *//
+
+/**
+ * Represents a user in the gym system.
+ * <p>
+ * A user can be an admin, trainer, or member. This model stores their profile
+ * information, including login credentials and role assignment.
+ * </p>
+ */
 
 public class User {
     private int userId;

@@ -8,6 +8,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) for handling operations related to users.
+ * <p>
+ * Provides methods to interact with the {@code users} table in the database, including
+ * creating users, retrieving users by ID or email, deleting users, and retrieving users
+ * by role.
+ * </p>
+ *
+ *  @author Jennifer Lyver
+ *  @version 1.0
+ */
+
 public class UserDAO {
 
     public UserDAO() {}

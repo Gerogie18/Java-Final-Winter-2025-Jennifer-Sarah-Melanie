@@ -7,9 +7,16 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.sql.SQLException;
 
-// Service class for membership handle all the business logic
-// and only uses the DAO to interact with the database it does not have methods to do so
-// you can inject in your dao to use in your service. An example will be in the code
+/**
+ * Service layer for managing gym memberships.
+ * <p>
+ * Handles operations like creating memberships, retrieving user membership history,
+ * and calculating total membership costs. Delegates data access to the {@link MembershipDAO}.
+ * </p>
+ *
+ *  @author Melanie Adams
+ *  @version 1.0
+ */
 public class MembershipService {
     Logger log = Logger.getLogger(MembershipService.class.getName());
 

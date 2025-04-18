@@ -4,9 +4,12 @@ import GymApp.models.enums.MembershipType;
 
 import java.time.LocalDate;
 
-//*\
-// This is class file that represents a membership
-//
+/**
+ * Represents a gym membership associated with a member.
+ * <p>
+ * Includes the type, cost, description, purchase date, and member ID.
+ * </p>
+ */
 
 public class Membership {
     private int membershipID;

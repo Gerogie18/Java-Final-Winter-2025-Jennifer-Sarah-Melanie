@@ -4,10 +4,21 @@ import GymApp.services.MembershipService;
 import GymApp.services.WorkoutClassService;
 import GymApp.services.MenuActions;
 import GymApp.models.enums.UserRole;
-
 import java.util.Scanner;
 
-public abstract class MemberMenu {
+/**
+ * Handles the command-line interface for member-specific actions.
+ * <p>
+ * This class provides a static method to display and manage the member menu,
+ * allowing members to browse available workout classes, view their membership expenses,
+ * and purchase new gym memberships.
+ * </p>
+ *
+ *  @author Melanie Adams
+ *  @version 1.0
+ */
+
+public class MemberMenu {
     public static void displayMenu(Scanner scanner, MembershipService membershipService,
             WorkoutClassService workoutClassService, int memberId) {
         int choice;

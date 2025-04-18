@@ -11,6 +11,17 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+/**
+ * Utility class that handles command-line menu actions for different user roles.
+ * <p>
+ * Contains static methods that interact with service-layer logic to perform
+ * user-facing operations such as adding, updating, and viewing workout classes,
+ * memberships, and users. This class is used by role-specific menus (e.g., AdminMenu, TrainerMenu).
+ * </p>
+ *
+ * <p>This class is not intended to be instantiated.</p>
+ */
+
 public class MenuActions {
 
     private static final Logger log = Logger.getLogger(MenuActions.class.getName());

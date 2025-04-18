@@ -3,16 +3,20 @@ package GymApp.menus;
 import GymApp.services.MembershipService;
 import GymApp.services.MenuActions;
 import GymApp.services.UserService;
-import java.sql.SQLException;
 import java.util.Scanner;
 
-public abstract class AdminMenu implements Menu {
+/**
+ * Handles the command-line interface for admin-specific actions.
+ * <p>
+ * This class provides a static method to display and manage the admin menu,
+ * allowing administrators to view all users, filter users by role, delete users,
+ * review gym memberships, and calculate total revenue.
+ * </p>
+ *  @author Jennifer Lyver
+ *  @version 1.0
+ */
 
-    //Admin must be able to:
-    // - view all users
-    // - delete users
-    // - view memberships
-    // - annual total revenue
+public class AdminMenu {
 
     public static void displayMenu(Scanner scanner, MembershipService membershipService, UserService userService, int adminId) {
         int choice;

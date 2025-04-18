@@ -7,6 +7,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) for handling operations related to workout classes.
+ * <p>
+ * Provides methods to manage the {@code workout_classes} table, including creating,
+ * updating, deleting, and retrieving workout class records by ID, status, or trainer.
+ * </p>
+ *
+ *  @author Sarah Perry
+ *  @version 1.0
+ */
+
 
 public class WorkoutClassDAO {
     public void createNewWorkoutClass(WorkoutClass workoutClass) throws SQLException {
@@ -23,7 +34,7 @@ public class WorkoutClassDAO {
             pstmt.setInt(5, workoutClass.getClass_capacity());
             pstmt.setInt(6, workoutClass.getTrainerId());
 
-            //check if update was successfull
+            //check if update was successful
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted == 0) {
                 throw new SQLException("Creating workout class failed; no rows affected.");
