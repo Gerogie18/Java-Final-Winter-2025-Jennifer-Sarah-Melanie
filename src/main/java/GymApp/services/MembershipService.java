@@ -18,7 +18,7 @@ import java.sql.SQLException;
  *  @version 1.0
  */
 public class MembershipService {
-    Logger log = Logger.getLogger(MembershipService.class.getName());
+    private static final Logger log = Logger.getLogger(MembershipService.class.getName());
 
     private final MembershipDAO membershipDAO;
 
